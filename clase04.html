@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLASE DÍA 4 - Aprende a Programar con IA desde Cero | AIWIS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --azul: #3b82f6;
+            --morado: #8b5cf6;
+            --verde: #10b981;
+            --amarillo: #f59e0b;
+            --rojo: #ef4444;
+            --gris: #64748b;
+            --fondo: #f8fafc;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: var(--azul);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header .emoji-grande {
+            font-size: 4em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--gris);
+            font-size: 1.2em;
+        }
+
+        /* Navigation */
+        .nav-menu {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .nav-btn {
+            background: white;
+            color: var(--azul);
+            border: 3px solid var(--azul);
+            padding: 15px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: var(--azul);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .nav-btn.active {
+            background: var(--azul);
+            color: white;
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .section.active {
+            display: block;
+            animation: aparecer 0.5s ease;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section h2 {
+            color: var(--azul);
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            border-bottom: 4px solid var(--azul);
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: var(--morado);
+            font-size: 1.8em;
+            margin: 30px 0 15px 0;
+        }
+
+        /* Caja de concepto simple */
+        .caja-concepto {
+            background: linear-gradient(135deg, #e0f2fe 0%, #ddd6fe 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 6px solid var(--azul);
+        }
+
+        .caja-concepto h4 {
+            color: var(--azul);
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .caja-concepto p {
+            color: #1e293b;
+            font-size: 1.1em;
+        }
+
+        /* Caja de ejemplo */
+        .caja-ejemplo {
+            background: #fef3c7;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 6px solid var(--amarillo);
+        }
+
+        .caja-ejemplo h4 {
+            color: #92400e;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        /* Caja de tip */
+        .caja-tip {
+            background: #dcfce7;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 6px solid var(--verde);
+        }
+
+        .caja-tip h4 {
+            color: #166534;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        /* Cards simples */
+        .tarjetas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border: 3px solid var(--azul);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .tarjeta:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .tarjeta .emoji {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .tarjeta h4 {
+            color: var(--azul);
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .tarjeta p {
+            color: var(--gris);
+            font-size: 1em;
+        }
+
+        /* Glosario interactivo */
+        .glosario {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .termino {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 5px solid var(--morado);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .termino:hover {
+            background: #f1f5f9;
+            padding-left: 25px;
+        }
+
+        .termino strong {
+            color: var(--morado);
+            font-size: 1.2em;
+        }
+
+        .termino .definicion {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #fef3c7;
+            border-radius: 8px;
+            color: #78350f;
+        }
+
+        .termino.abierto .definicion {
+            display: block;
+        }
+
+        /* Diagrama visual */
+        .diagrama {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 3px solid var(--azul);
+        }
+
+        .diagrama-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .diagrama-box {
+            background: linear-gradient(135deg, var(--azul), var(--morado));
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            min-width: 150px;
+            margin: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .diagrama-box h5 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .flecha {
+            font-size: 3em;
+            color: var(--azul);
+        }
+
+        /* Comparación visual */
+        .comparacion {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .lado {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border: 3px solid var(--azul);
+        }
+
+        .lado h4 {
+            color: var(--azul);
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .lado ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .lado li {
+            padding: 10px;
+            margin: 8px 0;
+            background: #f1f5f9;
+            border-radius: 8px;
+            border-left: 4px solid var(--verde);
+        }
+
+        /* Pasos numerados */
+        .pasos {
+            counter-reset: paso;
+        }
+
+        .paso {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 15px;
+            border-left: 5px solid var(--azul);
+            position: relative;
+            padding-left: 80px;
+        }
+
+        .paso:before {
+            counter-increment: paso;
+            content: counter(paso);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--azul);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        /* Código simple */
+        .codigo-simple {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            font-size: 1em;
+        }
+
+        .codigo-simple .comentario {
+            color: #94a3b8;
+        }
+
+        .codigo-simple .keyword {
+            color: #60a5fa;
+        }
+
+        .codigo-simple .string {
+            color: #fbbf24;
+        }
+
+        /* Tabla comparativa */
+        .tabla-simple {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .tabla-simple th {
+            background: var(--azul);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-size: 1.1em;
+        }
+
+        .tabla-simple td {
+            padding: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .tabla-simple tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        /* Visual de tokens */
+        .token-visual {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 10px;
+        }
+
+        .token {
+            background: var(--azul);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        /* Botón interactivo */
+        .boton-grande {
+            background: var(--verde);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .boton-grande:hover {
+            background: #059669;
+            transform: scale(1.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .comparacion {
+                grid-template-columns: 1fr;
+            }
+            
+            .diagrama-flow {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .footer h3 {
+            color: var(--azul);
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="emoji-grande">🎓</div>
+            <h1>CLASE DÍA 4</h1>
+            <p style="font-size: 1.5em; color: var(--azul); margin: 15px 0;">
+                <strong>Aprende a Programar con Inteligencia Artificial</strong>
+            </p>
+            <p style="color: var(--gris);">¡Desde CERO hasta tu primer proyecto!</p>
+            <p style="margin-top: 20px; color: var(--morado);">
+                <strong>AIWIS</strong> - CEO: Armin Salazar
+            </p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-menu">
+            <button class="nav-btn active" onclick="irSeccion(0)">🏠 Inicio</button>
+            <button class="nav-btn" onclick="irSeccion(1)">📚 Glosario</button>
+            <button class="nav-btn" onclick="irSeccion(2)">🤖 ¿Qué es IA?</button>
+            <button class="nav-btn" onclick="irSeccion(3)">💬 Chat vs API</button>
+            <button class="nav-btn" onclick="irSeccion(4)">🪙 Tokens</button>
+            <button class="nav-btn" onclick="irSeccion(5)">🛠️ Herramientas</button>
+            <button class="nav-btn" onclick="irSeccion(6)">👨‍💻 Primeros Pasos</button>
+            <button class="nav-btn" onclick="irSeccion(7)">🎯 Práctica</button>
+        </div>
+
+        <!-- SECCIÓN 0: INTRODUCCIÓN -->
+        <div class="section active" id="seccion-0">
+            <h2>🏠 ¡Bienvenido a tu Clase de IA!</h2>
+
+            <div class="caja-concepto">
+                <h4>🎯 ¿Qué aprenderás hoy?</h4>
+                <p>En esta clase aprenderás de forma <strong>simple y práctica</strong> cómo usar la Inteligencia Artificial para programar, aunque nunca hayas programado antes.</p>
+            </div>
+
+            <h3>📖 Lo que veremos paso a paso:</h3>
+
+            <div class="pasos">
+                <div class="paso">
+                    <strong>Entender qué es la IA</strong> - Con palabras simples y ejemplos cotidianos
+                </div>
+                <div class="paso">
+                    <strong>Aprender vocabulario básico</strong> - Un glosario con todos los términos que necesitas
+                </div>
+                <div class="paso">
+                    <strong>Conocer las herramientas</strong> - Claude, ChatGPT, Gemini y cómo usarlas
+                </div>
+                <div class="paso">
+                    <strong>Entender cómo funcionan</strong> - La diferencia entre usar el chat y programar con APIs
+                </div>
+                <div class="paso">
+                    <strong>Tu primer proyecto</strong> - Crear algo real con ayuda de la IA
+                </div>
+            </div>
+
+            <div class="caja-tip">
+                <h4>💡 Importante para principiantes</h4>
+                <p>No te preocupes si algunos términos suenan complicados al principio. Vamos a explicar TODO desde cero. Si algo no entiendes, revisa el glosario o vuelve a leer la sección. ¡Todos empezamos sin saber nada!</p>
+            </div>
+
+            <div class="tarjetas">
+                <div class="tarjeta">
+                    <div class="emoji">🎨</div>
+                    <h4>Aprende Creando</h4>
+                    <p>La mejor forma de aprender es haciendo. Vamos a crear cosas reales mientras aprendemos.</p>
+                </div>
+                <div class="tarjeta">
+                    <div class="emoji">🚀</div>
+                    <h4>Sin Experiencia Previa</h4>
+                    <p>Esta clase está diseñada para personas que empiezan desde CERO. No necesitas saber programar.</p>
+                </div>
+                <div class="tarjeta">
+                    <div class="emoji">🤝</div>
+                    <h4>IA como Ayudante</h4>
+                    <p>La IA será tu asistente personal que te ayuda a aprender y a crear programas.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 1: GLOSARIO -->
+        <div class="section" id="seccion-1">
+            <h2>📚 Glosario: Palabras que Debes Conocer</h2>
+
+            <div class="caja-concepto">
+                <h4>¿Para qué sirve este glosario?</h4>
+                <p>Aquí encontrarás todas las palabras técnicas explicadas de forma <strong>muy simple</strong>. Haz clic en cada término para ver su definición.</p>
+            </div>
+
+            <div class="glosario">
+                <div class="termino" onclick="toggleTermino(this)">
+                    <strong>🤖 Inteligencia Artificial (IA)</strong>
+                    <div class="definicion">
+                        Es un programa de computadora que puede "pensar" y resolver problemas como lo haría una persona. Por ejemplo: entender lo que escribes y darte respuestas inteligentes.
+                    </div>
+                </div>
+
+                <div class="termino" onclick="toggleTermino(this)">
+                    <strong>🧠 LLM (Modelo de Lenguaje Grande)</strong>
+                    <div class="definicion">
+                        Es el "cerebro" de la IA. Es un programa muy grande que aprendió a entender y generar texto leyendo millones de libros, artículos y páginas web. Ejemplos: ChatGPT, Claude, Gemini.
+                    </div>
+                </div>
+
+                <div class="termino" onclick="toggleTermino(this)">
+                    <strong>💬 Chat</strong>
+                    <div class="definicion">
+                        Es la forma más simple de usar IA. Es como WhatsApp: escribes un mensaje y la IA te responde. No necesitas saber programar. Ejemplos: ChatGPT.com, Claude.ai
+                    </div>
+                </div>
+
+                <div class="termino" onclick="toggleTermino(this)">
+                    <strong>🔌 API (Interfaz de Programación)</strong>
+                    <div class="definicion">
+                        Es una forma de que un programa hable con otro programa. Con una API puedes hacer que tu programa use ChatGPT, Claude o Gemini automáticamente. Requiere programar un poco.
+                    </div>
+                </div>
+
+                <div class="termino" onclick="toggleTermino(this)">
+                    <strong>🪙 Token</strong>
+                    <div class="definicion">
+                        Es como "palabras pequeñas" que la IA usa para leer y escribir. Cada pregunta y respuesta cuesta tokens. Aproximadamente 4 letras = 1 token. Es lo que se cobra cuando usas API.
+                    </div>
+                </div>
+
+                <div class="termino" onclick="toggleTermino(this)">
+                    <strong>🤖 Prompt</strong>
+                    <div class="definicion">
+                        Es la instrucción o pregunta que le das a la IA. Un buen prompt es claro y detallado. Ejemplo: "Explícame qué es Python como si tuviera 10 años"
+                    </div>
+                </div>
+
+                <div class="termino" onclick="toggleTermino(this)">
+                    <strong>💻 Código</strong>
+                    <div class="definicion">
+                        Son las instrucciones que le das a una computadora, escritas en un lenguaje que ella entiende (como Python, JavaScript, etc). Es como una receta de cocina para computadoras.
+                    </div>
+                </div>
+
+                <div class="termino" onclick="toggleTermino(this)">
+                    <strong>🐍 Python / JavaScript / etc</strong>
+                    <div class="definicion">
+                        Son lenguajes de programación. Cada uno tiene sus propias reglas, como idiomas. Python es muy fácil de aprender. JavaScript se usa mucho para páginas web.
+                    </div>
+                </div>
+
+                <div class="termino" onclick="toggleTermino(this)">
+                    <strong>🤖 Copilot</strong>
+                    <div class="definicion">
+                        Es un asistente de IA que te ayuda mientras programas. Te sugiere código automáticamente, como el autocompletado del celular pero para programar.
+                    </div>
+                </div>
+
+                <div class="termino" onclick="toggleTermino(this)">
+                    <strong>📝 IDE (Editor de Código)</strong>
+                    <div class="definicion">
+                        Es el programa donde escribes código. Como Word pero para programadores. Ejemplo: Visual Studio Code (VS Code). Te ayuda a escribir código con colores y sugerencias.
+                    </div>
+                </div>
+
+                <div class="termino" onclick="toggleTermino(this)">
+                    <strong>🌐 API Key (Clave de API)</strong>
+                    <div class="definicion">
+                        Es como una contraseña especial que te da acceso para usar la API de Claude, ChatGPT, etc. Es un código secreto que identifica tu cuenta.
+                    </div>
+                </div>
+
+                <div class="termino" onclick="toggleTermino(this)">
+                    <strong>💰 Créditos</strong>
+                    <div class="definicion">
+                        Es el dinero que pagas para usar las APIs. Cada vez que tu programa usa la IA, consume créditos según cuántos tokens usaste. Es como recargar el celular.
+                    </div>
+                </div>
+
+                <div class="termino" onclick="toggleTermino(this)">
+                    <strong>🔄 Automatización</strong>
+                    <div class="definicion">
+                        Hacer que algo funcione solo, sin que tengas que hacerlo manualmente. Por ejemplo: un programa que responde emails automáticamente usando IA.
+                    </div>
+                </div>
+
+                <div class="termino" onclick="toggleTermino(this)">
+                    <strong>🤖 Agente</strong>
+                    <div class="definicion">
+                        Es una IA que puede hacer varias tareas sola y tomar decisiones. Como un asistente virtual que trabaja para ti sin supervisión constante.
+                    </div>
+                </div>
+
+                <div class="termino" onclick="toggleTermino(this)">
+                    <strong>📦 Stack Tecnológico</strong>
+                    <div class="definicion">
+                        Es el conjunto de herramientas y lenguajes que usas para crear un programa completo. Como los ingredientes de una receta. Ejemplo: React + Node.js + MongoDB
+                    </div>
+                </div>
+            </div>
+
+            <div class="caja-tip">
+                <h4>💡 Consejo</h4>
+                <p>No necesitas memorizar todo ahora. Vuelve a este glosario cada vez que encuentres una palabra que no entiendas en las siguientes secciones.</p>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 2: QUÉ ES IA -->
+        <div class="section" id="seccion-2">
+            <h2>🤖 ¿Qué es la Inteligencia Artificial?</h2>
+
+            <div class="caja-concepto">
+                <h4>Explicación Simple</h4>
+                <p>La Inteligencia Artificial es como tener un <strong>ayudante muy inteligente en tu computadora</strong> que puede entender lo que le dices, responder preguntas, escribir textos, crear código, y mucho más.</p>
+            </div>
+
+            <h3>🎯 Analogía para Entenderlo Mejor</h3>
+
+            <div class="caja-ejemplo">
+                <h4>🍳 La IA es como un chef experto</h4>
+                <p>Imagina que tienes un chef que:</p>
+                <ul style="margin-top: 10px;">
+                    <li>✅ Ha leído miles de recetas de todo el mundo</li>
+                    <li>✅ Entiende lo que quieres comer con solo decirle "quiero algo italiano y saludable"</li>
+                    <li>✅ Puede crear una receta nueva combinando lo que sabe</li>
+                    <li>✅ Te explica paso a paso cómo cocinar</li>
+                    <li>✅ Se adapta a lo que tienes en tu cocina</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>Así funciona la IA con la programación</strong>: ha "leído" millones de líneas de código y puede ayudarte a crear programas.</p>
+            </div>
+
+            <h3>🌟 Las 3 IAs Más Usadas</h3>
+
+            <div class="tarjetas">
+                <div class="tarjeta">
+                    <div class="emoji">🤖</div>
+                    <h4>ChatGPT</h4>
+                    <p><strong>Creado por:</strong> OpenAI<br>
+                    <strong>Bueno para:</strong> Respuestas rápidas, resolver dudas<br>
+                    <strong>Web:</strong> chat.openai.com</p>
+                </div>
+
+                <div class="tarjeta">
+                    <div class="emoji">🧠</div>
+                    <h4>Claude</h4>
+                    <p><strong>Creado por:</strong> Anthropic<br>
+                    <strong>Bueno para:</strong> Análisis profundos, programación<br>
+                    <strong>Web:</strong> claude.ai</p>
+                </div>
+
+                <div class="tarjeta">
+                    <div class="emoji">✨</div>
+                    <h4>Gemini</h4>
+                    <p><strong>Creado por:</strong> Google<br>
+                    <strong>Bueno para:</strong> Búsquedas, imágenes y código<br>
+                    <strong>Web:</strong> gemini.google.com</p>
+                </div>
+            </div>
+
+            <div class="caja-tip">
+                <h4>💡 ¿Cuál usar?</h4>
+                <p><strong>Para empezar:</strong> Cualquiera de las tres está bien. Son gratuitas en su versión básica.<br>
+                <strong>Mi recomendación:</strong> Prueba las tres y usa la que más te guste. Cada una tiene su estilo.</p>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 3: CHAT VS API -->
+        <div class="section" id="seccion-3">
+            <h2>💬 Chat vs API: Los Dos Mundos de la IA</h2>
+
+            <div class="caja-concepto">
+                <h4>La Diferencia Fundamental</h4>
+                <p>Hay <strong>DOS formas</strong> de usar IA: como usuario normal (chat) o como programador (API). ¡Vamos a entender la diferencia!</p>
+            </div>
+
+            <h3>🎨 Diagrama Visual: Los Dos Mundos</h3>
+
+            <div class="diagrama">
+                <h4 style="text-align: center; color: var(--azul); margin-bottom: 20px;">¿Cómo llega tu pregunta a la IA?</h4>
+                
+                <div class="comparacion">
+                    <div class="lado" style="border-color: var(--verde);">
+                        <h4>🙂 MUNDO USUARIO (Chat)</h4>
+                        <div style="text-align: center; margin: 20px 0;">
+                            <div style="font-size: 3em;">👤</div>
+                            <div class="flecha">⬇️</div>
+                            <div class="diagrama-box" style="background: var(--verde);">
+                                <h5>Página Web</h5>
+                                <p style="font-size: 0.9em;">claude.ai<br>chat.openai.com</p>
+                            </div>
+                            <div class="flecha">⬇️</div>
+                            <div class="diagrama-box" style="background: var(--azul);">
+                                <h5>🤖 IA</h5>
+                                <p style="font-size: 0.9em;">Procesa y responde</p>
+                            </div>
+                            <div class="flecha">⬇️</div>
+                            <div style="font-size: 3em;">💬</div>
+                        </div>
+                        <ul>
+                            <li>✅ Muy fácil de usar</li>
+                            <li>✅ No necesitas programar</li>
+                            <li>✅ Gratis (con límites)</li>
+                            <li>✅ Manual (tú escribes cada vez)</li>
+                            <li>❌ No puedes automatizar</li>
+                        </ul>
+                    </div>
+
+                    <div class="lado" style="border-color: var(--morado);">
+                        <h4>👨‍💻 MUNDO DESARROLLADOR (API)</h4>
+                        <div style="text-align: center; margin: 20px 0;">
+                            <div style="font-size: 3em;">💻</div>
+                            <div class="flecha">⬇️</div>
+                            <div class="diagrama-box" style="background: var(--morado);">
+                                <h5>Tu Programa</h5>
+                                <p style="font-size: 0.9em;">Python, JavaScript, etc</p>
+                            </div>
+                            <div class="flecha">⬇️</div>
+                            <div class="diagrama-box" style="background: var(--azul);">
+                                <h5>🤖 IA (API)</h5>
+                                <p style="font-size: 0.9em;">Procesa automático</p>
+                            </div>
+                            <div class="flecha">⬇️</div>
+                            <div style="font-size: 3em;">⚡</div>
+                        </div>
+                        <ul>
+                            <li>✅ Totalmente automático</li>
+                            <li>✅ Procesa miles de veces</li>
+                            <li>✅ Integrado en apps</li>
+                            <li>❌ Necesitas programar</li>
+                            <li>❌ Pagas por uso (tokens)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3>📱 Ejemplos Prácticos</h3>
+
+            <div class="caja-ejemplo">
+                <h4>Ejemplo 1: Usando el CHAT (Usuario)</h4>
+                <p>Juan quiere que la IA le ayude a aprender inglés:</p>
+                <div class="pasos">
+                    <div class="paso">Abre <strong>claude.ai</strong> en su navegador</div>
+                    <div class="paso">Escribe: "Explícame los tiempos verbales en inglés"</div>
+                    <div class="paso">Lee la respuesta de Claude</div>
+                    <div class="paso">Escribe otra pregunta si tiene dudas</div>
+                </div>
+                <p><strong>💰 Costo:</strong> Gratis (o $20/mes para versión Pro con más mensajes)</p>
+            </div>
+
+            <div class="caja-ejemplo">
+                <h4>Ejemplo 2: Usando la API (Desarrollador)</h4>
+                <p>María creó una app que enseña inglés con IA:</p>
+                <div class="pasos">
+                    <div class="paso">Su app tiene un botón "Explicar este tema"</div>
+                    <div class="paso">Cuando alguien presiona el botón, su programa envía la pregunta a la API de Claude</div>
+                    <div class="paso">Claude responde automáticamente</div>
+                    <div class="paso">Su app muestra la respuesta al estudiante</div>
+                </div>
+                <p><strong>💰 Costo:</strong> Paga por cada pregunta (aprox $0.003 por pregunta pequeña)</p>
+                <p><strong>✨ Ventaja:</strong> Miles de estudiantes pueden usar su app al mismo tiempo, automáticamente</p>
+            </div>
+
+            <h3>🎯 ¿Cuándo Usar Cada Uno?</h3>
+
+            <table class="tabla-simple">
+                <thead>
+                    <tr>
+                        <th>Situación</th>
+                        <th>¿Qué usar?</th>
+                        <th>¿Por qué?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Aprender algo nuevo</td>
+                        <td>💬 Chat</td>
+                        <td>Es más fácil y conversacional</td>
+                    </tr>
+                    <tr>
+                        <td>Hacer una pregunta rápida</td>
+                        <td>💬 Chat</td>
+                        <td>No necesitas programar nada</td>
+                    </tr>
+                    <tr>
+                        <td>Crear una app o sitio web</td>
+                        <td>🔌 API</td>
+                        <td>Para que funcione automáticamente</td>
+                    </tr>
+                    <tr>
+                        <td>Procesar muchos documentos</td>
+                        <td>🔌 API</td>
+                        <td>Sería muy lento hacerlo manual</td>
+                    </tr>
+                    <tr>
+                        <td>Chatbot de atención al cliente</td>
+                        <td>🔌 API</td>
+                        <td>Debe responder 24/7 automáticamente</td>
+                    </tr>
+                    <tr>
+                        <td>Ayuda personal para tareas</td>
+                        <td>💬 Chat</td>
+                        <td>Es para ti solo, no necesitas automatizar</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="caja-tip">
+                <h4>💡 Para Principiantes</h4>
+                <p><strong>Empieza con el Chat:</strong> Primero aprende a usar ChatGPT, Claude o Gemini desde su página web. Cuando te sientas cómodo y quieras crear algo automático, entonces aprende a usar las APIs.</p>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 4: TOKENS -->
+        <div class="section" id="seccion-4">
+            <h2>🪙 Tokens: La "Moneda" de la IA</h2>
+
+            <div class="caja-concepto">
+                <h4>¿Qué son los Tokens?</h4>
+                <p>Los tokens son las <strong>"piezas pequeñas"</strong> en las que la IA divide el texto para procesarlo. Es lo que se cobra cuando usas APIs.</p>
+            </div>
+
+            <h3>🎨 Visualización de Tokens</h3>
+
+            <div class="diagrama">
+                <h4 style="color: var(--azul); margin-bottom: 15px;">Ejemplo: Convirtiendo texto en tokens</h4>
+                
+                <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                    <p style="margin-bottom: 10px;"><strong>Texto original:</strong></p>
+                    <p style="font-size: 1.2em;">"Hola, ¿cómo estás hoy?"</p>
+                </div>
+
+                <div style="text-align: center; font-size: 2em; color: var(--azul); margin: 20px 0;">⬇️ La IA lo divide en ⬇️</div>
+
+                <div class="token-visual">
+                    <span class="token">Hola</span>
+                    <span class="token">,</span>
+                    <span class="token">¿</span>
+                    <span class="token">cómo</span>
+                    <span class="token">estás</span>
+                    <span class="token">hoy</span>
+                    <span class="token">?</span>
+                </div>
+
+                <p style="text-align: center; font-size: 1.2em; margin-top: 20px;">
+                    <strong>Total: 7 tokens</strong> 📊
+                </p>
+            </div>
+
+            <h3>📏 Regla Aproximada</h3>
+
+            <div class="caja-ejemplo">
+                <h4>Cómo Calcular Tokens (Aproximado)</h4>
+                <div style="font-size: 1.2em; margin: 20px 0;">
+                    <div style="background: white; padding: 20px; border-radius: 10px; margin: 10px 0;">
+                        <strong>En español:</strong> 1 token ≈ 4 letras<br>
+                        Palabra "programación" (12 letras) = 3 tokens
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 10px; margin: 10px 0;">
+                        <strong>En inglés:</strong> 1 token ≈ 4 caracteres<br>
+                        Palabra "programming" (11 caracteres) = 3 tokens
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 10px; margin: 10px 0;">
+                        <strong>Regla simple:</strong> Una página de texto = 750 tokens aprox.
+                    </div>
+                </div>
+            </div>
+
+            <h3>💰 ¿Cuánto Cuesta?</h3>
+
+            <div class="diagrama">
+                <h4 style="color: var(--azul); text-align: center; margin-bottom: 20px;">Precios Aproximados (2024)</h4>
+                
+                <table class="tabla-simple">
+                    <thead>
+                        <tr>
+                            <th>Servicio</th>
+                            <th>Por 1 Millón de Tokens</th>
+                            <th>Equivale a...</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Claude (Entrada)</strong></td>
+                            <td>$3 USD</td>
+                            <td>~1,300 páginas leídas</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Claude (Salida)</strong></td>
+                            <td>$15 USD</td>
+                            <td>~1,300 páginas generadas</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ChatGPT GPT-4</strong></td>
+                            <td>$10 - $30 USD</td>
+                            <td>Según modelo usado</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gemini Pro</strong></td>
+                            <td>$0.50 - $7 USD</td>
+                            <td>Más económico</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>🧮 Ejemplos Prácticos de Costos</h3>
+
+            <div class="caja-ejemplo">
+                <h4>Caso 1: Chatbot de Atención al Cliente</h4>
+                <p><strong>Uso:</strong> Responder 1,000 consultas al día</p>
+                <p><strong>Promedio:</strong> Cada conversación = 500 tokens (pregunta + respuesta)</p>
+                <p><strong>Total diario:</strong> 500,000 tokens</p>
+                <p><strong>Costo diario:</strong> ~$7.50 USD</p>
+                <p><strong>Costo mensual:</strong> ~$225 USD</p>
+            </div>
+
+            <div class="caja-ejemplo">
+                <h4>Caso 2: Traductor Automático</h4>
+                <p><strong>Uso:</strong> Traducir 50 documentos al mes</p>
+                <p><strong>Promedio:</strong> Cada documento = 2,000 tokens</p>
+                <p><strong>Total mensual:</strong> 100,000 tokens</p>
+                <p><strong>Costo mensual:</strong> ~$1.50 USD</p>
+            </div>
+
+            <div class="caja-tip">
+                <h4>💡 Consejo para Ahorrar</h4>
+                <p>
+                    ✅ Usa prompts cortos y claros<br>
+                    ✅ No envíes contexto innecesario<br>
+                    ✅ Usa los modelos más baratos para tareas simples<br>
+                    ✅ Cachea respuestas comunes (guárdalas para reutilizar)
+                </p>
+            </div>
+
+            <h3>🆚 Chat Gratis vs API Pagada</h3>
+
+            <div class="comparacion">
+                <div class="lado">
+                    <h4>💬 Chat Gratis</h4>
+                    <ul>
+                        <li>Límite de mensajes por hora/día</li>
+                        <li>No pagas por token</li>
+                        <li>Pagas suscripción mensual (o es gratis)</li>
+                        <li>Ejemplo: $20/mes para uso ilimitado</li>
+                    </ul>
+                </div>
+                <div class="lado">
+                    <h4>🔌 API Pagada</h4>
+                    <ul>
+                        <li>Sin límite de mensajes</li>
+                        <li>Pagas por cada token usado</li>
+                        <li>Pagas solo lo que usas</li>
+                        <li>Ejemplo: $0.003 por cada consulta</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 5: HERRAMIENTAS -->
+        <div class="section" id="seccion-5">
+            <h2>🛠️ Herramientas para Programar con IA</h2>
+
+            <div class="caja-concepto">
+                <h4>¿Qué necesitas para empezar?</h4>
+                <p>Aquí están las herramientas principales que usarás para programar con ayuda de IA. ¡Todas son fáciles de usar!</p>
+            </div>
+
+            <h3>🌟 Herramientas de Chat (Para Empezar)</h3>
+
+            <div class="tarjetas">
+                <div class="tarjeta">
+                    <div class="emoji">💬</div>
+                    <h4>ChatGPT</h4>
+                    <p><strong>Web:</strong> chat.openai.com<br>
+                    <strong>Costo:</strong> Gratis / $20 mes<br>
+                    <strong>Úsalo para:</strong> Resolver dudas, aprender conceptos, generar código simple</p>
+                </div>
+
+                <div class="tarjeta">
+                    <div class="emoji">🧠</div>
+                    <h4>Claude</h4>
+                    <p><strong>Web:</strong> claude.ai<br>
+                    <strong>Costo:</strong> Gratis / $20 mes<br>
+                    <strong>Úsalo para:</strong> Análisis de código, explicaciones detalladas, proyectos complejos</p>
+                </div>
+
+                <div class="tarjeta">
+                    <div class="emoji">✨</div>
+                    <h4>Google Gemini</h4>
+                    <p><strong>Web:</strong> gemini.google.com<br>
+                    <strong>Costo:</strong> Gratis<br>
+                    <strong>Úsalo para:</strong> Buscar información, generar ideas, código básico</p>
+                </div>
+            </div>
+
+            <h3>💻 Herramientas de Programación (Siguiente Nivel)</h3>
+
+            <div class="tarjetas">
+                <div class="tarjeta">
+                    <div class="emoji">📝</div>
+                    <h4>Visual Studio Code</h4>
+                    <p><strong>Qué es:</strong> Editor de código (donde escribes programas)<br>
+                    <strong>Costo:</strong> Gratis<br>
+                    <strong>Descarga:</strong> code.visualstudio.com</p>
+                </div>
+
+                <div class="tarjeta">
+                    <div class="emoji">🤖</div>
+                    <h4>GitHub Copilot</h4>
+                    <p><strong>Qué es:</strong> IA que te ayuda mientras programas<br>
+                    <strong>Costo:</strong> $10/mes<br>
+                    <strong>Se instala en:</strong> VS Code</p>
+                </div>
+
+                <div class="tarjeta">
+                    <div class="emoji">⚡</div>
+                    <h4>Cursor</h4>
+                    <p><strong>Qué es:</strong> VS Code con IA integrada<br>
+                    <strong>Costo:</strong> Gratis / $20 mes<br>
+                    <strong>Descarga:</strong> cursor.sh</p>
+                </div>
+            </div>
+
+            <h3>📚 Cómo Empezar (Paso a Paso)</h3>
+
+            <div class="pasos">
+                <div class="paso">
+                    <strong>Crea una cuenta en Claude o ChatGPT</strong><br>
+                    Empieza usando la versión gratuita para practicar
+                </div>
+                <div class="paso">
+                    <strong>Haz preguntas sobre programación</strong><br>
+                    Ejemplo: "Explícame qué es Python y para qué sirve"
+                </div>
+                <div class="paso">
+                    <strong>Pide que te genere código simple</strong><br>
+                    Ejemplo: "Crea un programa que sume dos números"
+                </div>
+                <div class="paso">
+                    <strong>Descarga VS Code (gratis)</strong><br>
+                    Es donde vas a escribir y probar el código
+                </div>
+                <div class="paso">
+                    <strong>Copia el código que te dio la IA</strong><br>
+                    Pégalo en VS Code y pruébalo
+                </div>
+            </div>
+
+            <div class="caja-tip">
+                <h4>💡 Mi Recomendación para Principiantes</h4>
+                <p>
+                    <strong>Semana 1-2:</strong> Usa solo ChatGPT o Claude en el chat. Aprende a hacer buenas preguntas.<br>
+                    <strong>Semana 3-4:</strong> Descarga VS Code y empieza a copiar y probar código.<br>
+                    <strong>Mes 2:</strong> Cuando ya entiendas lo básico, considera usar Copilot o Cursor.
+                </p>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 6: PRIMEROS PASOS -->
+        <div class="section" id="seccion-6">
+            <h2>👨‍💻 Tus Primeros Pasos Programando con IA</h2>
+
+            <div class="caja-concepto">
+                <h4>¡Vamos a programar!</h4>
+                <p>Aquí aprenderás cómo pedirle a la IA que te ayude a crear tu primer programa, paso a paso.</p>
+            </div>
+
+            <h3>📝 El Arte de Hacer Buenas Preguntas (Prompts)</h3>
+
+            <div class="comparacion">
+                <div class="lado" style="border-color: #ef4444;">
+                    <h4>❌ Pregunta Mala</h4>
+                    <div style="background: #fee2e2; padding: 15px; border-radius: 10px; margin: 15px 0;">
+                        "Hazme un programa"
+                    </div>
+                    <p style="color: #dc2626;">Muy vaga. La IA no sabe qué quieres.</p>
+                </div>
+                <div class="lado" style="border-color: var(--verde);">
+                    <h4>✅ Pregunta Buena</h4>
+                    <div style="background: #dcfce7; padding: 15px; border-radius: 10px; margin: 15px 0;">
+                        "Crea un programa en Python que le pida al usuario su nombre y edad, y luego diga 'Hola [nombre], tienes [edad] años'"
+                    </div>
+                    <p style="color: #16a34a;">Específica, clara, con detalles.</p>
+                </div>
+            </div>
+
+            <h3>🎯 Ejemplo Práctico Completo</h3>
+
+            <div class="caja-ejemplo">
+                <h4>Proyecto: Calculadora Simple</h4>
+                <p><strong>Objetivo:</strong> Crear una calculadora que sume, reste, multiplique y divida</p>
+            </div>
+
+            <div class="pasos">
+                <div class="paso">
+                    <strong>Pregunta a la IA:</strong><br>
+                    "Crea un programa en Python que sea una calculadora. Debe pedir dos números y una operación (+, -, *, /) y mostrar el resultado"
+                </div>
+
+                <div class="paso">
+                    <strong>La IA te dará algo como esto:</strong><br>
+                    <div class="codigo-simple" style="margin-top: 10px;">
+<span class="comentario"># Calculadora simple</span>
+<span class="keyword">print</span>(<span class="string">"=== Calculadora ==="</span>)
+
+<span class="comentario"># Pedir números al usuario</span>
+num1 = <span class="keyword">float</span>(<span class="keyword">input</span>(<span class="string">"Primer número: "</span>))
+num2 = <span class="keyword">float</span>(<span class="keyword">input</span>(<span class="string">"Segundo número: "</span>))
+
+<span class="comentario"># Pedir operación</span>
+operacion = <span class="keyword">input</span>(<span class="string">"Operación (+, -, *, /): "</span>)
+
+<span class="comentario"># Calcular resultado</span>
+<span class="keyword">if</span> operacion == <span class="string">"+"</span>:
+    resultado = num1 + num2
+<span class="keyword">elif</span> operacion == <span class="string">"-"</span>:
+    resultado = num1 - num2
+<span class="keyword">elif</span> operacion == <span class="string">"*"</span>:
+    resultado = num1 * num2
+<span class="keyword">elif</span> operacion == <span class="string">"/"</span>:
+    resultado = num1 / num2
+
+<span class="comentario"># Mostrar resultado</span>
+<span class="keyword">print</span>(<span class="string">f"Resultado: {resultado}"</span>)
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <strong>Copia el código en VS Code</strong><br>
+                    Guárdalo como "calculadora.py"
+                </div>
+
+                <div class="paso">
+                    <strong>Ejecuta el programa</strong><br>
+                    Abre la terminal en VS Code y escribe: <code>python calculadora.py</code>
+                </div>
+
+                <div class="paso">
+                    <strong>Si algo no funciona:</strong><br>
+                    Vuelve a la IA y pregunta: "Me da este error: [copia el error]. ¿Cómo lo soluciono?"
+                </div>
+            </div>
+
+            <h3>🎓 Tips para Aprender Mejor</h3>
+
+            <div class="tarjetas">
+                <div class="tarjeta">
+                    <div class="emoji">🔍</div>
+                    <h4>Entiende el Código</h4>
+                    <p>No solo copies y pegues. Pide a la IA: "Explícame línea por línea qué hace este código"</p>
+                </div>
+
+                <div class="tarjeta">
+                    <div class="emoji">🔧</div>
+                    <h4>Modifica y Experimenta</h4>
+                    <p>Cambia cosas en el código. Pregunta: "¿Cómo puedo hacer que también reste números?"</p>
+                </div>
+
+                <div class="tarjeta">
+                    <div class="emoji">🐛</div>
+                    <h4>Aprende de Errores</h4>
+                    <p>Los errores son normales. La IA te ayudará a entenderlos y solucionarlos.</p>
+                </div>
+            </div>
+
+            <div class="caja-tip">
+                <h4>💡 Secreto del Éxito</h4>
+                <p>La clave no es memorizar código. La clave es aprender a <strong>hacer las preguntas correctas</strong> a la IA y <strong>entender las respuestas</strong>. Con práctica, cada vez harás mejores preguntas.</p>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 7: PRÁCTICA -->
+        <div class="section" id="seccion-7">
+            <h2>🎯 Ejercicios Prácticos</h2>
+
+            <div class="caja-concepto">
+                <h4>¡Hora de Practicar!</h4>
+                <p>Aquí tienes ejercicios para que practiques con la IA. Empieza por el más fácil y ve avanzando.</p>
+            </div>
+
+            <h3>📊 Niveles de Dificultad</h3>
+
+            <div class="tarjetas">
+                <div class="tarjeta" style="border-color: var(--verde);">
+                    <div class="emoji">🌱</div>
+                    <h4>Nivel 1: Principiante</h4>
+                    <p><strong>Duración:</strong> 10-15 minutos<br>
+                    <strong>Necesitas:</strong> Solo el chat de IA</p>
+                </div>
+
+                <div class="tarjeta" style="border-color: var(--amarillo);">
+                    <div class="emoji">🌿</div>
+                    <h4>Nivel 2: Intermedio</h4>
+                    <p><strong>Duración:</strong> 30-45 minutos<br>
+                    <strong>Necesitas:</strong> Chat + VS Code</p>
+                </div>
+
+                <div class="tarjeta" style="border-color: var(--rojo);">
+                    <div class="emoji">🌳</div>
+                    <h4>Nivel 3: Avanzado</h4>
+                    <p><strong>Duración:</strong> 1-2 horas<br>
+                    <strong>Necesitas:</strong> Todo + paciencia</p>
+                </div>
+            </div>
+
+            <h3>🌱 Ejercicios Nivel 1 (Principiante)</h3>
+
+            <div class="caja-ejemplo">
+                <h4>Ejercicio 1: Conversor de Temperatura</h4>
+                <p><strong>Tarea:</strong> Pide a la IA que cree un programa que convierta grados Celsius a Fahrenheit</p>
+                <p><strong>Prompt sugerido:</strong> "Crea un programa en Python que convierta temperatura de Celsius a Fahrenheit. Debe pedir la temperatura en Celsius y mostrar el resultado en Fahrenheit"</p>
+                <button class="boton-grande" onclick="mostrarSolucion('sol1')">👀 Ver Solución</button>
+                <div id="sol1" style="display: none; margin-top: 15px;">
+                    <div class="codigo-simple">
+celsius = <span class="keyword">float</span>(<span class="keyword">input</span>(<span class="string">"Temperatura en Celsius: "</span>))
+fahrenheit = (celsius * 9/5) + 32
+<span class="keyword">print</span>(<span class="string">f"{celsius}°C = {fahrenheit}°F"</span>)
+                    </div>
+                </div>
+            </div>
+
+            <div class="caja-ejemplo">
+                <h4>Ejercicio 2: Adivina el Número</h4>
+                <p><strong>Tarea:</strong> Programa que piense un número del 1 al 10 y tú tienes que adivinarlo</p>
+                <p><strong>Prompt sugerido:</strong> "Crea un juego en Python donde la computadora piense un número del 1 al 10, yo intente adivinarlo, y me diga si gané o perdí"</p>
+            </div>
+
+            <h3>🌿 Ejercicios Nivel 2 (Intermedio)</h3>
+
+            <div class="caja-ejemplo">
+                <h4>Ejercicio 3: Lista de Tareas</h4>
+                <p><strong>Tarea:</strong> Programa para agregar, ver y eliminar tareas</p>
+                <p><strong>Prompt sugerido:</strong> "Crea un programa de lista de tareas en Python con un menú que permita: 1) Agregar tarea, 2) Ver todas las tareas, 3) Eliminar tarea, 4) Salir"</p>
+            </div>
+
+            <div class="caja-ejemplo">
+                <h4>Ejercicio 4: Contador de Palabras</h4>
+                <p><strong>Tarea:</strong> Programa que cuente cuántas palabras tiene un texto</p>
+                <p><strong>Prompt sugerido:</strong> "Crea un programa que pida al usuario escribir un texto y luego le diga cuántas palabras, letras y oraciones tiene"</p>
+            </div>
+
+            <h3>🌳 Ejercicio Nivel 3 (Avanzado)</h3>
+
+            <div class="caja-ejemplo">
+                <h4>Ejercicio 5: Chatbot Simple con API</h4>
+                <p><strong>Tarea:</strong> Crea un chatbot que use la API de Claude o ChatGPT</p>
+                <p><strong>Pasos:</strong></p>
+                <ol style="margin-left: 20px;">
+                    <li>Consigue una API key de Claude o OpenAI</li>
+                    <li>Pide a la IA que te ayude a crear el código de conexión</li>
+                    <li>Haz que tu programa envíe mensajes a la API</li>
+                    <li>Muestra las respuestas en la consola</li>
+                </ol>
+                <p><strong>Prompt sugerido:</strong> "Muéstrame cómo crear un programa en Python que se conecte a la API de Claude, envíe una pregunta y muestre la respuesta"</p>
+            </div>
+
+            <h3>🎓 Recursos para Seguir Aprendiendo</h3>
+
+            <div class="tarjetas">
+                <div class="tarjeta">
+                    <div class="emoji">📺</div>
+                    <h4>YouTube</h4>
+                    <p>Busca "programación con IA para principiantes" - Hay miles de tutoriales gratis</p>
+                </div>
+
+                <div class="tarjeta">
+                    <div class="emoji">📚</div>
+                    <h4>Documentación</h4>
+                    <p>• docs.anthropic.com (Claude)<br>
+                    • platform.openai.com (ChatGPT)<br>
+                    • ai.google.dev (Gemini)</p>
+                </div>
+
+                <div class="tarjeta">
+                    <div class="emoji">👥</div>
+                    <h4>Comunidad</h4>
+                    <p>Únete a grupos en Discord, Reddit (r/learnprogramming) o foros locales</p>
+                </div>
+            </div>
+
+            <div class="caja-tip">
+                <h4>💡 El Mejor Consejo</h4>
+                <p>La única forma de aprender a programar es <strong>programando</strong>. Haz un ejercicio cada día, aunque sea pequeño. En un mes verás resultados increíbles.</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <h3>🎉 ¡Felicitaciones por Completar la Clase!</h3>
+            <p style="margin: 15px 0;">Ahora tienes las bases para empezar a programar con IA</p>
+            <div style="margin: 20px 0; padding: 20px; background: #f8fafc; border-radius: 10px;">
+                <strong style="color: var(--azul);">AIWIS</strong><br>
+                CEO: <strong>Armin Salazar</strong><br>
+                Transformación Digital con Inteligencia Artificial en Chile
+            </div>
+            <p style="color: var(--gris); margin-top: 15px;">
+                📧 contacto@aiwis.cl | 🌐 www.aiwis.cl
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Función para cambiar de sección
+        function irSeccion(index) {
+            const secciones = document.querySelectorAll('.section');
+            const botones = document.querySelectorAll('.nav-btn');
+            
+            secciones.forEach(s => s.classList.remove('active'));
+            botones.forEach(b => b.classList.remove('active'));
+            
+            secciones[index].classList.add('active');
+            botones[index].classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Función para toggle de términos del glosario
+        function toggleTermino(elemento) {
+            elemento.classList.toggle('abierto');
+        }
+
+        // Función para mostrar soluciones
+        function mostrarSolucion(id) {
+            const elemento = document.getElementById(id);
+            if (elemento.style.display === 'none') {
+                elemento.style.display = 'block';
+            } else {
+                elemento.style.display = 'none';
+            }
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', function(e) {
+            const secciones = document.querySelectorAll('.section');
+            let actual = Array.from(secciones).findIndex(s => s.classList.contains('active'));
+            
+            if (e.key === 'ArrowRight' && actual < secciones.length - 1) {
+                irSeccion(actual + 1);
+            } else if (e.key === 'ArrowLeft' && actual > 0) {
+                irSeccion(actual - 1);
+            }
+        });
+
+        // Mensaje de bienvenida en consola
+        console.log('🚀 Bienvenido a la Clase AIWIS - ¡A programar con IA!');
+    </script>
+</body>
+</html>

@@ -1,0 +1,4585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DÍA 3: Ingeniería de Prompts Profesional - AIWIS Consultora IA & TI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8fafc;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Menú lateral fijo */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            color: white;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 20px;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+        }
+
+        .sidebar-header {
+            padding: 20px 0;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+            margin-bottom: 30px;
+        }
+
+        .company-name {
+            font-size: 2em;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .company-tagline {
+            font-size: 0.85em;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .day-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-top: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        /* Menú de navegación */
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 0.95em;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateX(5px);
+        }
+
+        .nav-link.active {
+            background: rgba(255,255,255,0.25);
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .nav-link .icon {
+            font-size: 1.3em;
+            margin-right: 12px;
+            min-width: 25px;
+        }
+
+        /* Contenido principal */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 40px;
+            background: #f8fafc;
+        }
+
+
+        header {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            border: 3px solid #7e22ce;
+        }
+
+        h1 {
+            color: #1e3c72;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin: 15px 0;
+        }
+
+        .objetivo-principal {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 6px solid #f59e0b;
+            font-size: 1.05em;
+        }
+
+        .section {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            scroll-margin-top: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #1e3c72;
+            font-size: 2.5em;
+            margin-bottom: 25px;
+            border-bottom: 4px solid #7e22ce;
+            padding-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h3 {
+            color: #7e22ce;
+            font-size: 1.8em;
+            margin-top: 35px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h4 {
+            color: #2a5298;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        .tecnica-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 25px 0;
+            border-left: 6px solid #0284c7;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .tecnica-card h4 {
+            color: #0284c7;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .icon {
+            font-size: 2em;
+        }
+
+        .ejemplo {
+            background: #fff7ed;
+            border-left: 6px solid #f97316;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .ejemplo-bueno {
+            background: #f0fdf4;
+            border-left: 6px solid #22c55e;
+        }
+
+        .ejemplo-malo {
+            background: #fef2f2;
+            border-left: 6px solid #ef4444;
+        }
+
+        .comparativa {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .comparativa-item {
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .ejercicio {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border: 3px solid #3b82f6;
+            padding: 30px;
+            margin: 25px 0;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2);
+        }
+
+        .nivel-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            margin-right: 10px;
+        }
+
+        .nivel-principiante {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .nivel-intermedio {
+            background: #fed7aa;
+            color: #92400e;
+        }
+
+        .nivel-avanzado {
+            background: #fecaca;
+            color: #991b1b;
+        }
+
+        .nivel-experto {
+            background: #ddd6fe;
+            color: #5b21b6;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 25px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            background: #e5e7eb;
+            border-radius: 25px;
+            height: 30px;
+            margin: 15px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: width 1s ease-in-out;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-top: 4px solid #7e22ce;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #7e22ce;
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 1em;
+        }
+
+        .glosario-term {
+            background: #f8fafc;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 15px;
+            border-left: 5px solid #7e22ce;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        .term-title {
+            font-weight: bold;
+            color: #1e3c72;
+            font-size: 1.3em;
+            margin-bottom: 5px;
+        }
+
+        .term-english {
+            color: #64748b;
+            font-style: italic;
+            font-size: 0.95em;
+            margin-bottom: 10px;
+        }
+
+        .tip {
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+            border-left: 6px solid #0284c7;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .warning {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-left: 6px solid #f59e0b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 15px;
+        }
+
+        .success {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-left: 6px solid #10b981;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 15px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .dashboard-card {
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-top: 5px solid #7e22ce;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
+        .plantilla {
+            background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+            border: 3px dashed #7e22ce;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 15px;
+        }
+
+        .caso-uso {
+            background: linear-gradient(135deg, #fff1f2, #ffe4e6);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 25px 0;
+            border-left: 6px solid #e11d48;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 12px 25px;
+            background: #e2e8f0;
+            border: none;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #7e22ce, #a855f7);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .footer p {
+            margin: 10px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .visual-comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .vs-divider {
+            font-size: 3em;
+            font-weight: bold;
+            color: #7e22ce;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .nav-menu {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .nav-link {
+                font-size: 0.85em;
+                padding: 10px;
+            }
+            
+            .comparativa {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section {
+                padding: 25px;
+            }
+
+            .visual-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .vs-divider {
+                display: none;
+            }
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin: 5px 5px 5px 0;
+        }
+
+        .badge-code {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-idea {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-agent {
+            background: #e0e7ff;
+            color: #4338ca;
+        }
+
+        .badge-bank {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .interactive-demo {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 25px 0;
+            border: 3px solid #64748b;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            margin: 15px 0;
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .metric-icon {
+            font-size: 2.5em;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 30px 0;
+        }
+
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, #7e22ce, #a855f7);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 30px;
+        }
+
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -29px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #7e22ce;
+            border: 4px solid white;
+            box-shadow: 0 0 0 3px #7e22ce;
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #7e22ce, #a855f7);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(126, 34, 206, 0.4);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+        }
+
+        .scroll-top:hover {
+            transform: scale(1.1);
+        }
+
+        /* Animación de entrada para secciones */
+        .section {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Menú Lateral -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="company-name">🚀 AIWIS</div>
+                <div class="company-tagline">Consultora Especializada en IA & Tecnologías de la Información</div>
+                <div class="day-badge">📚 DÍA 3</div>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#intro" class="nav-link" onclick="scrollToSection('intro')">
+                        <span class="icon">🏁</span>
+                        <span>Introducción</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#tecnicas" class="nav-link" onclick="scrollToSection('tecnicas')">
+                        <span class="icon">🧠</span>
+                        <span>Técnicas Avanzadas</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#codigo" class="nav-link" onclick="scrollToSection('codigo')">
+                        <span class="icon">💻</span>
+                        <span>Prompts para Código</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#ideas" class="nav-link" onclick="scrollToSection('ideas')">
+                        <span class="icon">💡</span>
+                        <span>Generación de Ideas</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#gemini" class="nav-link" onclick="scrollToSection('gemini')">
+                        <span class="icon">✨</span>
+                        <span>Gemini & Gems</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#agentes" class="nav-link" onclick="scrollToSection('agentes')">
+                        <span class="icon">🤖</span>
+                        <span>Agentes & Asistentes</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#bancario" class="nav-link" onclick="scrollToSection('bancario')">
+                        <span class="icon">🏦</span>
+                        <span>Casos BCI</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#plantillas" class="nav-link" onclick="scrollToSection('plantillas')">
+                        <span class="icon">📋</span>
+                        <span>Plantillas Reutilizables</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#comparativas" class="nav-link" onclick="scrollToSection('comparativas')">
+                        <span class="icon">📊</span>
+                        <span>Gráficas & Métricas</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#glosario" class="nav-link" onclick="scrollToSection('glosario')">
+                        <span class="icon">📖</span>
+                        <span>Glosario Completo</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#ejercicios" class="nav-link" onclick="scrollToSection('ejercicios')">
+                        <span class="icon">✏️</span>
+                        <span>Ejercicios Prácticos</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Contenido Principal -->
+        <main class="main-content">
+            <!-- Header -->
+            <header>
+                <h1>Ingeniería de Prompts Profesional</h1>
+                <div class="subtitle">Dominando el Arte de la Comunicación con IA para el Desarrollo Bancario</div>
+                
+                <div class="objetivo-principal">
+                    <strong>🎯 Objetivo de la Sesión:</strong> Aprender técnicas avanzadas de prompting y aplicarlas en contextos reales de desarrollo de sistemas bancarios, automatización y consultoría tecnológica en Chile.
+                </div>
+            </header>
+
+        <!-- SECCIÓN: INTRODUCCIÓN -->
+        <div id="intro" class="section">
+            <h2>🏁 Bienvenido a la Ingeniería de Prompts Profesional</h2>
+            
+            <div class="success">
+                <strong>✅ ¿Por qué este curso es esencial para tu carrera?</strong>
+                <p>En AIWIS, trabajamos con clientes como BCI, instituciones bancarias y empresas que necesitan modernizar sistemas COBOL, implementar RPA y adoptar IA. El dominio de prompts profesionales te permite:</p>
+                <ul style="margin-left: 25px; margin-top: 10px;">
+                    <li>Generar código de calidad bancaria con estándares de seguridad</li>
+                    <li>Documentar sistemas legacy de forma automatizada</li>
+                    <li>Crear agentes inteligentes para procesos financieros</li>
+                    <li>Proponer soluciones innovadoras a clientes corporativos</li>
+                </ul>
+            </div>
+
+            <h3>📈 El Valor del Prompting en la Industria</h3>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">70%</div>
+                    <div class="stat-label">Reducción en tiempo de desarrollo</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">85%</div>
+                    <div class="stat-label">Mejora en calidad de código</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">60%</div>
+                    <div class="stat-label">Aumento en productividad</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$50K+</div>
+                    <div class="stat-label">Ahorro anual por proyecto</div>
+                </div>
+            </div>
+
+            <h3>🎓 Lo que aprenderás hoy</h3>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>1. Técnicas Avanzadas de Prompting</h4>
+                    <p>Chain-of-Thought, Few-Shot Learning, Role Prompting y más técnicas profesionales</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2. Prompting para Desarrollo</h4>
+                    <p>Generación de código, debugging, testing y documentación automatizada</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>3. Generación de Ideas e Innovación</h4>
+                    <p>Técnicas creativas para propuestas, soluciones y estrategias</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>4. Herramientas Específicas</h4>
+                    <p>Gemini Gems, agentes de automatización y asistentes IA</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>5. Casos Reales BCI</h4>
+                    <p>Aplicaciones en sistemas bancarios chilenos</p>
+                </div>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Consejo del Instructor:</strong> Este material está diseñado para ser consultado constantemente. Guárdalo como referencia y practica cada técnica en tus proyectos reales de AIWIS.
+            </div>
+        </div>
+
+        <!-- SECCIÓN: TÉCNICAS AVANZADAS -->
+        <div id="tecnicas" class="section">
+            <h2>🧠 Técnicas Avanzadas de Prompting</h2>
+
+            <div class="warning">
+                <strong>⚠️ Nivel de esta sección:</strong> Intermedio a Avanzado. Asegúrate de haber practicado los fundamentos básicos de prompting antes de continuar.
+            </div>
+
+            <!-- Chain-of-Thought -->
+            <h3>🔗 Chain-of-Thought (CoT) - Cadena de Pensamiento</h3>
+            
+            <div class="tecnica-card">
+                <h4>¿Qué es Chain-of-Thought?</h4>
+                <p>Es la técnica de pedir a la IA que muestre su razonamiento paso a paso antes de dar una respuesta final. Similar a "mostrar el trabajo" en matemáticas.</p>
+                
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <strong>📊 Impacto Medible</strong>
+                        <span class="metric-icon">🎯</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%; background: linear-gradient(90deg, #22c55e, #16a34a);">
+                            +85% Precisión
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 70%; background: linear-gradient(90deg, #3b82f6, #2563eb);">
+                            +70% Confiabilidad
+                        </div>
+                    </div>
+                </div>
+
+                <h4>🔑 Frases Clave para Activar CoT:</h4>
+                <ul style="margin-left: 25px;">
+                    <li><strong>"Piensa paso a paso"</strong> - La más efectiva</li>
+                    <li><strong>"Razona tu respuesta"</strong> - Para análisis</li>
+                    <li><strong>"Explica tu proceso de pensamiento"</strong> - Para aprendizaje</li>
+                    <li><strong>"Desglosa el problema"</strong> - Para problemas complejos</li>
+                    <li><strong>"Primero analiza, luego responde"</strong> - Para decisiones</li>
+                </ul>
+            </div>
+
+            <div class="comparativa">
+                <div class="comparativa-item ejemplo-malo">
+                    <h4>❌ Sin Chain-of-Thought</h4>
+                    <div class="code-block">
+<pre>Prompt: "Calcula el DTI de un cliente con 
+ingresos de $1.500.000 y deudas de $650.000"
+
+Respuesta: "El DTI es 43.33%"</pre>
+                    </div>
+                    <p><strong>Problema:</strong> No sabemos si el cálculo es correcto ni el razonamiento usado.</p>
+                </div>
+
+                <div class="comparativa-item ejemplo-bueno">
+                    <h4>✅ Con Chain-of-Thought</h4>
+                    <div class="code-block">
+<pre>Prompt: "Calcula el DTI de un cliente con 
+ingresos de $1.500.000 y deudas de $650.000.
+Piensa paso a paso."
+
+Respuesta: 
+"Paso 1: Identificar variables
+- Ingresos mensuales: $1.500.000
+- Deudas mensuales: $650.000
+
+Paso 2: Aplicar fórmula DTI
+DTI = (Deudas / Ingresos) × 100
+
+Paso 3: Calcular
+DTI = (650.000 / 1.500.000) × 100
+DTI = 0.4333 × 100
+DTI = 43.33%
+
+Paso 4: Interpretación
+43.33% está por encima del límite 
+recomendado de 40% para préstamos 
+hipotecarios en Chile.
+
+Resultado: DTI = 43.33% (ALTO RIESGO)"</pre>
+                    </div>
+                    <p><strong>Beneficio:</strong> Respuesta verificable, educativa y confiable.</p>
+                </div>
+            </div>
+
+            <div class="caso-uso">
+                <h4>🏦 Caso de Uso BCI: Análisis de Riesgo Crediticio</h4>
+                <div class="code-block">
+<pre>Eres un analista de riesgo de BCI. Analiza este perfil crediticio 
+paso a paso:
+
+Cliente: PYME Importadora
+- Ingresos anuales: $120.000.000
+- Deuda actual: $45.000.000
+- Historial: 2 pagos atrasados en últimos 12 meses
+- Antigüedad: 15 años
+- Solicita: Crédito $30.000.000
+
+Piensa paso a paso y da tu recomendación.</pre>
+                </div>
+            </div>
+
+            <!-- Few-Shot Learning -->
+            <h3>🎯 Few-Shot Learning - Aprendizaje con Ejemplos</h3>
+
+            <div class="tecnica-card">
+                <h4>¿Qué es Few-Shot Learning?</h4>
+                <p>Técnica de enseñar a la IA dándole 2-5 ejemplos concretos de lo que quieres, antes de pedirle que haga la tarea real.</p>
+
+                <h4>📊 Tipos de Shot Learning:</h4>
+                <table>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Ejemplos</th>
+                        <th>Cuándo Usar</th>
+                        <th>Efectividad</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Zero-Shot</strong></td>
+                        <td>0 ejemplos</td>
+                        <td>Tareas simples y conocidas</td>
+                        <td>60-70%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>One-Shot</strong></td>
+                        <td>1 ejemplo</td>
+                        <td>Formatos específicos</td>
+                        <td>70-80%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Few-Shot</strong></td>
+                        <td>2-5 ejemplos</td>
+                        <td>Patrones complejos</td>
+                        <td>85-95%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Many-Shot</strong></td>
+                        <td>10+ ejemplos</td>
+                        <td>Casos muy específicos</td>
+                        <td>95-99%</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h4>💼 Ejemplo Bancario - Clasificación de Transacciones</h4>
+
+            <div class="ejemplo-bueno">
+                <strong>Prompt Few-Shot para BCI:</strong>
+                <div class="code-block">
+<pre>Clasifica estas transacciones según tipo y riesgo.
+
+Ejemplos:
+1. "Transferencia 2.500.000 a misma cuenta hace 5 días"
+   Tipo: Transferencia Repetitiva
+   Riesgo: BAJO
+   Razón: Patrón consistente, mismo destinatario
+
+2. "Retiro cajero 3.800.000 a las 3:15 AM en región no habitual"
+   Tipo: Retiro Atípico
+   Riesgo: ALTO
+   Razón: Horario inusual, monto alto, ubicación diferente
+
+3. "Compra internacional USD 45.000 en sitio nuevo"
+   Tipo: Compra Internacional
+   Riesgo: MEDIO
+   Razón: Primera compra en ese comercio, monto significativo
+
+Ahora clasifica:
+"Transferencia 15.000.000 a cuenta nueva en Paraguay a las 11 PM"</pre>
+                </div>
+            </div>
+
+            <!-- Role Prompting -->
+            <h3>🎭 Role Prompting - Asignación de Roles</h3>
+
+            <div class="tecnica-card">
+                <h4>¿Qué es Role Prompting?</h4>
+                <p>Técnica de decirle a la IA que actúe como un profesional específico, lo que ajusta su vocabulario, perspectiva y expertise.</p>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h4>👨‍💻 Para Desarrollo</h4>
+                        <p>"Eres un arquitecto de software senior especializado en sistemas bancarios COBOL y Java"</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4>📊 Para Análisis</h4>
+                        <p>"Eres un analista de riesgos de BCI con 15 años de experiencia en evaluación crediticia"</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4>📝 Para Documentación</h4>
+                        <p>"Eres un redactor técnico especializado en documentación de sistemas financieros"</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4>🔍 Para Testing</h4>
+                        <p>"Eres un QA tester experto en pruebas de seguridad bancaria"</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparativa">
+                <div class="comparativa-item ejemplo-malo">
+                    <h4>❌ Sin Role Prompting</h4>
+                    <div class="code-block">
+<pre>Prompt: "Explica qué es un mainframe"
+
+Respuesta genérica técnica básica...</pre>
+                    </div>
+                </div>
+
+                <div class="comparativa-item ejemplo-bueno">
+                    <h4>✅ Con Role Prompting</h4>
+                    <div class="code-block">
+<pre>Prompt: "Eres un consultor de AIWIS 
+explicando a ejecutivos de BCI qué es un 
+mainframe y por qué es crítico para su 
+operación bancaria."
+
+Respuesta contextualizada para audiencia 
+ejecutiva bancaria...</pre>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🔥 Técnicas Avanzadas Adicionales</h3>
+
+            <div class="tecnica-card">
+                <h4>1️⃣ Self-Consistency (Auto-Consistencia)</h4>
+                <p>Pedir múltiples respuestas y comparar consistencia.</p>
+                <div class="code-block">
+<pre>"Dame 3 análisis independientes del mismo caso y luego 
+compara las conclusiones para identificar la más sólida"</pre>
+                </div>
+            </div>
+
+            <div class="tecnica-card">
+                <h4>2️⃣ Tree-of-Thoughts (Árbol de Pensamientos)</h4>
+                <p>Explorar múltiples caminos de razonamiento antes de decidir.</p>
+                <div class="code-block">
+<pre>"Explora 3 enfoques diferentes para este problema:
+1. Enfoque conservador
+2. Enfoque innovador
+3. Enfoque híbrido
+
+Luego evalúa pros/contras de cada uno"</pre>
+                </div>
+            </div>
+
+            <div class="tecnica-card">
+                <h4>3️⃣ Prompt Chaining (Encadenamiento)</h4>
+                <p>Dividir tareas complejas en pasos secuenciales.</p>
+                <div class="code-block">
+<pre>Paso 1: "Analiza los requisitos"
+Paso 2: "Diseña la arquitectura basada en el análisis anterior"
+Paso 3: "Genera el código basado en la arquitectura"
+Paso 4: "Crea tests basados en el código"</pre>
+                </div>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Pro Tip:</strong> Combina múltiples técnicas. Por ejemplo: Role Prompting + Chain-of-Thought + Few-Shot = Máxima efectividad.
+            </div>
+        </div>
+
+        <!-- SECCIÓN: PROMPTS PARA CÓDIGO -->
+        <div id="codigo" class="section">
+            <h2>💻 Prompts Profesionales para Generación de Código</h2>
+
+            <div class="success">
+                <strong>✅ En esta sección aprenderás:</strong>
+                <ul style="margin-left: 25px; margin-top: 10px;">
+                    <li>Generar código de calidad bancaria</li>
+                    <li>Documentar código legacy (COBOL, JCL)</li>
+                    <li>Crear tests automatizados</li>
+                    <li>Debugging asistido por IA</li>
+                    <li>Refactorización de sistemas legacy</li>
+                </ul>
+            </div>
+
+            <h3>🎯 Estructura de un Prompt Efectivo para Código</h3>
+
+            <div class="plantilla">
+                <h4>📋 Plantilla Base para Generación de Código</h4>
+                <div class="code-block">
+<pre><strong>[ROL]</strong> Eres un [tipo de desarrollador] con expertise en [tecnología]
+
+<strong>[CONTEXTO]</strong> Estoy trabajando en [proyecto/sistema] que [descripción]
+
+<strong>[TAREA]</strong> Necesito que [acción específica]
+
+<strong>[REQUISITOS]</strong>
+- Requisito 1
+- Requisito 2
+- Requisito 3
+
+<strong>[RESTRICCIONES]</strong>
+- Limitación 1
+- Limitación 2
+
+<strong>[FORMATO SALIDA]</strong>
+- Estructura esperada
+- Comentarios en español
+- Incluir manejo de errores
+
+<strong>[CALIDAD]</strong>
+- Estándares: [especificar]
+- Testing: [tipo de tests]
+- Seguridad: [consideraciones]</pre>
+                </div>
+            </div>
+
+            <h3>🏦 Ejemplos Específicos para Desarrollo Bancario</h3>
+
+            <div class="caso-uso">
+                <h4>Ejemplo 1: Validación de RUT Chileno</h4>
+                <span class="badge badge-code">Python</span>
+                <span class="badge badge-bank">Validación</span>
+                
+                <div class="code-block">
+<pre><strong>Prompt:</strong>
+Eres un desarrollador senior de AIWIS trabajando en el sistema 
+de validación de clientes para BCI.
+
+Necesito una función Python que valide RUTs chilenos con las 
+siguientes características:
+
+REQUISITOS:
+- Validar formato (XX.XXX.XXX-X)
+- Calcular y verificar dígito verificador
+- Aceptar RUT con o sin puntos y guion
+- Retornar True/False más mensaje descriptivo
+- Logging de intentos de validación
+
+SEGURIDAD:
+- Sanitizar entrada para prevenir injection
+- Límite de tasa para prevenir brute force
+- No exponer información sensible en logs
+
+CALIDAD:
+- Type hints
+- Docstrings completos
+- Tests unitarios incluidos
+- Manejo de edge cases (K como dígito verificador)
+
+FORMATO:
+- PEP 8 compliant
+- Comentarios en español
+- Incluir ejemplos de uso</pre>
+                </div>
+
+                <div class="ejemplo-bueno">
+                    <strong>Respuesta Esperada:</strong>
+                    <p>La IA generará código profesional con todos los requisitos, incluyendo manejo de errores, logging, tests y documentación completa.</p>
+                </div>
+            </div>
+
+            <div class="caso-uso">
+                <h4>Ejemplo 2: Modernización de COBOL a Python</h4>
+                <span class="badge badge-code">COBOL → Python</span>
+                <span class="badge badge-bank">Migración</span>
+                
+                <div class="code-block">
+<pre><strong>Prompt:</strong>
+Eres un experto en modernización de sistemas bancarios legacy. 
+Tu especialidad es migrar código COBOL a Python manteniendo 
+la lógica de negocio intacta.
+
+CONTEXTO:
+Estoy migrando el módulo de cálculo de intereses del sistema 
+CARDET de BCI (originalmente en COBOL/JCL).
+
+CÓDIGO COBOL ORIGINAL:
+```cobol
+IDENTIFICATION DIVISION.
+PROGRAM-ID. CALC-INT.
+DATA DIVISION.
+WORKING-STORAGE SECTION.
+01 WS-PRINCIPAL       PIC 9(10)V99.
+01 WS-TASA            PIC 9V9(4).
+01 WS-DIAS            PIC 9(4).
+01 WS-INTERES         PIC 9(10)V99.
+
+PROCEDURE DIVISION.
+    MULTIPLY WS-PRINCIPAL BY WS-TASA GIVING WS-INTERES.
+    MULTIPLY WS-INTERES BY WS-DIAS GIVING WS-INTERES.
+    DIVIDE WS-INTERES BY 36000 GIVING WS-INTERES.
+    DISPLAY "INTERES: " WS-INTERES.
+    STOP RUN.
+```
+
+TAREA:
+Convierte este código COBOL a Python moderno con:
+- Clase Calculator
+- Type hints
+- Validaciones de entrada
+- Documentación completa
+- Tests unitarios
+- Logging de operaciones
+- Manejo de decimales precisos (Decimal)
+
+ADICIONAL:
+- Mantener la misma precisión numérica
+- Documentar diferencias en cálculo si las hay
+- Incluir comparativa COBOL vs Python en comentarios</pre>
+                </div>
+            </div>
+
+            <h3>🔍 Debugging con IA</h3>
+
+            <div class="tecnica-card">
+                <h4>Estructura para Debugging Efectivo</h4>
+                <div class="code-block">
+<pre>Eres un debugger experto especializado en [lenguaje].
+
+PROBLEMA:
+[Describir el error/comportamiento inesperado]
+
+CÓDIGO:
+```
+[Pegar código relevante]
+```
+
+ERROR/TRACEBACK:
+```
+[Pegar mensaje de error completo]
+```
+
+CONTEXTO:
+- Entorno: [desarrollo/producción]
+- Versiones: [librerías/frameworks]
+- Datos de entrada: [ejemplo que falla]
+
+ANÁLISIS REQUERIDO:
+1. Identifica la causa raíz (piensa paso a paso)
+2. Explica por qué ocurre
+3. Propón 2-3 soluciones alternativas
+4. Recomienda la mejor solución con justificación
+5. Sugiere cómo prevenir este error en el futuro</pre>
+                </div>
+            </div>
+
+            <h3>📝 Documentación Automatizada</h3>
+
+            <div class="caso-uso">
+                <h4>Ejemplo: Documentar Sistema Legacy</h4>
+                <div class="code-block">
+<pre>Eres un redactor técnico especializado en documentación de 
+sistemas bancarios legacy.
+
+TAREA:
+Genera documentación completa para este programa COBOL que 
+procesa transacciones de tarjetas de crédito en BCI.
+
+CÓDIGO:
+[Pegar código COBOL/JCL]
+
+DOCUMENTACIÓN REQUERIDA:
+1. README.md:
+   - Propósito del sistema
+   - Flujo general de proceso
+   - Dependencias y prerequisitos
+
+2. Documentación Técnica:
+   - Descripción de cada sección del código
+   - Diccionario de datos (copybooks)
+   - Flujo de control detallado
+   - Parámetros de JCL explicados
+
+3. Documentación de Usuario:
+   - Cómo ejecutar el proceso
+   - Parámetros configurables
+   - Interpretación de logs y resultados
+   - Troubleshooting común
+
+4. Diagrama de Flujo:
+   - En formato Mermaid
+   - Mostrar decisiones clave
+
+FORMATO:
+- Markdown profesional
+- Diagramas donde sea útil
+- Tablas para datos estructurados
+- Ejemplos concretos
+- Referencias a estándares BCI</pre>
+                </div>
+            </div>
+
+            <h3>🧪 Generación de Tests</h3>
+
+            <div class="tecnica-card">
+                <h4>Plantilla para Generación de Tests</h4>
+                <div class="code-block">
+<pre>Eres un QA Engineer especializado en testing de sistemas bancarios.
+
+CÓDIGO A TESTEAR:
+```python
+[Pegar código]
+```
+
+GENERA SUITE DE TESTS:
+
+1. TESTS UNITARIOS (pytest):
+   - Happy path (casos normales)
+   - Edge cases (límites)
+   - Error cases (entradas inválidas)
+   - Cobertura: mínimo 90%
+
+2. TESTS DE INTEGRACIÓN:
+   - Interacción con BD
+   - APIs externas
+   - Flujo completo
+
+3. TESTS DE SEGURIDAD:
+   - Injection attacks
+   - Validación de entrada
+   - Manejo de datos sensibles
+
+4. FIXTURES Y MOCKS:
+   - Datos de prueba realistas
+   - Mocks de servicios externos
+
+REQUISITOS:
+- AAA pattern (Arrange, Act, Assert)
+- Nombres descriptivos de tests
+- Comentarios explicativos
+- Parametrized tests donde aplique
+- Assertions claras y específicas</pre>
+                </div>
+            </div>
+
+            <h3>🔄 Refactorización</h3>
+
+            <div class="caso-uso">
+                <h4>Refactorizar Código Legacy</h4>
+                <div class="code-block">
+<pre>Eres un experto en refactorización de código legacy bancario.
+
+OBJETIVO:
+Refactorizar este código siguiendo principios SOLID y clean code, 
+manteniendo la lógica de negocio exacta.
+
+CÓDIGO ACTUAL:
+```python
+[Código con code smells]
+```
+
+ANÁLISIS REQUERIDO:
+1. Identifica code smells y anti-patterns
+2. Lista problemas de mantenibilidad
+3. Propón arquitectura mejorada
+
+REFACTORIZACIÓN:
+- Aplicar principios SOLID
+- Mejorar nombres de variables/funciones
+- Extraer funciones complejas
+- Eliminar código duplicado
+- Mejorar manejo de errores
+- Agregar type hints
+
+ENTREGABLES:
+1. Código refactorizado
+2. Lista de cambios realizados
+3. Justificación de cada mejora
+4. Tests para validar equivalencia funcional
+5. Métricas de mejora (complejidad ciclomática, líneas, etc.)</pre>
+                </div>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Best Practices para Código con IA:</strong>
+                <ul style="margin-left: 25px; margin-top: 10px;">
+                    <li>Siempre especifica el contexto bancario/financiero</li>
+                    <li>Incluye requisitos de seguridad explícitos</li>
+                    <li>Pide código production-ready, no prototiposs</li>
+                    <li>Solicita tests junto con el código</li>
+                    <li>Valida manualmente el código generado antes de usar</li>
+                    <li>Itera: el primer resultado raramente es perfecto</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: IDEAS -->
+        <div id="ideas" class="section">
+            <h2>💡 Prompts para Generación de Ideas e Innovación</h2>
+
+            <div class="success">
+                <strong>✅ Aprenderás a usar IA para:</strong>
+                <ul style="margin-left: 25px; margin-top: 10px;">
+                    <li>Generar propuestas comerciales innovadoras</li>
+                    <li>Resolver problemas complejos de clientes</li>
+                    <li>Crear estrategias de modernización</li>
+                    <li>Diseñar soluciones arquitectónicas</li>
+                    <li>Proponer mejoras de procesos</li>
+                </ul>
+            </div>
+
+            <h3>🎨 Técnicas Creativas de Prompting</h3>
+
+            <div class="tecnica-card">
+                <h4>1️⃣ SCAMPER Method (Prompting Creativo)</h4>
+                <p><strong>S</strong>ustituir, <strong>C</strong>ombinar, <strong>A</strong>daptar, <strong>M</strong>odificar, <strong>P</strong>oner en otros usos, <strong>E</strong>liminar, <strong>R</strong>eorganizar</p>
+                
+                <div class="code-block">
+<pre><strong>Prompt SCAMPER para BCI:</strong>
+
+Usando el método SCAMPER, genera 20 ideas innovadoras para 
+mejorar la experiencia de solicitud de créditos hipotecarios en BCI:
+
+SUSTITUIR: ¿Qué podemos reemplazar del proceso actual?
+COMBINAR: ¿Qué podemos unir o fusionar?
+ADAPTAR: ¿Qué podemos ajustar del proceso de otros bancos?
+MODIFICAR: ¿Qué podemos cambiar en tamaño, forma o alcance?
+PONER EN OTROS USOS: ¿Qué tecnología podemos usar diferente?
+ELIMINAR: ¿Qué pasos son innecesarios?
+REORGANIZAR: ¿Cómo podemos cambiar el orden o la secuencia?
+
+Para cada idea:
+- Título descriptivo
+- Descripción (2-3 líneas)
+- Impacto esperado (Alto/Medio/Bajo)
+- Complejidad implementación (Alta/Media/Baja)
+- Tecnología necesaria</pre>
+                </div>
+            </div>
+
+            <div class="tecnica-card">
+                <h4>2️⃣ Six Thinking Hats (Seis Sombreros)</h4>
+                <p>Analizar problemas desde 6 perspectivas diferentes</p>
+                
+                <div class="code-block">
+<pre>Analiza la propuesta de implementar RPA en procesos de 
+reconciliación bancaria de BCI usando los 6 sombreros:
+
+🎩 SOMBRERO BLANCO (Datos y hechos):
+   Lista datos objetivos, estadísticas, costos reales
+
+🔴 SOMBRERO ROJO (Emociones e intuición):
+   ¿Cómo se sentirá el equipo? ¿Y los clientes?
+
+⚫ SOMBRERO NEGRO (Crítico y cauteloso):
+   Riesgos, problemas potenciales, qué puede salir mal
+
+💛 SOMBRERO AMARILLO (Optimista y positivo):
+   Beneficios, oportunidades, por qué es buena idea
+
+🟢 SOMBRERO VERDE (Creativo):
+   Soluciones alternativas, nuevas ideas
+
+🔵 SOMBRERO AZUL (Control y organización):
+   Plan de implementación, próximos pasos
+
+Dame un análisis completo con cada perspectiva.</pre>
+                </div>
+            </div>
+
+            <h3>🚀 Casos de Uso para Innovación</h3>
+
+            <div class="caso-uso">
+                <h4>Caso 1: Propuesta Comercial Nueva</h4>
+                <span class="badge badge-idea">Innovación</span>
+                <span class="badge badge-bank">BCI</span>
+                
+                <div class="code-block">
+<pre>Eres un consultor estratégico de AIWIS preparando una propuesta 
+para BCI.
+
+CONTEXTO:
+BCI quiere modernizar sus sistemas de análisis de riesgo crediticio 
+que actualmente corren en COBOL en mainframe z/OS. El proceso 
+actual toma 6-8 horas cada noche y limita la capacidad de 
+ofrecer respuestas en tiempo real.
+
+TAREA:
+Genera 5 propuestas de solución diferentes que combinen:
+- Modernización de tecnología
+- IA/Machine Learning
+- Arquitectura cloud/híbrida
+- Mantenimiento de compliance bancario chileno
+
+Para cada propuesta incluye:
+
+1. NOMBRE COMERCIAL atractivo
+2. DESCRIPCIÓN EJECUTIVA (3 líneas)
+3. ARQUITECTURA PROPUESTA:
+   - Componentes principales
+   - Stack tecnológico
+   - Integración con legacy
+4. BENEFICIOS CUANTIFICABLES:
+   - Reducción de tiempo
+   - Ahorro de costos
+   - Nuevas capacidades
+5. FASES DE IMPLEMENTACIÓN (timeline)
+6. INVERSIÓN ESTIMADA
+7. ROI ESPERADO (12, 24, 36 meses)
+8. RIESGOS Y MITIGACIÓN
+
+FORMATO:
+Presentación ejecutiva, lenguaje claro para CEOs y CTOs.</pre>
+                </div>
+            </div>
+
+            <div class="caso-uso">
+                <h4>Caso 2: Resolución Creativa de Problemas</h4>
+                <span class="badge badge-idea">Problem Solving</span>
+                
+                <div class="code-block">
+<pre>Actúa como un think tank de consultores expertos en tecnología 
+bancaria.
+
+PROBLEMA:
+BCI tiene 2.5 millones de líneas de código COBOL legacy que 
+manejan operaciones críticas. Necesitan:
+- Documentar el código (poco documentado actualmente)
+- Mantenerlo funcionando (escasez de programadores COBOL)
+- Modernizarlo gradualmente (sin disrupciones)
+- Transferir conocimiento (empleados próximos a jubilar)
+
+RESTRICCIONES:
+- Presupuesto limitado
+- No puede haber downtime
+- Compliance estricto
+- Sistemas interconectados complejos
+
+TÉCNICA:
+Usa el método de "Principios Fundamentales" (First Principles):
+1. Descompón el problema a sus elementos básicos
+2. Cuestiona cada supuesto
+3. Construye soluciones desde cero
+
+Genera:
+- 10 ideas convencionales
+- 10 ideas no convencionales
+- 3 propuestas híbridas detalladas
+- 1 "moonshot idea" (idea radical pero posible)</pre>
+                </div>
+            </div>
+
+            <h3>🎯 Frameworks para Ideación</h3>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h4>🧩 TRIZ (40 Principios)</h4>
+                    <p>Método sistemático de inventiva para resolver contradicciones técnicas</p>
+                    <div class="code-block">
+<pre>"Usando TRIZ, cómo resolver la 
+contradicción: necesitamos 
+procesar más rápido (velocidad) 
+pero mantener precisión 
+máxima (calidad)"</pre>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h4>💎 Value Proposition Canvas</h4>
+                    <p>Alinear soluciones con necesidades reales del cliente</p>
+                    <div class="code-block">
+<pre>"Analiza BCI como cliente:
+- Jobs to be done
+- Pains
+- Gains
+
+Y nuestra solución:
+- Products/Services
+- Pain relievers
+- Gain creators"</pre>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h4>🎯 Design Thinking</h4>
+                    <p>Proceso iterativo centrado en el usuario</p>
+                    <div class="code-block">
+<pre>"Aplica Design Thinking:
+1. Empatizar con usuarios BCI
+2. Definir el problema real
+3. Idear soluciones
+4. Prototipar rápido
+5. Testear e iterar"</pre>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h4>🌊 Blue Ocean Strategy</h4>
+                    <p>Crear nuevos espacios de mercado</p>
+                    <div class="code-block">
+<pre>"Identifica qué servicios de 
+modernización:
+- ELIMINAR
+- REDUCIR
+- INCREMENTAR
+- CREAR
+para diferenciarnos"</pre>
+                    </div>
+                </div>
+            </div>
+
+            <h3>✍️ Generación de Contenido Persuasivo</h3>
+
+            <div class="tecnica-card">
+                <h4>AIDA Framework para Propuestas</h4>
+                <p><strong>A</strong>tención → <strong>I</strong>nterés → <strong>D</strong>eseo → <strong>A</strong>cción</p>
+                
+                <div class="code-block">
+<pre>Escribe un email ejecutivo para CTO de BCI siguiendo AIDA:
+
+ATENCIÓN (Hook inicial):
+- Estadística impactante o pregunta provocadora
+- Línea de asunto irresistible
+
+INTERÉS (Mostrar relevancia):
+- Cómo afecta a BCI específicamente
+- Datos de la industria bancaria chilena
+
+DESEO (Beneficios y prueba):
+- Resultados de casos similares
+- ROI concreto
+- Testimonios o casos de éxito
+
+ACCIÓN (Call to action claro):
+- Qué hacer next
+- Sentido de urgencia
+- Facilitar el siguiente paso
+
+Contexto: Proponer implementación de IA para análisis de fraude
+
+Extensión: Máximo 250 palabras
+Tono: Profesional pero no rígido</pre>
+                </div>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Pro Tips para Generación de Ideas:</strong>
+                <ul style="margin-left: 25px; margin-top: 10px;">
+                    <li><strong>Cantidad antes que calidad:</strong> Pide 20+ ideas, luego filtra</li>
+                    <li><strong>Combinación de técnicas:</strong> Usa múltiples frameworks</li>
+                    <li><strong>Perspectivas diversas:</strong> Pide rol de diferentes stakeholders</li>
+                    <li><strong>Restricciones creativas:</strong> Las limitaciones fomentan creatividad</li>
+                    <li><strong>Iteración rápida:</strong> Genera, evalúa, refina</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: GEMINI & GEMS -->
+        <div id="gemini" class="section">
+            <h2>✨ Dominio de Google Gemini y Gems</h2>
+
+            <div class="success">
+                <strong>✅ Dominarás:</strong>
+                <ul style="margin-left: 25px; margin-top: 10px;">
+                    <li>Características únicas de Gemini vs otros LLMs</li>
+                    <li>Crear y usar Gems personalizados</li>
+                    <li>Integración con Google Workspace</li>
+                    <li>Multimodalidad (texto, imagen, video, audio)</li>
+                    <li>Casos de uso específicos bancarios</li>
+                </ul>
+            </div>
+
+            <h3>🔍 ¿Qué es Google Gemini?</h3>
+
+            <div class="chart-container">
+                <h4>Comparativa: Gemini vs Otros LLMs</h4>
+                <table>
+                    <tr>
+                        <th>Característica</th>
+                        <th>Gemini Pro</th>
+                        <th>Claude</th>
+                        <th>GPT-4</th>
+                        <th>Mejor Para</th>
+                    </tr>
+                    <tr>
+                        <td>Context Window</td>
+                        <td>🟢 2M tokens</td>
+                        <td>🟢 200K tokens</td>
+                        <td>🟡 128K tokens</td>
+                        <td>Gemini (análisis docs grandes)</td>
+                    </tr>
+                    <tr>
+                        <td>Multimodal</td>
+                        <td>🟢 Nativo</td>
+                        <td>🟡 Limitado</td>
+                        <td>🟢 Sí</td>
+                        <td>Gemini (video/audio)</td>
+                    </tr>
+                    <tr>
+                        <td>Google Workspace</td>
+                        <td>🟢 Integrado</td>
+                        <td>❌ No</td>
+                        <td>❌ No</td>
+                        <td>Gemini (productividad)</td>
+                    </tr>
+                    <tr>
+                        <td>Razonamiento</td>
+                        <td>🟢 Excelente</td>
+                        <td>🟢 Excelente</td>
+                        <td>🟢 Excelente</td>
+                        <td>Empate técnico</td>
+                    </tr>
+                    <tr>
+                        <td>Código</td>
+                        <td>🟢 Muy bueno</td>
+                        <td>🟢 Excelente</td>
+                        <td>🟢 Muy bueno</td>
+                        <td>Claude (código complejo)</td>
+                    </tr>
+                    <tr>
+                        <td>Español</td>
+                        <td>🟢 Nativo</td>
+                        <td>🟢 Excelente</td>
+                        <td>🟢 Muy bueno</td>
+                        <td>Gemini/Claude</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>💎 Gems: Asistentes IA Personalizados</h3>
+
+            <div class="tecnica-card">
+                <h4>¿Qué son los Gems?</h4>
+                <p>Los Gems son versiones personalizadas de Gemini que puedes crear con instrucciones específicas, comportamiento y expertise definidos. Son como tener un equipo de consultores especializados siempre disponibles.</p>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">Gems que puedes crear</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">5 min</div>
+                        <div class="stat-label">Tiempo promedio de creación</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">10X</div>
+                        <div class="stat-label">Aumento en productividad</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Disponibilidad</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🏗️ Cómo Crear Gems Efectivos</h3>
+
+            <div class="plantilla">
+                <h4>📋 Estructura de un Gem Profesional</h4>
+                <div class="code-block">
+<pre><strong>NOMBRE DEL GEM:</strong> [Nombre descriptivo y memorable]
+
+<strong>DESCRIPCIÓN BREVE:</strong>
+[1-2 líneas explicando para qué sirve]
+
+<strong>INSTRUCCIONES DETALLADAS:</strong>
+
+1. ROL Y EXPERTISE:
+   Eres un [rol específico] con [años] de experiencia en [área].
+   Tu especialidad es [especialización].
+
+2. CONTEXTO DE TRABAJO:
+   Trabajas para AIWIS, consultora chilena especializada en [áreas].
+   Tus clientes principales son [tipo de clientes].
+
+3. COMPORTAMIENTO:
+   - Tono: [profesional/casual/técnico]
+   - Formato preferido: [estructura de respuestas]
+   - Nivel de detalle: [alto/medio/conciso]
+
+4. CONOCIMIENTO ESPECÍFICO:
+   - Dominas: [tecnologías/frameworks]
+   - Conoces estándares: [regulaciones/mejores prácticas]
+   - Referencias: [documentación/fuentes]
+
+5. RESTRICCIONES:
+   - Nunca: [cosas a evitar]
+   - Siempre: [cosas a incluir]
+   - Prioriza: [valores/objetivos]
+
+6. FORMATO DE SALIDA:
+   - Estructura típica de respuestas
+   - Uso de markdown/código
+   - Ejemplos a incluir
+
+7. INTERACCIONES:
+   - Cómo hacer preguntas de clarificación
+   - Cuándo pedir más contexto
+   - Cómo iterar en soluciones</pre>
+                </div>
+            </div>
+
+            <h3>🏦 Gems Específicos para AIWIS + BCI</h3>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h4>💻 Gem: "Arquitecto COBOL-Python"</h4>
+                    <div class="code-block">
+<pre><strong>Nombre:</strong> Arquitecto COBOL-Python BCI
+
+<strong>Descripción:</strong> Experto en modernizar 
+sistemas COBOL bancarios a Python moderno
+
+<strong>Instrucciones:</strong>
+Eres un arquitecto senior con 20 años 
+migrando mainframes bancarios. 
+
+Expertise:
+- COBOL 74/85, JCL, CICS, DB2
+- Python, FastAPI, SQLAlchemy
+- Arquitecturas cloud-native
+- Compliance bancario chileno
+
+Para cada código COBOL:
+1. Analiza lógica completa
+2. Identifica patrones y antipatrones
+3. Diseña arquitectura Python equivalente
+4. Propón tests de equivalencia
+5. Documenta diferencias críticas
+
+Siempre considera:
+- Precisión decimal financiera
+- Manejo de transacciones
+- Logging y auditoría
+- Performance en volumen
+
+Formato: Código comentado + 
+arquitectura + guía migración</pre>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h4>📊 Gem: "Analista Riesgo BCI"</h4>
+                    <div class="code-block">
+<pre><strong>Nombre:</strong> Analista de Riesgo BCI
+
+<strong>Descripción:</strong> Especialista en evaluación 
+crediticia y detección de fraude
+
+<strong>Instrucciones:</strong>
+Eres analista de riesgo con certificación 
+CFE y 15 años en banca chilena.
+
+Dominas:
+- Modelos scoring crediticio
+- Detección patrones fraudulentos
+- Regulación SBIF/CMF
+- KYC y AML chileno
+
+Para cada análisis:
+1. Evalúa métricas financieras
+2. Identifica red flags
+3. Calcula scores de riesgo
+4. Fundamenta decisiones
+5. Sugiere mitigaciones
+
+Siempre incluye:
+- Análisis cuantitativo Y cualitativo
+- Referencias regulatorias
+- Nivel de confianza
+- Recomendación clara
+
+Tono: Profesional, objetivo, 
+basado en datos</pre>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h4>📝 Gem: "Documentador Técnico"</h4>
+                    <div class="code-block">
+<pre><strong>Nombre:</strong> Documentador Técnico AIWIS
+
+<strong>Descripción:</strong> Crea documentación 
+técnica profesional para sistemas bancarios
+
+<strong>Instrucciones:</strong>
+Eres redactor técnico especializado en 
+sistemas financieros complejos.
+
+Produces:
+- README.md profesionales
+- Documentación de APIs
+- Manuales de usuario
+- Guías de arquitectura
+- Diagramas técnicos
+
+Para cada documento:
+1. Audiencia identificada
+2. Estructura clara (TOC)
+3. Ejemplos concretos
+4. Diagramas cuando ayuden
+5. Referencias cruzadas
+
+Formato markdown con:
+- Headers jerárquicos
+- Code blocks con sintaxis
+- Tablas para datos estructurados
+- Diagramas Mermaid
+- Sección troubleshooting
+
+Estilo: Claro, conciso, sin ambigüedad</pre>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h4>🎯 Gem: "Consultor Comercial"</h4>
+                    <div class="code-block">
+<pre><strong>Nombre:</strong> Consultor Comercial AIWIS
+
+<strong>Descripción:</strong> Genera propuestas 
+comerciales ganadoras
+
+<strong>Instrucciones:</strong>
+Eres consultor de negocios tech B2B 
+especializado en bancos chilenos.
+
+Creas propuestas que incluyen:
+- Executive Summary impactante
+- Análisis de situación actual
+- Propuesta de solución
+- Plan de implementación
+- ROI detallado
+- Términos comerciales
+
+Para cada propuesta:
+1. Entiende pain points del cliente
+2. Posiciona valor claramente
+3. Diferencia de competencia
+4. Justifica inversión
+5. Cierra con CTA fuerte
+
+Formato:
+- PowerPoint-ready
+- Gráficos de impacto
+- Datos cuantificables
+- Testimonios/casos
+
+Tono: Ejecutivo, confiante, 
+orientado a resultados</pre>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🎬 Capacidades Multimodales de Gemini</h3>
+
+            <div class="tecnica-card">
+                <h4>Trabajar con Múltiples Tipos de Contenido</h4>
+                
+                <h4>📸 Imágenes</h4>
+                <div class="ejemplo">
+                    <strong>Caso de Uso:</strong> Análisis de diagramas de arquitectura
+                    <div class="code-block">
+<pre>[Subir imagen de diagrama de arquitectura legacy]
+
+Prompt:
+"Analiza este diagrama de arquitectura del sistema actual de BCI.
+Identifica:
+1. Componentes principales y sus relaciones
+2. Posibles cuellos de botella
+3. Puntos de riesgo de seguridad
+4. Oportunidades de modernización
+5. Propón arquitectura mejorada
+
+Genera versión en Mermaid del diagrama actual y propuesto."</pre>
+                    </div>
+                </div>
+
+                <h4>🎥 Videos</h4>
+                <div class="ejemplo">
+                    <strong>Caso de Uso:</strong> Transcripción y análisis de reuniones
+                    <div class="code-block">
+<pre>[Subir video de reunión con cliente]
+
+Prompt:
+"Analiza esta reunión con BCI. Genera:
+1. Transcripción completa en español
+2. Resumen ejecutivo (3 párrafos)
+3. Puntos de acción con responsables
+4. Preguntas pendientes del cliente
+5. Próximos pasos sugeridos
+6. Temas de preocupación identificados
+
+Formato: Documento estructurado listo para compartir."</pre>
+                    </div>
+                </div>
+
+                <h4>📄 Documentos Largos</h4>
+                <div class="ejemplo">
+                    <strong>Caso de Uso:</strong> Análisis de contratos y RFPs
+                    <div class="code-block">
+<pre>[Subir RFP de 200 páginas de BCI]
+
+Prompt:
+"Analiza este RFP completo. Extrae:
+
+REQUISITOS:
+- Técnicos (tabla categorizada)
+- Funcionales (lista priorizada)
+- No funcionales (con métricas)
+- Compliance y regulatorios
+
+EVALUACIÓN:
+- Criterios de selección con pesos
+- Timeline y milestones
+- Presupuesto y estructura de costos
+
+ANÁLISIS:
+- Qué tenemos vs qué necesitamos
+- Level of effort estimado
+- Riesgos de propuesta
+- Estrategia de respuesta recomendada
+
+ENTREGABLE:
+Documento ejecutivo de 5 páginas + tabla de requisitos"</pre>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🔌 Integración con Google Workspace</h3>
+
+            <div class="caso-uso">
+                <h4>Automatizaciones con Gemini + Workspace</h4>
+                
+                <div class="tabs" style="margin-top: 20px;">
+                    <button class="tab active" onclick="showTab('gmail-tab')">Gmail</button>
+                    <button class="tab" onclick="showTab('sheets-tab')">Sheets</button>
+                    <button class="tab" onclick="showTab('docs-tab')">Docs</button>
+                    <button class="tab" onclick="showTab('slides-tab')">Slides</button>
+                </div>
+
+                <div id="gmail-tab" class="tab-content active">
+                    <h4>📧 Gmail + Gemini</h4>
+                    <div class="code-block">
+<pre>Prompt dentro de Gmail:
+
+"Analiza los últimos 50 emails de [cliente@bci.cl]
+y genera:
+1. Timeline de interacciones
+2. Estado actual del proyecto
+3. Compromisos pendientes
+4. Sentiment analysis de la relación
+5. Próximas acciones recomendadas
+
+Formato: Informe ejecutivo para reunión."</pre>
+                    </div>
+                </div>
+
+                <div id="sheets-tab" class="tab-content">
+                    <h4>📊 Sheets + Gemini</h4>
+                    <div class="code-block">
+<pre>Prompt dentro de Sheets:
+
+"Este spreadsheet contiene datos de proyectos 
+AIWIS 2024. Genera:
+
+1. Dashboard con:
+   - Proyectos por estado
+   - Revenue por cliente
+   - Utilización del equipo
+   - Forecast Q1 2025
+
+2. Análisis:
+   - Clientes más rentables
+   - Proyectos en riesgo
+   - Oportunidades de upsell
+
+3. Recomendaciones accionables
+
+Crea tabs nuevos con visualizaciones."</pre>
+                    </div>
+                </div>
+
+                <div id="docs-tab" class="tab-content">
+                    <h4>📝 Docs + Gemini</h4>
+                    <div class="code-block">
+<pre>Prompt dentro de Docs:
+
+"Este documento es un borrador de propuesta 
+para BCI. Mejóralo:
+
+1. Revisa gramática y estilo
+2. Fortalece argumentos débiles
+3. Agrega datos que faltan
+4. Mejora estructura lógica
+5. Crea executive summary
+6. Sugiere gráficos necesarios
+
+Mantén el tono profesional y técnico."</pre>
+                    </div>
+                </div>
+
+                <div id="slides-tab" class="tab-content">
+                    <h4>📊 Slides + Gemini</h4>
+                    <div class="code-block">
+<pre>Prompt dentro de Slides:
+
+"Basado en [Doc de propuesta], crea una 
+presentación de 15 slides para CTO de BCI:
+
+Estructura:
+- Portada + Agenda
+- Situación actual (3 slides)
+- Propuesta solución (4 slides)
+- Plan implementación (3 slides)
+- ROI y beneficios (2 slides)
+- Próximos pasos + Cierre
+
+Por slide: título, bullet points clave, 
+sugerencia de visual."</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Pro Tips para Gemini:</strong>
+                <ul style="margin-left: 25px; margin-top: 10px;">
+                    <li><strong>Context window gigante:</strong> Aprovecha 2M tokens para análisis masivos</li>
+                    <li><strong>Multimodal nativo:</strong> Combina texto + imagen + video en un solo prompt</li>
+                    <li><strong>Gems especializados:</strong> Crea un Gem por rol/proyecto frecuente</li>
+                    <li><strong>Workspace integration:</strong> Trabaja directamente en tus herramientas</li>
+                    <li><strong>Español nativo:</strong> No necesitas traducir, piensa en español</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: AGENTES Y ASISTENTES -->
+        <div id="agentes" class="section">
+            <h2>🤖 Prompting para Agentes de Automatización y Asistentes IA</h2>
+
+            <div class="success">
+                <strong>✅ Dominarás:</strong>
+                <ul style="margin-left: 25px; margin-top: 10px;">
+                    <li>Diferencia entre IA tradicional, agentes y asistentes</li>
+                    <li>Diseñar prompts para RPA con IA</li>
+                    <li>Crear agentes autónomos para tareas complejas</li>
+                    <li>Implementar asistentes conversacionales</li>
+                    <li>Casos de uso en automatización bancaria</li>
+                </ul>
+            </div>
+
+            <h3>🧩 Taxonomía: IA vs Agentes vs Asistentes</h3>
+
+            <div class="chart-container">
+                <table>
+                    <tr>
+                        <th>Característica</th>
+                        <th>IA Tradicional</th>
+                        <th>Agente IA</th>
+                        <th>Asistente IA</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Autonomía</strong></td>
+                        <td>❌ Ninguna</td>
+                        <td>🟢 Alta</td>
+                        <td>🟡 Media</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Toma decisiones</strong></td>
+                        <td>❌ No</td>
+                        <td>🟢 Sí</td>
+                        <td>🟡 Limitada</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Usa herramientas</strong></td>
+                        <td>❌ No</td>
+                        <td>🟢 Sí, múltiples</td>
+                        <td>🟢 Sí, definidas</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Multitarea</strong></td>
+                        <td>❌ Una tarea</td>
+                        <td>🟢 Workflow completo</td>
+                        <td>🟡 Secuencia</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Aprende del contexto</strong></td>
+                        <td>❌ No</td>
+                        <td>🟢 Sí</td>
+                        <td>🟢 Sí</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Interacción humana</strong></td>
+                        <td>🟡 Consulta única</td>
+                        <td>🟡 Validación</td>
+                        <td>🟢 Conversación</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ejemplo</strong></td>
+                        <td>ChatGPT simple</td>
+                        <td>AutoGPT, BabyAGI</td>
+                        <td>Claude Projects</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>🎯 Prompting para Agentes Autónomos</h3>
+
+            <div class="tecnica-card">
+                <h4>Estructura de Prompt para Agente</h4>
+                <p>Los agentes necesitan prompts que definan objetivos, herramientas, límites y criterios de éxito.</p>
+                
+                <div class="code-block">
+<pre><strong>PLANTILLA PARA AGENTE AUTÓNOMO:</strong>
+
+=== DEFINICIÓN DEL AGENTE ===
+NOMBRE: [Nombre descriptivo del agente]
+PROPÓSITO: [Objetivo de alto nivel]
+ALCANCE: [Qué está dentro/fuera de su responsabilidad]
+
+=== OBJETIVO PRINCIPAL ===
+[Objetivo específico, medible, con criterio de éxito claro]
+
+Criterios de éxito:
+- Métrica 1: [valor objetivo]
+- Métrica 2: [valor objetivo]
+- Métrica 3: [valor objetivo]
+
+=== HERRAMIENTAS DISPONIBLES ===
+1. [Herramienta 1]: [Para qué usarla]
+2. [Herramienta 2]: [Para qué usarla]
+3. [Herramienta 3]: [Para qué usarla]
+
+=== PROCESO DE DECISIÓN ===
+Paso 1: [Analizar...]
+Paso 2: [Decidir...]
+Paso 3: [Ejecutar...]
+Paso 4: [Validar...]
+Paso 5: [Iterar o completar]
+
+=== RESTRICCIONES Y LÍMITES ===
+NUNCA:
+- [Acción prohibida 1]
+- [Acción prohibida 2]
+
+SIEMPRE:
+- [Acción obligatoria 1]
+- [Acción obligatoria 2]
+
+PEDIR CONFIRMACIÓN HUMANA SI:
+- [Condición que requiere aprobación 1]
+- [Condición que requiere aprobación 2]
+
+=== MANEJO DE ERRORES ===
+Si [tipo de error]:
+  Entonces: [estrategia de recuperación]
+
+Si [situación ambigua]:
+  Entonces: [cómo pedir clarificación]
+
+=== LOGGING Y REPORTE ===
+Por cada acción ejecutada, registra:
+- Timestamp
+- Herramienta usada
+- Input dado
+- Output recibido
+- Decisión tomada
+- Resultado obtenido
+
+Al finalizar, genera:
+[Formato de reporte final]</pre>
+                </div>
+            </div>
+
+            <h3>🏦 Casos de Uso: Agentes para BCI</h3>
+
+            <div class="caso-uso">
+                <h4>Agente 1: Conciliación Bancaria Automatizada</h4>
+                <span class="badge badge-agent">Agente Autónomo</span>
+                <span class="badge badge-bank">BCI</span>
+                
+                <div class="code-block">
+<pre>=== DEFINICIÓN DEL AGENTE ===
+NOMBRE: AgenteConciliadorBCI
+PROPÓSITO: Automatizar conciliación diaria de transacciones entre 
+           sistemas core y sistemas auxiliares
+ALCANCE: Transacciones del día, cuentas corrientes y vista
+
+=== OBJETIVO PRINCIPAL ===
+Conciliar 100% de transacciones del día con menos de 0.01% 
+de discrepancias sin resolver.
+
+Criterios de éxito:
+- Exactitud: 99.99% de transacciones correctamente conciliadas
+- Velocidad: Proceso completo en menos de 30 minutos
+- Discrepancias: <10 transacciones requiriendo revisión humana
+- Documentación: 100% de excepciones documentadas
+
+=== HERRAMIENTAS DISPONIBLES ===
+1. API_Sistema_Core: Consultar transacciones del mainframe
+2. API_Swift: Obtener transacciones internacionales
+3. Database_Query: Consultar bases de datos auxiliares
+4. Excel_Generator: Generar reportes de excepciones
+5. Email_Service: Notificar al equipo de discrepancias
+6. Slack_Bot: Updates en tiempo real del proceso
+
+=== PROCESO DE DECISIÓN ===
+
+Paso 1: EXTRACCIÓN
+- Obtener transacciones del día de ambos sistemas
+- Timestamp inicio: [registrar]
+- Cantidad total transacciones: [contar]
+
+Paso 2: NORMALIZACIÓN
+- Estandarizar formatos de fecha/hora
+- Unificar códigos de moneda
+- Normalizar referencias de transacción
+
+Paso 3: MATCHING
+- Aplicar algoritmo de matching por:
+  1. Monto exacto + fecha + tipo
+  2. Monto ±0.01 + fecha + tipo (redondeos)
+  3. Fuzzy match en referencia (errores tipográficos)
+
+Paso 4: CLASIFICACIÓN DISCREPANCIAS
+- Categorizar no-matches:
+  * Timing differences (T+0 vs T+1)
+  * Errores de registro
+  * Transacciones duplicadas
+  * Transacciones faltantes
+  * Diferencias de formato
+
+Paso 5: RESOLUCIÓN AUTOMÁTICA
+- Aplicar reglas de negocio predefinidas
+- Intentar match con transacciones días anteriores
+- Consultar tablas de corrección conocidas
+
+Paso 6: ESCALACIÓN
+- Generar reporte de excepciones
+- Priorizar por impacto (monto alto = prioridad alta)
+- Asignar a analista según categoría
+
+Paso 7: DOCUMENTACIÓN
+- Generar reporte ejecutivo
+- Actualizar dashboard en tiempo real
+- Archivar logs completos
+
+=== RESTRICCIONES Y LÍMITES ===
+
+NUNCA:
+- Modificar datos en sistema core sin aprobación
+- Conciliar montos >$10.000.000 sin validación humana
+- Enviar reportes fuera del equipo autorizado
+- Ejecutar fuera del horario 00:00-06:00 AM
+
+SIEMPRE:
+- Validar checksums antes de procesar
+- Encriptar datos sensibles en tránsito
+- Mantener audit trail completo
+- Respetar límites de rate API (100 req/min)
+
+PEDIR CONFIRMACIÓN HUMANA SI:
+- Discrepancia total >$50.000.000
+- Más de 100 transacciones sin match
+- Detección de posible fraude
+- Sistema fuente no responde
+
+=== MANEJO DE ERRORES ===
+
+Si API timeout:
+  Entonces: Reintentar 3 veces con backoff exponencial (1s, 2s, 4s)
+  Si falla: Notificar urgente + switch a modo manual
+
+Si datos inconsistentes:
+  Entonces: Marcar como sospechoso + escalar + no procesar
+
+Si volumen anormal (>150% promedio):
+  Entonces: Validar con fuente + notificar previo a procesar
+
+=== LOGGING Y REPORTE ===
+
+Por cada ejecución registrar:
+- Hora inicio/fin
+- Transacciones procesadas: [número]
+- Matches automáticos: [número] ([%])
+- Discrepancias resueltas: [número]
+- Discrepancias escaladas: [número]
+- Errores encontrados: [descripción]
+- Tiempo de procesamiento: [minutos]
+
+Reporte final formato:
+```
+CONCILIACIÓN DIARIA BCI - [FECHA]
+========================================
+RESUMEN:
+- Total transacciones: [N]
+- Conciliadas: [N] (XX%)
+- Discrepancias: [N] (XX%)
+- Escaladas: [N]
+
+MÉTRICAS:
+- Exactitud: XX%
+- Tiempo: XX min
+- Status: [OK | ATENCIÓN | CRÍTICO]
+
+DETALLES:
+[Lista de discrepancias con prioridad]
+
+PRÓXIMAS ACCIONES:
+[Recomendaciones automáticas]
+```</pre>
+                </div>
+            </div>
+
+            <div class="caso-uso">
+                <h4>Agente 2: Monitor de Fraude en Tiempo Real</h4>
+                <span class="badge badge-agent">Agente Reactivo</span>
+                <span class="badge badge-bank">Seguridad</span>
+                
+                <div class="code-block">
+<pre>=== DEFINICIÓN DEL AGENTE ===
+NOMBRE: AgenteAntiFraude
+PROPÓSITO: Detectar y responder a actividad fraudulenta en tiempo real
+ALCANCE: Transacciones tarjetas crédito/débito, transferencias
+
+=== OBJETIVO PRINCIPAL ===
+Detectar fraude con 95% de precisión (recall) y menos de 
+1% falsos positivos.
+
+=== HERRAMIENTAS ===
+1. Stream_Processor: Monitor transacciones en tiempo real
+2. ML_Model: Modelo de scoring de fraude
+3. Customer_Profile_API: Historial y patrones del cliente
+4. Geo_Location_Service: Validar ubicación
+5. Block_Transaction_API: Bloquear transacción sospechosa
+6. SMS_Service: Alertar cliente
+7. Case_Management: Crear caso para investigación
+
+=== PROCESO DE DECISIÓN ===
+
+Paso 1: MONITOREO CONTINUO
+- Stream de transacciones en tiempo real
+- Buffer de 100ms para análisis
+
+Paso 2: SCORING INMEDIATO
+- Ejecutar modelo ML
+- Score 0-100 (100 = muy sospechoso)
+
+Paso 3: ANÁLISIS CONTEXTUAL
+Si score ≥ 70:
+  - Consultar perfil cliente
+  - Comparar con patrones históricos
+  - Validar ubicación vs patrón
+  - Verificar velocidad (múltiples tx rápidas)
+
+Paso 4: DECISIÓN AUTOMATIZADA
+Si score ≥ 90:
+  ACCIÓN: Bloquear transacción inmediatamente
+  NOTIFICAR: Cliente + equipo de fraude
+  CREAR: Caso de investigación ALTA prioridad
+
+Si score 70-89:
+  ACCIÓN: Permitir pero flagear
+  NOTIFICAR: Equipo de fraude para revisión
+  SOLICITAR: Verificación adicional cliente
+
+Si score < 70:
+  ACCIÓN: Permitir
+  LOGGING: Transacción para análisis posterior
+
+=== RESTRICCIONES ===
+
+NUNCA:
+- Bloquear sin score ≥90 o confirming red flags
+- Compartir detalles específicos con cliente por SMS
+- Tomar más de 200ms en decisión (SLA)
+
+SIEMPRE:
+- Registrar decisión con justificación
+- Preservar evidencia digital
+- Respetar privacidad del cliente
+- Seguir protocolos CMF
+
+ESCALAR HUMANO SI:
+- Cliente VIP o cuenta corporativa
+- Monto >$5.000.000
+- Patrón de fraude sofisticado
+- Múltiples alertas simultáneas (posible ataque)
+
+=== REPORTE CONTINUO ===
+Dashboard en tiempo real:
+- Alertas última hora: [N]
+- Transacciones bloqueadas: [N]
+- Falsos positivos detectados: [N]
+- Casos creados: [N]
+- Tiempo promedio decisión: [ms]</pre>
+                </div>
+            </div>
+
+            <h3>💬 Prompting para Asistentes Conversacionales</h3>
+
+            <div class="tecnica-card">
+                <h4>Diseño de Asistente IA para BCI</h4>
+                
+                <div class="code-block">
+<pre>=== ASISTENTE: BCI Banking Assistant ===
+
+PERSONALIDAD:
+- Profesional pero amigable
+- Paciente y empático
+- Proactivo en ofrecer ayuda
+- Claro y conciso
+
+CAPACIDADES:
+1. Consultas de cuenta:
+   - Saldo actual
+   - Movimientos recientes
+   - Créditos disponibles
+
+2. Transacciones:
+   - Transferencias (con límites)
+   - Pago de servicios
+   - Pago tarjetas de crédito
+
+3. Soporte:
+   - FAQs
+   - Ubicación sucursales
+   - Atención ejecutivo (escalación)
+
+4. Productos:
+   - Información productos BCI
+   - Simulaciones préstamos/créditos
+   - Cotización seguros
+
+FLUJO CONVERSACIONAL:
+
+1. SALUDO:
+"¡Hola! Soy tu asistente BCI. ¿En qué puedo ayudarte hoy?"
+
+2. ENTENDER INTENCIÓN:
+- Clasificar consulta: [transacción|consulta|soporte|producto]
+- Si ambiguo: Hacer pregunta clarificadora
+- Si múltiple: "Entiendo que necesitas X y Y. Comencemos con X"
+
+3. VALIDACIÓN (si aplica):
+- Solicitar autenticación adicional
+- Validar límites y restricciones
+- Confirmar detalles antes de ejecutar
+
+4. EJECUCIÓN:
+- Realizar acción
+- Confirmar resultado
+- Proveer número de referencia
+
+5. CIERRE:
+"¿Hay algo más en lo que pueda ayudarte?"
+
+TONOS POR CONTEXTO:
+
+Consulta saldo:
+  Casual: "Tu saldo disponible es $1.234.567"
+
+Transacción rechazada:
+  Empático: "Entiendo que esto es inconveniente. La transacción 
+  no pudo procesarse porque [razón]. Puedo ayudarte a [alternativa]"
+
+Posible fraude:
+  Urgente pero calmado: "Detectamos actividad inusual. Por tu 
+  seguridad, necesito que confirmes..."
+
+Escalación humano:
+  Transparente: "Para esto necesito conectarte con un ejecutivo 
+  especializado. Te transferiré en un momento."
+
+MANEJO DE CASOS:
+
+Si cliente frustrado:
+  - Reconocer frustración
+  - Ofrecer solución inmediata
+  - Escalar si persiste
+
+Si consulta fuera de alcance:
+  - Ser honesto sobre limitaciones
+  - Ofrecer alternativas
+  - Transferir a humano si necesario
+
+Si información ambigua:
+  - Hacer preguntas específicas
+  - Dar ejemplos de lo que se necesita
+  - Nunca asumir
+
+EJEMPLOS DE INTERACCIONES:
+
+Cliente: "quiero transferir"
+Asistente: "¡Perfecto! Para hacer la transferencia necesito:
+- Monto a transferir
+- Banco destino
+- RUT beneficiario
+- Número de cuenta
+
+¿Tienes toda esta información a mano?"
+
+Cliente: "me robaron la tarjeta"
+Asistente: "Entiendo tu preocupación. Por tu seguridad, bloquearé 
+tu tarjeta INMEDIATAMENTE. ¿Puedes confirmar los últimos 4 dígitos 
+de la tarjeta para verificar?"
+
+[Cliente confirma]
+
+Asistente: "Tarjeta bloqueada exitosamente. Ahora:
+1. Revisa últimos movimientos en la app
+2. Reporta cualquier compra no reconocida
+3. Solicita nueva tarjeta (llega en 3-5 días hábiles)
+4. ¿Quieres que te ayude con alguno de estos pasos?"</pre>
+                </div>
+            </div>
+
+            <h3>🔧 Integración RPA + IA</h3>
+
+            <div class="caso-uso">
+                <h4>Caso: RPA con Decisiones Inteligentes</h4>
+                <span class="badge badge-agent">RPA + IA</span>
+                
+                <div class="code-block">
+<pre>PROCESO: Apertura de Cuentas Bancarias BCI
+
+=== FLUJO HÍBRIDO RPA + IA ===
+
+1. RPA: CAPTURA DATOS
+   - Escanear documento identidad (OCR)
+   - Extraer datos de formulario digital
+   - Consultar APIs de validación externa
+
+2. IA: VALIDACIÓN INTELIGENTE
+   Prompt para agente IA:
+   "Valida estos datos de solicitud de cuenta:
+   
+   [Datos del cliente]
+   
+   Verifica:
+   - Consistencia entre documentos
+   - Red flags en historial crediticio
+   - Cumplimiento requisitos mínimos
+   - Detección posible identidad falsa
+   
+   Responde en JSON:
+   {
+     'valido': true/false,
+     'score_confianza': 0-100,
+     'issues': ['lista de problemas'],
+     'recomendacion': 'aprobar'|'revisar'|'rechazar',
+     'justificacion': 'texto explicativo'
+   }"
+
+3. RPA: DECISIÓN BASADA EN IA
+   IF IA_response['valido'] AND score ≥ 85:
+       Apertura automática
+   ELIF score 60-84:
+       Enviar a cola revisión humana
+   ELSE:
+       Rechazar con explicación
+
+4. IA: GENERACIÓN COMUNICACIÓN
+   Prompt:
+   "Genera email personalizado para cliente con decisión:
+   [Aprobar|Revisar|Rechazar]
+   
+   Tono profesional, explicar próximos pasos, incluir 
+   info de contacto si tienen dudas."
+
+5. RPA: ENVÍO Y ACTUALIZACIÓN
+   - Enviar email
+   - Actualizar CRM
+   - Registrar en audit log
+   - Notificar ejecutivo asignado</pre>
+                </div>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Mejores Prácticas - Agentes y Asistentes:</strong>
+                <ul style="margin-left: 25px; margin-top: 10px;">
+                    <li><strong>Límites claros:</strong> Define qué puede y no puede hacer</li>
+                    <li><strong>Human-in-the-loop:</strong> Siempre en decisiones críticas</li>
+                    <li><strong>Auditoría completa:</strong> Registra cada decisión y acción</li>
+                    <li><strong>Manejo de errores:</strong> Plan B, C y D para cada fallo</li>
+                    <li><strong>Testing exhaustivo:</strong> Simula edge cases antes de producción</li>
+                    <li><strong>Monitoreo continuo:</strong> Dashboard en tiempo real de performance</li>
+                    <li><strong>Iteración:</strong> Mejora continua basada en datos reales</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: CASOS BANCARIOS BCI (continuación) -->
+        <div id="bancario" class="section">
+            <h2>🏦 Casos de Uso Reales: Desarrollo de Sistemas Bancarios para BCI</h2>
+
+            <div class="success">
+                <strong>✅ Casos reales de AIWIS para BCI:</strong>
+                <ul style="margin-left: 25px; margin-top: 10px;">
+                    <li>Modernización de sistemas COBOL legacy</li>
+                    <li>Análisis de cartera deteriorada (CARDET)</li>
+                    <li>Automatización de procesos de crédito</li>
+                    <li>Detección de fraude con IA</li>
+                    <li>Chatbots y asistentes virtuales</li>
+                </ul>
+            </div>
+
+            <h3>📋 Caso 1: Sistema CARDET - Análisis de Cartera Deteriorada</h3>
+
+            <div class="caso-uso">
+                <h4>Contexto del Proyecto</h4>
+                <p><strong>Cliente:</strong> BCI<br>
+                <strong>Sistema:</strong> CARDET (mainframe COBOL + JCL + DB2)<br>
+                <strong>Objetivo:</strong> Modernizar análisis de cartera deteriorada y generar reportes automáticos para SBIF/CMF</p>
+
+                <h4>Desafío:</h4>
+                <ul style="margin-left: 25px;">
+                    <li>3.500 líneas de COBOL legacy mal documentado</li>
+                    <li>Lógica de negocio compleja para clasificación de riesgo</li>
+                    <li>Reportes manuales que toman 4 horas diarias</li>
+                    <li>Errores humanos en cálculo de provisiones</li>
+                </ul>
+
+                <h4>Solución con IA:</h4>
+                <div class="code-block">
+<pre><strong>Fase 1: Documentación Automática del Código Legacy</strong>
+
+Prompt para Claude/Gemini:
+"Eres un arquitecto de mainframes bancarios experto en COBOL y 
+sistemas financieros chilenos.
+
+TAREA:
+Analiza este programa COBOL del sistema CARDET de BCI y genera 
+documentación completa.
+
+CÓDIGO:
+```cobol
+[Pegar los 3.500 líneas de COBOL]
+```
+
+DOCUMENTACIÓN REQUERIDA:
+
+1. RESUMEN EJECUTIVO:
+   - Propósito del programa
+   - Inputs y outputs
+   - Sistemas que interactúa
+   - Criticidad para el negocio
+
+2. ANÁLISIS TÉCNICO:
+   - Estructura del programa (secciones)
+   - Copybooks utilizados
+   - Archivos procesados
+   - Tablas DB2 accedidas
+   - Stored procedures llamados
+
+3. LÓGICA DE NEGOCIO:
+   - Reglas de clasificación de cartera
+   - Cálculo de provisiones
+   - Criterios de deterioro
+   - Escalas de riesgo aplicadas
+
+4. FLUJO DE PROCESO:
+   - Diagrama de flujo en Mermaid
+   - Decisiones clave
+   - Loops y condiciones
+   - Manejo de errores
+
+5. DICCIONARIO DE DATOS:
+   - Tabla con cada variable
+   - Tipo de dato
+   - Propósito
+   - Rango de valores válidos
+
+6. DEPENDENCIAS:
+   - Jobs JCL que lo ejecutan
+   - Programas que lo llaman
+   - Programas que llama
+   - Datasets de entrada/salida
+
+7. RIESGOS IDENTIFICADOS:
+   - Code smells
+   - Hardcoded values
+   - Falta de validaciones
+   - Posibles bugs
+
+8. RECOMENDACIONES:
+   - Mejoras prioritarias
+   - Estrategia de modernización
+   - Testing necesario
+
+FORMATO: Markdown profesional con tablas y diagramas."</pre>
+                </div>
+
+                <div class="ejemplo-bueno">
+                    <strong>Resultado:</strong> Documentación completa en 30 minutos vs 3 semanas de trabajo manual. Base sólida para la modernización.
+                </div>
+
+                <div class="code-block">
+<pre><strong>Fase 2: Migración a Python Moderno</strong>
+
+Prompt:
+"Basándote en la documentación anterior, diseña una arquitectura 
+moderna en Python para reemplazar CARDET.
+
+REQUISITOS:
+- Microservicios (no monolito)
+- API REST para consultas en tiempo real
+- Procesamiento batch nocturno (mantener ventana)
+- Mismo nivel de precisión que COBOL (100%)
+- Auditoría completa de operaciones
+- Escalabilidad horizontal
+- Despliegue en cloud híbrido
+
+ARQUITECTURA:
+1. Diseña diagrama de componentes
+2. Define APIs y contratos
+3. Especifica bases de datos
+4. Propón stack tecnológico
+5. Diseña flujo de datos
+6. Define estrategia de testing
+7. Plan de rollout gradual
+
+ENTREGABLES:
+- Documento de arquitectura (20 páginas)
+- Diagramas C4 (Context, Container, Component)
+- ADRs (Architecture Decision Records)
+- Estimación de esfuerzo y timeline
+- Análisis de riesgos
+
+CONTEXTO IMPORTANTE:
+- Sistema crítico 24/7
+- Regulación CMF chilena
+- Coexistencia con mainframe durante migración"</pre>
+                </div>
+
+                <div class="code-block">
+<pre><strong>Fase 3: Generación de Código de Producción</strong>
+
+Prompt para cada componente:
+"Genera código Python production-ready para el componente de 
+'Clasificación de Riesgo' del nuevo CARDET.
+
+ESPECIFICACIÓN:
+[Incluir spec detallada del componente]
+
+REQUISITOS DE CÓDIGO:
+- Type hints completos
+- Docstrings Google style
+- Logging estructurado (JSON)
+- Manejo de excepciones robusto
+- Validación de entrada con Pydantic
+- Tests unitarios (>90% coverage)
+- Tests de integración
+- Performance: procesar 100K registros en <5min
+- Precisión decimal financiera (usar Decimal)
+
+ESTÁNDARES BCI:
+- PEP 8 compliance
+- Seguridad: no logs de datos sensibles
+- Auditoría: trace ID en cada operación
+- Error handling: never fail silently
+- Monitoring: métricas Prometheus
+
+INCLUIR:
+1. Código principal
+2. Tests (pytest)
+3. Fixtures de datos realistas
+4. Documentación de API
+5. Ejemplos de uso
+
+VALIDACIÓN:
+Incluir casos de prueba que comparen resultado con COBOL 
+para validar equivalencia funcional."</pre>
+                </div>
+            </div>
+
+            <h3>💳 Caso 2: Motor de Aprobación de Créditos con IA</h3>
+
+            <div class="caso-uso">
+                <h4>Prompt para Diseño de Sistema</h4>
+                <div class="code-block">
+<pre>Diseña un motor de decisión de créditos para BCI que combine 
+reglas de negocio tradicionales con ML.
+
+CONTEXTO:
+- BCI procesa 5.000 solicitudes crédito/día
+- Tiempo actual: 24-48 horas decisión
+- Objetivo: decisión instantánea (90% casos)
+- Mantener tasa morosidad <2%
+
+SISTEMA HÍBRIDO:
+
+1. REGLAS DURAS (No negociables):
+   - Edad: 18-75 años
+   - Ingreso mínimo: $400.000
+   - Sin DICOM vigente >$500.000
+   - No protestos últimos 24 meses
+
+2. MODELO ML (Scoring 0-1000):
+   Features:
+   - Demográficos: edad, profesión, zona
+   - Financieros: ingresos, deudas, DTI
+   - Comportamiento: historial BCI, otros bancos
+   - Social: estabilidad laboral, residencial
+   - Transaccional: patrones de gasto/ahorro
+
+3. DECISIÓN FINAL:
+   IF reglas_duras_rechaza: RECHAZO AUTOMÁTICO
+   ELIF ml_score > 750: APROBACIÓN AUTOMÁTICA
+   ELIF ml_score 500-750: REVISIÓN ANALISTA
+   ELSE: RECHAZO CON EXPLICACIÓN
+
+PROMPT PARA EXPLICACIONES:
+"Genera explicación personalizada para cliente sobre decisión 
+de crédito, cumpliendo con:
+
+- Transparencia: razones claras y entendibles
+- Ley 21.521 Chile (explicabilidad de decisiones automatizadas)
+- Constructivo: si rechaza, dar pasos para mejorar
+- Empático: tono profesional pero humano
+
+Datos:
+- Decisión: [aprobar|rechazar|revisar]
+- Score ML: [número]
+- Factores principales: [lista]
+
+Genera:
+1. Email para cliente
+2. Argumentos para ejecutivo (si revisión manual)
+3. Registro auditoría para regulador"</pre>
+                </div>
+            </div>
+
+            <h3>🔐 Caso 3: Sistema Anti-Fraude Inteligente</h3>
+
+            <div class="caso-uso">
+                <h4>Arquitectura de Detección de Fraude</h4>
+                <div class="code-block">
+<pre>Diseña sistema de detección de fraude multicapa para BCI.
+
+CAPAS DE DETECCIÓN:
+
+1. VALIDACIÓN BÁSICA (Tiempo real, <100ms):
+   - Saldo disponible
+   - Límites por tipo de transacción
+   - Horarios permitidos
+   - Países bloqueados
+
+2. REGLAS HEURÍSTICAS (Tiempo real, <200ms):
+   Prompt para generar reglas:
+   "Lista 50 reglas de detección de fraude para transacciones 
+   bancarias en Chile. Para cada regla:
+   - Nombre
+   - Condición lógica
+   - Score de sospecha (1-100)
+   - Acción (permitir/bloquear/alertar)
+   - Tasa de falsos positivos esperada"
+
+3. MODELO ML (Tiempo real, <300ms):
+   Anomaly detection + clasificación binaria
+   Features: velocidad, ubicación, monto, dispositivo, comportamiento
+
+4. ANÁLISIS CONTEXTUAL (Tiempo real, <500ms):
+   Prompt para agente IA:
+   "Analiza esta transacción en contexto:
+   
+   TRANSACCIÓN:
+   - Monto: $[X]
+   - Ubicación: [Y]
+   - Hora: [Z]
+   - Tipo: [T]
+   
+   PERFIL CLIENTE:
+   - Historial 90 días: [...]
+   - Patrones normales: [...]
+   - Riesgos previos: [...]
+   
+   CONTEXTO ADICIONAL:
+   - Actividad reciente cuenta
+   - Cambios en perfil
+   - Alertas previas
+   
+   ANÁLISIS REQUERIDO:
+   1. Probabilidad fraude: [%]
+   2. Nivel de confianza: [bajo|medio|alto]
+   3. Factores de riesgo: [lista]
+   4. Factores atenuantes: [lista]
+   5. Recomendación: [bloquear|alertar|permitir]
+   6. Explicación: [texto para equipo]
+   
+   Piensa paso a paso y justifica tu análisis."
+
+5. DECISIÓN FINAL:
+   Combinar scores de todas las capas
+   Aplicar umbrales dinámicos por cliente
+   Ejecutar acción (bloquear/MFA adicional/permitir)
+
+6. POST-PROCESAMIENTO:
+   - Notificar cliente si aplica
+   - Crear caso investigación si necesario
+   - Feedback loop: aprender de falsos positivos/negativos</pre>
+                </div>
+            </div>
+
+            <h3>📊 Caso 4: Reportería Regulatoria Automatizada</h3>
+
+            <div class="caso-uso">
+                <h4>Generación de Informes CMF con IA</h4>
+                <div class="code-block">
+<pre>Sistema para generar reportes regulatorios de la CMF usando IA.
+
+REPORTES MENSUALES:
+- Provisiones por riesgo de crédito
+- Cartera vencida y en cobranza judicial
+- Concentración de riesgo
+- Liquidez y solvencia
+
+PROMPT PARA GENERACIÓN:
+"Eres un especialista en reportería bancaria para la CMF 
+(Comisión para el Mercado Financiero) de Chile.
+
+DATOS:
+[Exportar datos relevantes del mes]
+
+TAREA:
+Genera el informe mensual de Provisiones por Riesgo de Crédito 
+siguiendo exactamente el formato de la Circular N°1 de la CMF.
+
+REQUISITOS:
+1. Calcular provisiones según normativa chilena:
+   - Normal (0%)
+   - Subestándar (2%)
+   - Deficiente (25%)
+   - Dudoso (50%)
+   - Pérdida (100%)
+
+2. Clasificar cartera por:
+   - Tipo de crédito
+   - Garantías
+   - Días de morosidad
+   - Score de riesgo
+
+3. Generar tablas en formato requerido:
+   - Resumen ejecutivo
+   - Detalle por categoría
+   - Movimientos del período
+   - Análisis de variaciones
+
+4. Validaciones automáticas:
+   - Sumas verificadas
+   - Consistencia con períodos anteriores
+   - Alertas si desviaciones >10%
+   - Completitud de información
+
+5. Documentación de respaldo:
+   - Metodología de cálculo
+   - Fuentes de datos
+   - Supuestos aplicados
+   - Ajustes manuales (si los hubo)
+
+6. Explicaciones narrativas:
+   - Redactar análisis de variaciones significativas
+   - Explicar tendencias
+   - Justificar cambios en provisiones
+
+FORMATO SALIDA:
+- Excel con fórmulas
+- PDF para envío oficial
+- Archivos de respaldo
+- Log de proceso
+
+CALIDAD:
+- 100% precisión numérica
+- 0 errores de formato
+- Cumplimiento total normativa
+- Trazabilidad completa"</pre>
+                </div>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Lecciones Aprendidas - Proyectos BCI:</strong>
+                <ul style="margin-left: 25px; margin-top: 10px;">
+                    <li><strong>Documentación primero:</strong> Entender legacy antes de tocar código</li>
+                    <li><strong>Validación exhaustiva:</strong> Comparar resultados IA vs sistema actual</li>
+                    <li><strong>Rollout gradual:</strong> Piloto → A/B test → Full deployment</li>
+                    <li><strong>Human oversight:</strong> Siempre mantener supervisión en decisiones críticas</li>
+                    <li><strong>Auditoría completa:</strong> Cada decisión de IA debe ser explicable</li>
+                    <li><strong>Compliance first:</strong> Cumplir regulación CMF es no-negociable</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: PLANTILLAS REUTILIZABLES -->
+        <div id="plantillas" class="section">
+            <h2>📋 Plantillas Reutilizables para tu Equipo</h2>
+
+            <div class="success">
+                <strong>✅ Biblioteca de Plantillas AIWIS:</strong>
+                <p>Copia y adapta estas plantillas para tus proyectos diarios</p>
+            </div>
+
+            <div class="plantilla">
+                <h3>1. Plantilla: Análisis de Código</h3>
+                <div class="code-block">
+<pre>Eres un code reviewer senior de AIWIS.
+
+CÓDIGO A REVISAR:
+```[lenguaje]
+[pegar código]
+```
+
+ANÁLISIS COMPLETO:
+
+1. CALIDAD DE CÓDIGO:
+   ✅ Aspectos positivos:
+   - [listar]
+   
+   ⚠️ Code smells detectados:
+   - [listar con líneas]
+   
+   ❌ Problemas críticos:
+   - [listar con severidad]
+
+2. MEJORES PRÁCTICAS:
+   - Cumple SOLID: [sí/no/parcial]
+   - Nombres descriptivos: [evaluación]
+   - Complejidad ciclomática: [número]
+   - Duplicación: [porcentaje]
+
+3. SEGURIDAD:
+   - Vulnerabilidades: [lista]
+   - Validaciones faltantes: [lista]
+   - Datos sensibles expuestos: [lista]
+
+4. PERFORMANCE:
+   - Cuellos de botella: [lista]
+   - Optimizaciones sugeridas: [lista]
+   - Big O del algoritmo: [análisis]
+
+5. MANTENIBILIDAD:
+   - Score: [1-10]
+   - Documentación: [suficiente/insuficiente]
+   - Testing: [cobertura estimada]
+
+6. REFACTORIZACIÓN:
+   - Prioridad alta: [cambios críticos]
+   - Prioridad media: [mejoras deseables]
+   - Nice to have: [sugerencias menores]
+
+7. CÓDIGO REFACTORIZADO:
+   [Versión mejorada del código]
+
+8. JUSTIFICACIÓN:
+   [Explicar cada cambio realizado]</pre>
+                </div>
+            </div>
+
+            <div class="plantilla">
+                <h3>2. Plantilla: Generación de Tests</h3>
+                <div class="code-block">
+<pre>Eres un QA Engineer de AIWIS experto en testing bancario.
+
+FUNCIÓN A TESTEAR:
+```python
+[pegar función]
+```
+
+GENERA SUITE COMPLETA:
+
+```python
+import pytest
+from decimal import Decimal
+from unittest.mock import Mock, patch
+
+# ====================================
+# FIXTURES
+# ====================================
+
+@pytest.fixture
+def [nombre_fixture]():
+    """Descripción del fixture"""
+    return [datos de prueba]
+
+# ====================================
+# TESTS UNITARIOS - HAPPY PATH
+# ====================================
+
+def test_[nombre]_caso_normal():
+    """Verifica comportamiento normal con datos válidos"""
+    # Arrange
+    [preparar datos]
+    
+    # Act
+    resultado = [llamar función]
+    
+    # Assert
+    assert resultado == [valor esperado]
+    assert [otras verificaciones]
+
+# ====================================
+# TESTS UNITARIOS - EDGE CASES
+# ====================================
+
+@pytest.mark.parametrize("input,expected", [
+    ([caso 1], [resultado 1]),
+    ([caso 2], [resultado 2]),
+    ([caso 3], [resultado 3]),
+])
+def test_[nombre]_edge_cases(input, expected):
+    """Verifica casos límite"""
+    resultado = [función](input)
+    assert resultado == expected
+
+# ====================================
+# TESTS UNITARIOS - ERROR CASES
+# ====================================
+
+def test_[nombre]_con_input_invalido():
+    """Verifica manejo de errores con entrada inválida"""
+    with pytest.raises([TipoError]):
+        [función]([input inválido])
+
+def test_[nombre]_con_none():
+    """Verifica manejo de None"""
+    with pytest.raises(ValueError, match="no puede ser None"):
+        [función](None)
+
+# ====================================
+# TESTS DE INTEGRACIÓN
+# ====================================
+
+@patch('[módulo.función_externa]')
+def test_[nombre]_integracion_db(mock_db):
+    """Verifica integración con base de datos"""
+    mock_db.return_value = [dato mockeado]
+    resultado = [función_que_usa_db]()
+    assert [verificaciones]
+    mock_db.assert_called_once_with([params esperados])
+
+# ====================================
+# TESTS DE PERFORMANCE
+# ====================================
+
+def test_[nombre]_performance():
+    """Verifica que procesa 10K registros en <5 segundos"""
+    import time
+    datos = [generar 10000 registros]
+    
+    start = time.time()
+    [función](datos)
+    elapsed = time.time() - start
+    
+    assert elapsed < 5.0, f"Tardó {elapsed}s, esperado <5s"
+
+# ====================================
+# TESTS ESPECÍFICOS BANCARIOS
+# ====================================
+
+def test_[nombre]_precision_decimal():
+    """Verifica precisión decimal financiera"""
+    resultado = [función](Decimal('1000.005'))
+    assert isinstance(resultado, Decimal)
+    assert resultado == Decimal('[valor exacto]')
+
+def test_[nombre]_auditoría():
+    """Verifica que se registra en log de auditoría"""
+    with patch('[logger]') as mock_log:
+        [función]()
+        mock_log.info.assert_called()
+        # Verificar que log incluye datos necesarios
+```
+
+COBERTURA ESPERADA: >90%
+TIEMPO EJECUCIÓN: <10 segundos</pre>
+                </div>
+            </div>
+
+            <div class="plantilla">
+                <h3>3. Plantilla: Documentación de API</h3>
+                <div class="code-block">
+<pre>Genera documentación completa de API para este endpoint.
+
+CÓDIGO:
+```python
+[pegar código del endpoint]
+```
+
+DOCUMENTACIÓN REQUERIDA:
+
+# API: [Nombre Endpoint]
+
+## Descripción
+[Explicación de qué hace el endpoint]
+
+## Endpoint
+```
+[METHOD] /api/v1/[path]
+```
+
+## Autenticación
+- Tipo: [Bearer Token / API Key / OAuth]
+- Header requerido: `Authorization: Bearer {token}`
+- Permisos necesarios: [lista]
+
+## Request
+
+### Headers
+| Header | Tipo | Requerido | Descripción |
+|--------|------|-----------|-------------|
+| [nombre] | [tipo] | [sí/no] | [descripción] |
+
+### Query Parameters
+| Parámetro | Tipo | Requerido | Descripción | Ejemplo |
+|-----------|------|-----------|-------------|---------|
+| [nombre] | [tipo] | [sí/no] | [descripción] | [ejemplo] |
+
+### Body (JSON)
+```json
+{
+  "[campo]": "[tipo] - [descripción]",
+  "[campo]": {
+    "[subcampo]": "[tipo] - [descripción]"
+  }
+}
+```
+
+### Validaciones
+- [campo]: [reglas de validación]
+
+## Response
+
+### Success (200 OK)
+```json
+{
+  "[campo]": "[valor ejemplo]",
+  "[campo]": {
+    "[subcampo]": "[valor ejemplo]"
+  }
+}
+```
+
+### Errores
+
+#### 400 Bad Request
+```json
+{
+  "error": "Descripción del error",
+  "details": ["Lista de problemas específicos"]
+}
+```
+
+#### 401 Unauthorized
+```json
+{
+  "error": "Token inválido o expirado"
+}
+```
+
+#### 500 Internal Server Error
+```json
+{
+  "error": "Error interno del servidor",
+  "trace_id": "uuid"
+}
+```
+
+## Ejemplos
+
+### cURL
+```bash
+curl -X [METHOD] \
+  [URL] \
+  -H "Authorization: Bearer {token}" \
+  -H "Content-Type: application/json" \
+  -d '[body]'
+```
+
+### Python
+```python
+import requests
+
+response = requests.[method](
+    "[url]",
+    headers={"Authorization": f"Bearer {token}"},
+    json=[body]
+)
+print(response.json())
+```
+
+### JavaScript
+```javascript
+fetch('[url]', {
+  method: '[METHOD]',
+  headers: {
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify([body])
+})
+.then(res => res.json())
+.then(data => console.log(data));
+```
+
+## Rate Limiting
+- Límite: [X] requests por [tiempo]
+- Header respuesta: `X-RateLimit-Remaining`
+
+## Notas
+- [Consideraciones especiales]
+- [Casos de uso comunes]
+- [Troubleshooting]</pre>
+                </div>
+            </div>
+
+            <div class="plantilla">
+                <h3>4. Plantilla: Propuesta Comercial</h3>
+                <div class="code-block">
+<pre>Genera propuesta comercial para [CLIENTE].
+
+CONTEXTO:
+- Cliente: [nombre empresa]
+- Industria: [sector]
+- Pain point principal: [problema]
+- Presupuesto estimado: [rango]
+- Timeline deseado: [plazo]
+
+GENERAR:
+
+# PROPUESTA COMERCIAL: [TÍTULO ATRACTIVO]
+
+## Para: [Cliente]
+## De: AIWIS Consultora IA & TI
+## Fecha: [fecha]
+## Referencia: [código propuesta]
+
+---
+
+## 1. RESUMEN EJECUTIVO (1 página máximo)
+
+[Párrafo inicial impactante con hook]
+
+**Situación Actual:**
+[Describir problema del cliente brevemente]
+
+**Solución Propuesta:**
+[Nuestra solución en 2-3 líneas]
+
+**Beneficios Clave:**
+- [Beneficio cuantificable 1]
+- [Beneficio cuantificable 2]
+- [Beneficio cuantificable 3]
+
+**Inversión:** $[monto] CLP
+**Timeline:** [X] meses
+**ROI Esperado:** [Y]% en [Z] meses
+
+---
+
+## 2. ENTENDIMIENTO DEL DESAFÍO
+
+### 2.1 Situación Actual
+[Análisis detallado del problema]
+
+### 2.2 Impacto en el Negocio
+- Costos actuales: $[monto]
+- Tiempo perdido: [horas/día]
+- Oportunidades perdidas: [cuantificar]
+- Riesgos: [listar]
+
+### 2.3 ¿Por qué actuar ahora?
+[Urgencia y tendencias del mercado]
+
+---
+
+## 3. SOLUCIÓN PROPUESTA
+
+### 3.1 Arquitectura General
+[Diagrama o descripción de componentes]
+
+### 3.2 Componentes Principales
+1. **[Componente 1]**
+   - Descripción
+   - Tecnología
+   - Beneficio
+
+2. **[Componente 2]**
+   [...]
+
+### 3.3 Diferenciadores Clave
+- [Por qué elegir nuestra solución vs competencia]
+
+---
+
+## 4. PLAN DE IMPLEMENTACIÓN
+
+| Fase | Duración | Entregables | Hitos |
+|------|----------|-------------|-------|
+| 1. Discovery | [X] semanas | [lista] | [milestone] |
+| 2. Diseño | [X] semanas | [lista] | [milestone] |
+| 3. Desarrollo | [X] semanas | [lista] | [milestone] |
+| 4. Testing | [X] semanas | [lista] | [milestone] |
+| 5. Deployment | [X] semanas | [lista] | [milestone] |
+| 6. Soporte | [X] meses | [lista] | [milestone] |
+
+---
+
+## 5. EQUIPO ASIGNADO
+
+| Rol | Experiencia | Dedicación |
+|-----|-------------|------------|
+| [Nombre - Rol] | [X años en Y] | [%] |
+
+---
+
+## 6. INVERSIÓN Y ROI
+
+### 6.1 Estructura de Costos
+| Concepto | Monto (CLP) |
+|----------|-------------|
+| [Item 1] | $[monto] |
+| [Item 2] | $[monto] |
+| **Total** | **$[monto]** |
+
+### 6.2 Análisis ROI
+- Inversión total: $[monto]
+- Ahorro anual estimado: $[monto]
+- Payback period: [X] meses
+- ROI 3 años: [Y]%
+
+### 6.3 Forma de Pago
+- [Detallar estructura de pagos]
+
+---
+
+## 7. CASOS DE ÉXITO
+
+### Cliente Similar 1: [Nombre]
+- Desafío: [...]
+- Solución: [...]
+- Resultados: [métricas]
+
+[Repetir para 2-3 casos]
+
+---
+
+## 8. RIESGOS Y MITIGACIONES
+
+| Riesgo | Probabilidad | Impacto | Mitigación |
+|--------|--------------|---------|------------|
+| [Riesgo 1] | [Alta/Media/Baja] | [Alto/Medio/Bajo] | [Plan] |
+
+---
+
+## 9. PRÓXIMOS PASOS
+
+1. [Acción 1 con fecha]
+2. [Acción 2 con fecha]
+3. [Kickoff proyectado: fecha]
+
+---
+
+## 10. TÉRMINOS Y CONDICIONES
+
+[Condiciones comerciales, garantías, SLAs, etc.]
+
+---
+
+**Contacto:**
+[Nombre Ejecutivo]
+[email]
+[teléfono]
+
+**Validez de la propuesta:** [X] días desde emisión
+
+---
+
+*Esta propuesta es confidencial y propiedad de AIWIS Consultora IA & TI*</pre>
+                </div>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Cómo Usar Estas Plantillas:</strong>
+                <ol style="margin-left: 25px; margin-top: 10px;">
+                    <li>Copia la plantilla completa</li>
+                    <li>Reemplaza [variables] con tu contexto específico</li>
+                    <li>Ejecuta en tu IA preferida (Claude, Gemini, GPT-4)</li>
+                    <li>Revisa y ajusta el output</li>
+                    <li>Guarda versiones exitosas para futura referencia</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: GRÁFICAS Y COMPARATIVAS -->
+        <div id="comparativas" class="section">
+            <h2>📊 Gráficas, Dashboards y Comparativas</h2>
+
+            <h3>📈 Efectividad de Técnicas de Prompting</h3>
+
+            <div class="chart-container">
+                <h4>Precisión por Técnica</h4>
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <strong>Zero-Shot (Sin ejemplos)</strong>
+                        <span class="metric-icon">📊</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%; background: linear-gradient(90deg, #ef4444, #dc2626);">
+                            60% Precisión
+                        </div>
+                    </div>
+                    <p style="margin-top: 10px;"><strong>Uso:</strong> Tareas simples y conocidas</p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <strong>Few-Shot (2-5 ejemplos)</strong>
+                        <span class="metric-icon">📊</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%; background: linear-gradient(90deg, #f59e0b, #d97706);">
+                            85% Precisión
+                        </div>
+                    </div>
+                    <p style="margin-top: 10px;"><strong>Uso:</strong> Patrones específicos y formatos</p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <strong>Chain-of-Thought</strong>
+                        <span class="metric-icon">📊</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 90%; background: linear-gradient(90deg, #22c55e, #16a34a);">
+                            90% Precisión
+                        </div>
+                    </div>
+                    <p style="margin-top: 10px;"><strong>Uso:</strong> Razonamiento complejo y análisis</p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <strong>Few-Shot + CoT + Role</strong>
+                        <span class="metric-icon">📊</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 95%; background: linear-gradient(90deg, #8b5cf6, #7c3aed);">
+                            95% Precisión
+                        </div>
+                    </div>
+                    <p style="margin-top: 10px;"><strong>Uso:</strong> Máxima calidad en tareas críticas</p>
+                </div>
+            </div>
+
+            <h3>⚡ Comparativa: Velocidad vs Calidad</h3>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h4>⚡ Prompt Simple</h4>
+                    <div class="stat-number" style="font-size: 2em;">5s</div>
+                    <div class="stat-label">Tiempo Respuesta</div>
+                    <div class="progress-bar" style="margin-top: 15px;">
+                        <div class="progress-fill" style="width: 60%; background: #ef4444;">
+                            60% Calidad
+                        </div>
+                    </div>
+                    <p style="margin-top: 10px;"><strong>Mejor para:</strong> Consultas rápidas, borradores</p>
+                </div>
+
+                <div class="dashboard-card">
+                    <h4>🎯 Prompt Estructurado</h4>
+                    <div class="stat-number" style="font-size: 2em;">15s</div>
+                    <div class="stat-label">Tiempo Respuesta</div>
+                    <div class="progress-bar" style="margin-top: 15px;">
+                        <div class="progress-fill" style="width: 85%; background: #f59e0b;">
+                            85% Calidad
+                        </div>
+                    </div>
+                    <p style="margin-top: 10px;"><strong>Mejor para:</strong> Desarrollo, documentación</p>
+                </div>
+
+                <div class="dashboard-card">
+                    <h4>🚀 Prompt Experto</h4>
+                    <div class="stat-number" style="font-size: 2em;">45s</div>
+                    <div class="stat-label">Tiempo Respuesta</div>
+                    <div class="progress-bar" style="margin-top: 15px;">
+                        <div class="progress-fill" style="width: 95%; background: #22c55e;">
+                            95% Calidad
+                        </div>
+                    </div>
+                    <p style="margin-top: 10px;"><strong>Mejor para:</strong> Producción, clientes</p>
+                </div>
+
+                <div class="dashboard-card">
+                    <h4>🎨 Prompt Multi-Iteración</h4>
+                    <div class="stat-number" style="font-size: 2em;">5min</div>
+                    <div class="stat-label">Tiempo Respuesta</div>
+                    <div class="progress-bar" style="margin-top: 15px;">
+                        <div class="progress-fill" style="width: 99%; background: #8b5cf6;">
+                            99% Calidad
+                        </div>
+                    </div>
+                    <p style="margin-top: 10px;"><strong>Mejor para:</strong> Proyectos críticos</p>
+                </div>
+            </div>
+
+            <h3>💰 ROI de Implementación IA en BCI</h3>
+
+            <div class="chart-container">
+                <table>
+                    <tr>
+                        <th>Área</th>
+                        <th>Sin IA</th>
+                        <th>Con IA</th>
+                        <th>Ahorro</th>
+                        <th>ROI</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Desarrollo de Código</strong></td>
+                        <td>80 hrs/proyecto</td>
+                        <td>24 hrs/proyecto</td>
+                        <td>56 hrs (70%)</td>
+                        <td>350%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Documentación</strong></td>
+                        <td>40 hrs/proyecto</td>
+                        <td>8 hrs/proyecto</td>
+                        <td>32 hrs (80%)</td>
+                        <td>400%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Testing</strong></td>
+                        <td>60 hrs/proyecto</td>
+                        <td>20 hrs/proyecto</td>
+                        <td>40 hrs (67%)</td>
+                        <td>300%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Code Review</strong></td>
+                        <td>20 hrs/proyecto</td>
+                        <td>8 hrs/proyecto</td>
+                        <td>12 hrs (60%)</td>
+                        <td>250%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Análisis Legacy</strong></td>
+                        <td>120 hrs/sistema</td>
+                        <td>10 hrs/sistema</td>
+                        <td>110 hrs (92%)</td>
+                        <td>1100%</td>
+                    </tr>
+                    <tr style="background: #f0fdf4; font-weight: bold;">
+                        <td><strong>TOTAL</strong></td>
+                        <td>320 hrs</td>
+                        <td>70 hrs</td>
+                        <td>250 hrs (78%)</td>
+                        <td>457%</td>
+                    </tr>
+                </table>
+
+                <div class="success" style="margin-top: 20px;">
+                    <strong>📊 Conclusión:</strong> Por cada $1 invertido en herramientas IA y capacitación, AIWIS obtiene $4.57 en retorno a través de aumento de productividad y reducción de costos operativos.
+                </div>
+            </div>
+
+            <h3>🎯 Matriz de Decisión: ¿Qué IA Usar?</h3>
+
+            <div class="chart-container">
+                <table>
+                    <tr>
+                        <th>Caso de Uso</th>
+                        <th>Claude</th>
+                        <th>Gemini</th>
+                        <th>GPT-4</th>
+                        <th>Recomendación</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Código Complejo</strong></td>
+                        <td>🟢 Excelente</td>
+                        <td>🟡 Muy bueno</td>
+                        <td>🟢 Excelente</td>
+                        <td><strong>Claude</strong> (mejor razonamiento)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Docs Largos (>100 pág)</strong></td>
+                        <td>🟢 200K context</td>
+                        <td>🟢 2M context</td>
+                        <td>🟡 128K context</td>
+                        <td><strong>Gemini</strong> (context gigante)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Análisis Multimodal</strong></td>
+                        <td>🟡 Limitado</td>
+                        <td>🟢 Nativo</td>
+                        <td>🟢 Sí</td>
+                        <td><strong>Gemini</strong> (mejor multimodal)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Integración Workspace</strong></td>
+                        <td>❌ No</td>
+                        <td>🟢 Nativo</td>
+                        <td>❌ No</td>
+                        <td><strong>Gemini</strong> (única opción)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Razonamiento Ético</strong></td>
+                        <td>🟢 Excelente</td>
+                        <td>🟡 Bueno</td>
+                        <td>🟡 Bueno</td>
+                        <td><strong>Claude</strong> (más "thoughtful")</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Velocidad Respuesta</strong></td>
+                        <td>🟢 Rápido</td>
+                        <td>🟢 Rápido</td>
+                        <td>🟡 Medio</td>
+                        <td><strong>Claude/Gemini</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Español Nativo</strong></td>
+                        <td>🟢 Excelente</td>
+                        <td>🟢 Excelente</td>
+                        <td>🟡 Muy bueno</td>
+                        <td><strong>Claude/Gemini</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Costo</strong></td>
+                        <td>💰💰💰</td>
+                        <td>💰💰</td>
+                        <td>💰💰💰</td>
+                        <td><strong>Gemini</strong> (mejor precio/valor)</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>📊 Dashboard de Métricas de Prompting</h3>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Prompts Ejecutados (mes)</div>
+                    <div class="stat-number">12,500</div>
+                    <p style="font-size: 0.9em; color: #22c55e; margin-top: 5px;">↑ 45% vs mes anterior</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">Tiempo Ahorrado (mes)</div>
+                    <div class="stat-number">850 hrs</div>
+                    <p style="font-size: 0.9em; color: #22c55e; margin-top: 5px;">≈ $25M CLP ahorrados</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">Precisión Promedio</div>
+                    <div class="stat-number">87%</div>
+                    <p style="font-size: 0.9em; color: #22c55e; margin-top: 5px;">↑ 12% con capacitación</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">Satisfacción Cliente</div>
+                    <div class="stat-number">9.2/10</div>
+                    <p style="font-size: 0.9em; color: #22c55e; margin-top: 5px;">Calidad de entregables IA</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: GLOSARIO COMPLETO (ya existente, mejorado) -->
+        <div id="glosario" class="section">
+            <h2>📖 Glosario Completo de Términos IA y Prompting</h2>
+
+            <div class="warning">
+                <strong>📚 Guía de Uso:</strong> Este glosario es tu referencia permanente. Marca esta página y consúltala cada vez que encuentres un término nuevo. Con el tiempo, todos estos conceptos se volverán naturales.
+            </div>
+
+            <h3>🧠 Términos de Técnicas de Prompting</h3>
+
+            <div class="glosario-term">
+                <div class="term-title">Chain-of-Thought (CoT)</div>
+                <div class="term-english">Pronunciación: "chein of zot" / Español: Cadena de Pensamiento</div>
+                <p><strong>Definición:</strong> Técnica que pide a la IA que "piense en voz alta" mostrando su razonamiento paso a paso antes de dar una respuesta final.</p>
+                <p><strong>Frase clave:</strong> "Piensa paso a paso"</p>
+                <p><strong>Beneficio:</strong> Reduce errores y aumenta precisión en 30-50%</p>
+                <p><strong>Ejemplo:</strong></p>
+                <div class="code-block">
+<pre>"Calcula el DTI. Piensa paso a paso."
+→ IA muestra: Paso 1... Paso 2... Conclusión</pre>
+                </div>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">Few-Shot Learning</div>
+                <div class="term-english">Pronunciación: "fiu shot learning" / Español: Aprendizaje con Pocos Ejemplos</div>
+                <p><strong>Definición:</strong> Técnica de enseñarle a la IA con 2-5 ejemplos concretos de lo que quieres.</p>
+                <p><strong>Desglose:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li><strong>Few</strong> = Pocos (2-5)</li>
+                    <li><strong>Shot</strong> = Intento o ejemplo</li>
+                    <li><strong>Learning</strong> = Aprendizaje</li>
+                </ul>
+                <p><strong>Cuándo usar:</strong> Cuando necesitas formato o patrón específico</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">Zero-Shot</div>
+                <div class="term-english">Pronunciación: "siro shot" / Español: Sin ejemplos</div>
+                <p><strong>Definición:</strong> Pedir a la IA que haga algo sin darle ningún ejemplo previo.</p>
+                <p><strong>Ejemplo:</strong> "Traduce esto al inglés" (sin mostrar ejemplo de traducción)</p>
+                <p><strong>Precisión:</strong> ~60%, adecuado para tareas simples</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">One-Shot</div>
+                <div class="term-english">Pronunciación: "uan shot" / Español: Un ejemplo</div>
+                <p><strong>Definición:</strong> Dar un solo ejemplo a la IA antes de pedirle que haga la tarea.</p>
+                <p><strong>Precisión:</strong> ~70-75%</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">Many-Shot</div>
+                <div class="term-english">Pronunciación: "meni shot" / Español: Muchos ejemplos</div>
+                <p><strong>Definición:</strong> Dar 10 o más ejemplos a la IA. Usado para tareas muy complejas o específicas.</p>
+                <p><strong>Precisión:</strong> ~95-99%</p>
+                <p><strong>Trade-off:</strong> Alta precisión pero consume muchos tokens</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">Role Prompting</div>
+                <div class="term-english">Pronunciación: "rol promting" / Español: Asignación de Roles</div>
+                <p><strong>Definición:</strong> Técnica de decirle a la IA que actúe como un profesional o experto específico.</p>
+                <p><strong>Formato:</strong> "Eres un [profesión] experto en [área]..."</p>
+                <p><strong>Beneficio:</strong> La IA ajusta vocabulario, tono y enfoque según el rol.</p>
+                <p><strong>Ejemplo:</strong> "Eres un arquitecto de software senior especializado en sistemas bancarios COBOL"</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">Self-Consistency</div>
+                <div class="term-english">Pronunciación: "self consístency" / Español: Auto-Consistencia</div>
+                <p><strong>Definición:</strong> Generar múltiples respuestas independientes y elegir la más consistente.</p>
+                <p><strong>Uso:</strong> Validar decisiones críticas</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">Tree-of-Thoughts</div>
+                <div class="term-english">Pronunciación: "tri of zots" / Español: Árbol de Pensamientos</div>
+                <p><strong>Definición:</strong> Explorar múltiples caminos de solución en paralelo antes de decidir el mejor.</p>
+                <p><strong>Metáfora:</strong> Como un árbol con ramas, explora varias opciones</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">Prompt Chaining</div>
+                <div class="term-english">Pronunciación: "prompt cheining" / Español: Encadenamiento de Prompts</div>
+                <p><strong>Definición:</strong> Dividir tarea compleja en serie de prompts secuenciales donde cada uno usa output del anterior.</p>
+                <p><strong>Beneficio:</strong> Mayor control y debugging más fácil</p>
+            </div>
+
+            <h3>💻 Términos Técnicos de IA</h3>
+
+            <div class="glosario-term">
+                <div class="term-title">LLM (Large Language Model)</div>
+                <div class="term-english">Pronunciación: "el-el-em" / Español: Modelo de Lenguaje Grande</div>
+                <p><strong>Definición:</strong> Red neuronal entrenada con billones de palabras para entender y generar texto.</p>
+                <p><strong>Ejemplos:</strong> GPT-4, Claude, Gemini, Llama</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">Token</div>
+                <div class="term-english">Pronunciación: "token" / Español: Unidad de texto</div>
+                <p><strong>Definición:</strong> Pedazo de texto que la IA procesa. Aproximadamente 4 caracteres o 3/4 de una palabra.</p>
+                <p><strong>Ejemplo:</strong> "Hola mundo" = aproximadamente 3 tokens</p>
+                <p><strong>Relevancia:</strong> Los LLMs cobran por token y tienen límites de context window</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">Temperature</div>
+                <div class="term-english">Pronunciación: "témprachur" / Español: Temperatura (creatividad)</div>
+                <p><strong>Definición:</strong> Parámetro que controla qué tan creativa o predecible es la IA.</p>
+                <ul style="margin-left: 20px;">
+                    <li><strong>Baja (0-0.3):</strong> Respuestas predecibles y precisas → Código, análisis</li>
+                    <li><strong>Media (0.4-0.7):</strong> Balance → Escritura general</li>
+                    <li><strong>Alta (0.8-1.0):</strong> Muy creativa y variada → Brainstorming, arte</li>
+                </ul>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">Context Window</div>
+                <div class="term-english">Pronunciación: "context window" / Español: Ventana de Contexto</div>
+                <p><strong>Definición:</strong> Cantidad de texto que la IA puede "recordar" en una conversación.</p>
+                <p><strong>Analogía:</strong> Como la memoria a corto plazo de la IA.</p>
+                <p><strong>Tamaños típicos:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>GPT-4: 128K tokens (~96K palabras)</li>
+                    <li>Claude: 200K tokens (~150K palabras)</li>
+                    <li>Gemini: 2M tokens (~1.5M palabras)</li>
+                </ul>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">Hallucination</div>
+                <div class="term-english">Pronunciación: "jalusinéishon" / Español: Alucinación</div>
+                <p><strong>Definición:</strong> Cuando la IA inventa información falsa que suena convincente.</p>
+                <p><strong>Cómo evitarlo:</strong> Usar Chain-of-Thought, pedir fuentes, validar información crítica</p>
+                <p><strong>Ejemplo:</strong> IA inventa estadísticas o citas que no existen</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">Fine-tuning</div>
+                <div class="term-english">Pronunciación: "fain tiúning" / Español: Ajuste Fino</div>
+                <p><strong>Definición:</strong> Entrenar un modelo pre-existente con datos específicos de tu dominio.</p>
+                <p><strong>Uso:</strong> Cuando necesitas que la IA domine terminología o procesos muy específicos</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">Embedding</div>
+                <div class="term-english">Pronunciación: "embedding" / Español: Incrustación (vectores)</div>
+                <p><strong>Definición:</strong> Representación numérica (vector) de texto que captura su significado.</p>
+                <p><strong>Uso:</strong> Búsqueda semántica, similitud de textos, RAG</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">RAG (Retrieval-Augmented Generation)</div>
+                <div class="term-english">Pronunciación: "rag" / Español: Generación Aumentada por Recuperación</div>
+                <p><strong>Definición:</strong> Técnica donde la IA busca información relevante en una base de datos antes de responder.</p>
+                <p><strong>Beneficio:</strong> Reduce alucinaciones, permite usar datos privados</p>
+                <p><strong>Ejemplo:</strong> Chatbot que consulta documentación interna antes de responder</p>
+            </div>
+
+            <h3>🤖 Términos de Agentes y Automatización</h3>
+
+            <div class="glosario-term">
+                <div class="term-title">AI Agent</div>
+                <div class="term-english">Pronunciación: "ei-ai éichent" / Español: Agente de IA</div>
+                <p><strong>Definición:</strong> Sistema de IA que puede tomar decisiones y ejecutar acciones de forma autónoma.</p>
+                <p><strong>Características:</strong> Autonomía, uso de herramientas, toma decisiones, workflows complejos</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">ReAct (Reasoning + Acting)</div>
+                <div class="term-english">Pronunciación: "ri-act" / Español: Razonamiento + Acción</div>
+                <p><strong>Definición:</strong> Patrón donde el agente alterna entre razonar y actuar.</p>
+                <p><strong>Flujo:</strong> Piensa → Actúa → Observa → Piensa → ...</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">Tool Use / Function Calling</div>
+                <div class="term-english">Pronunciación: "tul ius" / Español: Uso de Herramientas</div>
+                <p><strong>Definición:</strong> Capacidad de la IA de usar herramientas externas (APIs, bases de datos, calculadoras)</p>
+                <p><strong>Ejemplo:</strong> IA que puede consultar una base de datos SQL o llamar una API</p>
+            </div>
+
+            <h3>📊 Términos de Análisis Bancario</h3>
+
+            <div class="glosario-term">
+                <div class="term-title">DTI (Debt-to-Income)</div>
+                <div class="term-english">Pronunciación: "di-ti-ai" / Español: Relación Deuda-Ingreso</div>
+                <p><strong>Definición:</strong> Porcentaje de tus ingresos que usas para pagar deudas.</p>
+                <p><strong>Cálculo:</strong> (Deudas mensuales ÷ Ingresos mensuales) × 100</p>
+                <p><strong>Ejemplo:</strong> Deudas $800K, Ingresos $2M → DTI = 40%</p>
+                <p><strong>Interpretación:</strong> <30% = Bueno | 30-40% = Aceptable | >40% = Riesgo</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">Score Crediticio</div>
+                <div class="term-english">Inglés: Credit Score</div>
+                <p><strong>Definición:</strong> Número que representa qué tan confiable eres pagando deudas.</p>
+                <p><strong>Rango Chile:</strong> 0-1000</p>
+                <p><strong>Factores:</strong> Historial pagos, deudas actuales, años de historia, tipos de crédito</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">SBIF / CMF</div>
+                <div class="term-english">Superintendencia de Bancos / Comisión para el Mercado Financiero</div>
+                <p><strong>Definición:</strong> Organismo regulador del sistema financiero chileno (SBIF fue renombrada a CMF).</p>
+                <p><strong>Relevancia:</strong> Dictamina normas que todos los bancos deben cumplir</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">Provisiones</div>
+                <div class="term-english">Inglés: Provisions</div>
+                <p><strong>Definición:</strong> Dinero que los bancos deben apartar para cubrir potenciales pérdidas por créditos impagos.</p>
+                <p><strong>Categorías CMF:</strong> Normal (0%), Subestándar (2%), Deficiente (25%), Dudoso (50%), Pérdida (100%)</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">KYC (Know Your Customer)</div>
+                <div class="term-english">Pronunciación: "kei-uai-si" / Español: Conoce a tu Cliente</div>
+                <p><strong>Definición:</strong> Proceso de verificar identidad y evaluar riesgo de clientes.</p>
+                <p><strong>Incluye:</strong> Verificación identidad, origen fondos, PEP check</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">AML (Anti-Money Laundering)</div>
+                <div class="term-english">Pronunciación: "ei-em-el" / Español: Anti Lavado de Dinero</div>
+                <p><strong>Definición:</strong> Conjunto de procedimientos para prevenir el lavado de dinero.</p>
+                <p><strong>Obligatorio:</strong> Por Ley 19.913 en Chile</p>
+            </div>
+
+            <h3>💼 Términos Profesionales TI</h3>
+
+            <div class="glosario-term">
+                <div class="term-title">Legacy System</div>
+                <div class="term-english">Pronunciación: "légasi system" / Español: Sistema Heredado</div>
+                <p><strong>Definición:</strong> Sistema antiguo pero crítico que sigue en uso (generalmente difícil de reemplazar).</p>
+                <p><strong>Ejemplo:</strong> Mainframe COBOL en bancos con 30+ años</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">Mainframe</div>
+                <div class="term-english">Pronunciación: "méinfreim" / Español: Computador Central</div>
+                <p><strong>Definición:</strong> Computador muy potente usado para procesar millones de transacciones (común en bancos).</p>
+                <p><strong>Ejemplo:</strong> IBM z/OS</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">COBOL</div>
+                <div class="term-english">Pronunciación: "cóbol" / Common Business-Oriented Language</div>
+                <p><strong>Definición:</strong> Lenguaje de programación de 1959, todavía usado en 70% de los sistemas bancarios mundiales.</p>
+                <p><strong>Problema:</strong> Escasez de programadores que lo conozcan</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">RPA (Robotic Process Automation)</div>
+                <div class="term-english">Pronunciación: "ar-pi-ei" / Español: Automatización Robótica de Procesos</div>
+                <p><strong>Definición:</strong> Software que imita acciones humanas en computador (clics, copy-paste, etc).</p>
+                <p><strong>Ejemplo:</strong> Bot que descarga reportes, los procesa y envía por email</p>
+            </div>
+
+            <div class="glosario-term">
+                <div class="term-title">API (Application Programming Interface)</div>
+                <div class="term-english">Pronunciación: "ei-pi-ai" / Español: Interfaz de Programación de Aplicaciones</div>
+                <p><strong>Definición:</strong> Forma en que dos sistemas se comunican programáticamente.</p>
+                <p><strong>Analogía:</strong> Como un mesero: tú pides, él lleva orden a cocina, trae comida</p>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Cómo Dominar estos Términos:</strong>
+                <ol style="margin-left: 25px; margin-top: 10px;">
+                    <li>No intentes memorizar todos de una vez</li>
+                    <li>Enfócate en los que usarás más frecuentemente</li>
+                    <li>Usa los términos en conversaciones reales</li>
+                    <li>Crea flashcards con los 20 términos más importantes</li>
+                    <li>Revisa este glosario semanalmente por un mes</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: EJERCICIOS PRÁCTICOS -->
+        <div id="ejercicios" class="section">
+            <h2>✏️ Ejercicios Prácticos</h2>
+
+            <div class="success">
+                <strong>✅ Metodología de Aprendizaje:</strong>
+                <p>Estos ejercicios están diseñados para aplicar inmediatamente lo aprendido. Te recomendamos hacerlos en orden de dificultad.</p>
+            </div>
+
+            <div class="ejercicio">
+                <span class="nivel-badge nivel-principiante">Nivel: Principiante</span>
+                <h3>Ejercicio 1: Tu Primer Prompt Estructurado</h3>
+                <p><strong>Objetivo:</strong> Transformar un prompt simple en uno estructurado usando Chain-of-Thought</p>
+                
+                <h4>Prompt Básico (No hacer esto):</h4>
+                <div class="code-block">
+<pre>"Calcula si un cliente puede obtener un crédito hipotecario"</pre>
+                </div>
+
+                <h4>Tu tarea:</h4>
+                <p>Reescribe el prompt incluyendo:</p>
+                <ul style="margin-left: 25px;">
+                    <li>Role Prompting (define quién es la IA)</li>
+                    <li>Chain-of-Thought (pide razonamiento paso a paso)</li>
+                    <li>Datos específicos del cliente</li>
+                    <li>Criterios de evaluación claros</li>
+                    <li>Formato de salida deseado</li>
+                </ul>
+
+                <h4>Datos del caso:</h4>
+                <ul style="margin-left: 25px;">
+                    <li>Ingreso mensual: $2.500.000</li>
+                    <li>Deuda actual: $800.000/mes</li>
+                    <li>Cuota hipotecaria estimada: $750.000/mes</li>
+                    <li>Ahorro: $10.000.000</li>
+                    <li>Antigüedad laboral: 3 años</li>
+                </ul>
+
+                <div class="tip">
+                    <strong>💡 Pista:</strong> Empieza con "Eres un analista de crédito hipotecario de BCI..."
+                </div>
+            </div>
+
+            <div class="ejercicio">
+                <span class="nivel-badge nivel-principiante">Nivel: Principiante</span>
+                <h3>Ejercicio 2: Few-Shot Learning</h3>
+                <p><strong>Objetivo:</strong> Usar ejemplos para enseñar formato específico</p>
+                
+                <p><strong>Contexto:</strong> Necesitas que la IA clasifique transacciones bancarias como "Normal", "Sospechosa" o "Fraudulenta"</p>
+
+                <h4>Tu tarea:</h4>
+                <p>Crea un prompt Few-Shot con:</p>
+                <ul style="margin-left: 25px;">
+                    <li>3 ejemplos de cada categoría</li>
+                    <li>Explicación de por qué cada transacción está en su categoría</li>
+                    <li>Formato JSON para la respuesta</li>
+                </ul>
+
+                <h4>Transacción a clasificar:</h4>
+                <p>"Transferencia de $8.500.000 a cuenta nueva en Paraguay a las 2:30 AM"</p>
+            </div>
+
+            <div class="ejercicio">
+                <span class="nivel-badge nivel-intermedio">Nivel: Intermedio</span>
+                <h3>Ejercicio 3: Generación de Código Bancario</h3>
+                <p><strong>Objetivo:</strong> Generar función Python production-ready</p>
+                
+                <h4>Requisitos:</h4>
+                <p>Genera una función que calcule el score de riesgo crediticio con estas características:</p>
+                <ul style="margin-left: 25px;">
+                    <li>Input: datos financieros del cliente</li>
+                    <li>Output: score 0-1000 y categoría de riesgo</li>
+                    <li>Factores: DTI, historial, antigüedad, ahorros</li>
+                    <li>Type hints completos</li>
+                    <li>Docstring detallado</li>
+                    <li>Manejo de errores</li>
+                    <li>Logging</li>
+                    <li>Tests unitarios</li>
+                </ul>
+
+                <h4>Escribe el prompt completo que generaría este código</h4>
+            </div>
+
+            <div class="ejercicio">
+                <span class="nivel-badge nivel-intermedio">Nivel: Intermedio</span>
+                <h3>Ejercicio 4: Diseña un Gem para BCI</h3>
+                <p><strong>Objetivo:</strong> Crear instrucciones para un Gem especializado</p>
+                
+                <p><strong>Escenario:</strong> Necesitas un Gem que ayude a analistas de BCI a investigar transacciones sospechosas</p>
+
+                <h4>Define:</h4>
+                <ul style="margin-left: 25px;">
+                    <li>Nombre del Gem</li>
+                    <li>Descripción breve</li>
+                    <li>Rol y expertise</li>
+                    <li>Comportamiento esperado</li>
+                    <li>Formato de análisis</li>
+                    <li>Restricciones (qué NO debe hacer)</li>
+                    <li>3 ejemplos de interacciones</li>
+                </ul>
+            </div>
+
+            <div class="ejercicio">
+                <span class="nivel-badge nivel-avanzado">Nivel: Avanzado</span>
+                <h3>Ejercicio 5: Agente Autónomo</h3>
+                <p><strong>Objetivo:</strong> Diseñar sistema de agente para proceso completo</p>
+                
+                <p><strong>Caso:</strong> Agente que procesa solicitudes de tarjetas de crédito end-to-end</p>
+
+                <h4>Diseña:</h4>
+                <ul style="margin-left: 25px;">
+                    <li>Objetivo principal del agente</li>
+                    <li>Herramientas que necesita (APIs, DBs, etc)</li>
+                    <li>Proceso de decisión (paso a paso)</li>
+                    <li>Restricciones y límites</li>
+                    <li>Cuándo escalar a humano</li>
+                    <li>Manejo de errores</li>
+                    <li>Logging y reporte</li>
+                    <li>Métricas de éxito</li>
+                </ul>
+
+                <p><strong>Bonus:</strong> Crea el prompt completo que inicializaría este agente</p>
+            </div>
+
+            <div class="ejercicio">
+                <span class="nivel-badge nivel-avanzado">Nivel: Avanzado</span>
+                <h3>Ejercicio 6: Modernización COBOL</h3>
+                <p><strong>Objetivo:</strong> Prompt completo para migración de código legacy</p>
+                
+                <p><strong>Contexto:</strong> Programa COBOL de 800 líneas que calcula intereses compuestos</p>
+
+                <h4>Crea un prompt que:</h4>
+                <ul style="margin-left: 25px;">
+                    <li>Primero documente el código COBOL</li>
+                    <li>Identifique la lógica de negocio crítica</li>
+                    <li>Diseñe arquitectura Python moderna</li>
+                    <li>Genere código equivalente</li>
+                    <li>Cree tests de equivalencia</li>
+                    <li>Documente diferencias y decisiones</li>
+                </ul>
+
+                <p><strong>Requisitos de calidad:</strong></p>
+                <ul style="margin-left: 25px;">
+                    <li>100% precisión numérica (usar Decimal)</li>
+                    <li>Mismo resultado que COBOL</li>
+                    <li>Código production-ready</li>
+                    <li>Tests exhaustivos</li>
+                </ul>
+            </div>
+
+            <div class="ejercicio">
+                <span class="nivel-badge nivel-experto">Nivel: Experto</span>
+                <h3>Ejercicio Final: Proyecto Completo</h3>
+                <p><strong>Objetivo:</strong> Integrar todas las técnicas aprendidas</p>
+                
+                <p><strong>Caso Real:</strong> BCI necesita sistema de detección de fraude en tiempo real</p>
+
+                <h4>Entregables requeridos:</h4>
+                <ol style="margin-left: 25px;">
+                    <li><strong>Documento de Arquitectura</strong>
+                        <ul>
+                            <li>Diseño de sistema completo</li>
+                            <li>Componentes y su interacción</li>
+                            <li>Stack tecnológico</li>
+                            <li>Prompt usado para generar arquitectura</li>
+                        </ul>
+                    </li>
+                    <li><strong>Agente de Detección</strong>
+                        <ul>
+                            <li>Definición completa del agente</li>
+                            <li>Proceso de decisión</li>
+                            <li>Integración con APIs bancarias</li>
+                            <li>Prompt de inicialización</li>
+                        </ul>
+                    </li>
+                    <li><strong>Código de Producción</strong>
+                        <ul>
+                            <li>3 componentes clave en Python</li>
+                            <li>Tests unitarios e integración</li>
+                            <li>Prompts usados para generación</li>
+                        </ul>
+                    </li>
+                    <li><strong>Documentación</strong>
+                        <ul>
+                            <li>README técnico</li>
+                            <li>Manual de operación</li>
+                            <li>Troubleshooting guide</li>
+                            <li>Prompts usados para documentar</li>
+                        </ul>
+                    </li>
+                    <li><strong>Propuesta Comercial</strong>
+                        <ul>
+                            <li>Para CTO de BCI</li>
+                            <li>15 slides ejecutivos</li>
+                            <li>ROI detallado</li>
+                            <li>Prompt usado para propuesta</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h4>Criterios de Éxito:</h4>
+                <ul style="margin-left: 25px;">
+                    <li>✅ Sistema técnicamente viable</li>
+                    <li>✅ Cumple regulación CMF</li>
+                    <li>✅ ROI positivo demostrable</li>
+                    <li>✅ Todos los prompts documentados</li>
+                    <li>✅ Calidad production-ready</li>
+                </ul>
+
+                <div class="warning">
+                    <strong>⏱️ Tiempo estimado:</strong> 4-6 horas
+                    <br><strong>💡 Consejo:</strong> Trabaja por fases, documenta cada prompt que uses
+                </div>
+            </div>
+
+            <div class="success">
+                <h3>🎓 Al Completar los Ejercicios</h3>
+                <p><strong>Habrás demostrado dominio en:</strong></p>
+                <ul style="margin-left: 25px;">
+                    <li>✅ Todas las técnicas avanzadas de prompting</li>
+                    <li>✅ Generación de código bancario de calidad</li>
+                    <li>✅ Diseño de agentes y asistentes</li>
+                    <li>✅ Documentación profesional</li>
+                    <li>✅ Propuestas comerciales técnicas</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>🏆 Estás listo para aplicar IA en proyectos reales de AIWIS y BCI</strong></p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <h2 style="color: white; border: none;">🚀 AIWIS - Consultora IA & TI</h2>
+            <p style="font-size: 1.1em; margin: 15px 0;">Curso: Ingeniería de Prompts Profesional - DÍA 3</p>
+            <p>📧 Contacto: info@aiwis.cl</p>
+            <p>🌐 www.aiwis.cl</p>
+            <p style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.3);">
+                💡 <strong>Recuerda:</strong> La maestría en prompting viene con la práctica constante. <br>
+                Usa este material como referencia permanente en tus proyectos.
+            </p>
+            <p style="margin-top: 15px; font-size: 0.9em;">
+                Diseñado para aprendizaje progresivo | De cero a experto | Casos reales BCI
+            </p>
+            <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.7;">
+                © 2024 AIWIS Consultora. Material de capacitación profesional.
+            </p>
+        </div>
+        
+        </main>
+    </div>
+
+    <!-- Botón Scroll to Top -->
+    <div class="scroll-top" id="scrollTop" onclick="scrollToTop()">
+        ↑
+    </div>
+
+    <script>
+        // Función para scroll suave a secciones
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                const yOffset = -20; // offset para el scroll
+                const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                
+                window.scrollTo({ top: y, behavior: 'smooth' });
+                
+                // Actualizar link activo
+                updateActiveLink(sectionId);
+            }
+            
+            // Prevenir comportamiento por defecto del link
+            event.preventDefault();
+        }
+
+        // Actualizar el link activo en el menú
+        function updateActiveLink(sectionId) {
+            // Remover clase active de todos los links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Agregar clase active al link correspondiente
+            const activeLink = document.querySelector(`a[href="#${sectionId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+
+        // Detectar qué sección está visible y actualizar menú
+        function onScroll() {
+            const sections = document.querySelectorAll('.section');
+            const scrollPosition = window.pageYOffset + 100; // offset para mejor detección
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    updateActiveLink(sectionId);
+                }
+            });
+        }
+
+        // Función para mostrar tabs
+        function showTab(tabId) {
+            // Ocultar todos los tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Desactivar todos los tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Activar el tab seleccionado
+            const targetContent = document.getElementById(tabId);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
+
+            // Activar el botón del tab
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+        }
+
+        // Mostrar botón scroll to top cuando se hace scroll
+        window.onscroll = function() {
+            onScroll(); // Actualizar menú activo
+            
+            const scrollTop = document.getElementById('scrollTop');
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+        };
+
+        // Función scroll to top
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Inicializar al cargar
+        window.onload = function() {
+            // Activar primer link del menú
+            const firstLink = document.querySelector('.nav-link');
+            if (firstLink) {
+                firstLink.classList.add('active');
+            }
+            
+            // Animar progress bars
+            const progressBars = document.querySelectorAll('.progress-fill');
+            setTimeout(() => {
+                progressBars.forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                });
+            }, 500);
+
+            // Si hay un hash en la URL, navegar a esa sección
+            if (window.location.hash) {
+                const sectionId = window.location.hash.substring(1);
+                setTimeout(() => {
+                    scrollToSection(sectionId);
+                }, 100);
+            }
+        }
+
+        // Agregar smooth scroll a todos los links del menú
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const href = this.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        const sectionId = href.substring(1);
+                        scrollToSection(sectionId);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

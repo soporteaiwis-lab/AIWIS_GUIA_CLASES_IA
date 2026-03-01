@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen Clase 09 | ADA - Adopción de IA</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --highlight-color: #e74c3c;
+            --light-bg: #ecf0f1;
+            --card-bg: #ffffff;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .meta-info {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        .meta-info i { margin-right: 8px; }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .section-card:hover {
+            transform: translateY(-2px);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--accent-color);
+            margin-top: 20px;
+        }
+
+        /* Bullets & Lists */
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+        }
+
+        ul li::before {
+            content: "\f00c"; /* FontAwesome check */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        /* Examples Grid */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .example-item {
+            background: #f8f9fa;
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        /* Tips Box */
+        .tip-box {
+            background-color: #e8f6f3;
+            border: 1px solid #d1f2eb;
+            color: #0e6655;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        /* Case Study Section */
+        .case-study {
+            background-color: #fff8e1;
+            border-left: 5px solid #ffc107;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        /* Footer */
+        .cta-button {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: var(--highlight-color);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #c0392b;
+        }
+
+        /* Citation Style */
+        .cite {
+            font-size: 0.75rem;
+            color: #7f8c8d;
+            vertical-align: super;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.8rem; }
+            .meta-info { display: block; margin: 5px auto; width: fit-content;}
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <h1>ADA | Programa de Adopción de IA</h1>
+        <h2>Clase 09: Creación de Gemas y Estrategias "Paso a Paso"</h2>
+        <div class="meta-info">
+            <i class="fas fa-calendar-alt"></i> 13 de Noviembre, 2025
+            <span style="margin: 0 10px;">|</span>
+            <i class="fas fa-clock"></i> Semana 02
+        </div>
+    </div>
+</header>
+
+<div class="container">
+
+    <div class="section-card">
+        <h2><i class="fas fa-rocket"></i> Objetivo de la Sesión</h2>
+        <p>
+            Esta sesión fue eminentemente práctica e interactiva. El objetivo principal fue asegurar que todos los participantes tuvieran acceso correcto a Gemini y comenzaran a crear sus propias "Gemas" (asistentes personalizados). Además, se analizó un caso de éxito real sobre migración de datos asistida por IA.
+        </p>
+    </div>
+
+    <div class="section-card">
+        <h2><i class="fas fa-gem"></i> El Mundo de las "Gemas"</h2>
+        <p>
+            Una "Gema" es una versión personalizada de Gemini instruida para una tarea específica. Durante la clase, revisamos los componentes esenciales para crear una:
+        </p>
+        
+        
+        <div class="examples-grid">
+            <div class="example-item">
+                <strong>1. Descripción e Instrucciones</strong>
+                <p>La descripción explica brevemente qué hace la gema. Las instrucciones son el "cerebro" donde defines cómo debe comportarse.</p>
+            </div>
+            <div class="example-item">
+                <strong>2. La "Varita Mágica"</strong>
+                <p>Gemini ofrece una herramienta (varita mágica) que ayuda a redactar un prompt inicial basado en una idea simple.</p>
+            </div>
+            <div class="example-item">
+                <strong>3. Base de Conocimiento</strong>
+                <p>Es fundamental para dar contexto. Puedes subir archivos (Excel, PDF, TXT) que la IA usa como referencia específica que no encontraría en internet.</p>
+            </div>
+        </div>
+
+        <div class="tip-box">
+            <i class="fas fa-lightbulb"></i> <strong>Tip de Ahorro:</strong> Si usas la versión gratuita de Gemini, selecciona modelos "Flash" o "Mini". Consumen menos créditos y son ideales para tareas que no requieren razonamiento ultra-profundo.
+        </div>
+    </div>
+
+    <div class="section-card">
+        <h2><i class="fas fa-users-cog"></i> Laboratorio: Ideas en Acción</h2>
+        <p>Los participantes desarrollaron prototipos de Gemas para resolver problemas reales de su día a día:</p>
+        
+        <ul>
+            <li>
+                <strong>Análisis de Jobs (JCL):</strong> Raúl Alarcón creó una gema para analizar y optimizar código JCL cargando archivos TXT.
+            </li>
+            <li>
+                <strong>Validador de JCL ("Chequea JCL"):</strong> Pedro Concha diseñó un asistente para revisar comandos no obvios en los JCL.
+            </li>
+            <li>
+                <strong>Conversor TXT a Excel:</strong> Crizla Urrutia trabajó en una gema para estructurar archivos de texto plano en columnas de Excel.
+            </li>
+            <li>
+                <strong>Validador de Procesos Masivos:</strong> Rafael Valdes propuso una gema para buscar strings repetidos y agrupar archivos por sistema para detectar inconsistencias en clasificaciones.
+            </li>
+        </ul>
+    </div>
+
+    <div class="section-card case-study">
+        <h2><i class="fas fa-project-diagram"></i> Estudio de Caso: El Poder del "Paso a Paso"</h2>
+        <p>
+            Se presentó un caso real de migración en BCI: transformar <strong>150 procesos antiguos</strong> en <strong>450 archivos nuevos</strong> de configuración.
+        </p>
+
+        <h3>El Problema</h3>
+        <p>El intento inicial de pedirle a la IA que generara los 3 archivos de salida simultáneamente resultó en caos e inconsistencias.</p>
+
+        
+        <h3>La Solución Ganadora</h3>
+        <p>La clave del éxito fue cambiar la estrategia de "dame todo ya" a un enfoque controlado:</p>
+        <ol>
+            <li><strong>Plantillas Limpias:</strong> Usar esqueletos vacíos en la base de conocimiento para evitar datos "alucinados".</li>
+            <li><strong>Iteración Secuencial:</strong> Generar un archivo a la vez.</li>
+            <li><strong>Validación Humana:</strong> El experto revisa entre cada paso.</li>
+        </ol>
+
+        <div style="display: flex; justify-content: center;">
+            <div style="width: 300px; text-align: center;">
+                <canvas id="collabChart"></canvas>
+                <p style="font-size: 0.9rem; margin-top: 10px;"><strong>La Fórmula del Éxito</strong></p>
+            </div>
+        </div>
+        
+        <script>
+            const ctx = document.getElementById('collabChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['IA (Trabajo Pesado)', 'Humano (Supervisión Experta)'],
+                    datasets: [{
+                        data: [95, 5],
+                        backgroundColor: ['#3498db', '#e74c3c'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        </script>
+
+        <p><em>Resultado: Un proyecto estimado para 8 meses se aceleró drásticamente gracias a esta colaboración inteligente.</em></p>
+    </div>
+
+    <div class="section-card">
+        <h2><i class="fas fa-laptop-code"></i> Herramientas Avanzadas y Futuro</h2>
+        <ul>
+            <li><strong>Google AI Studio:</strong> Un entorno más avanzado para desarrolladores que permite integrar APIs de Gemini directamente en aplicaciones web o prototipos.</li>
+            <li><strong>Portal Corporativo con IA:</strong> Se mostró un prototipo de dashboard desarrollado sin código (solo con IA generativa) que integra herramientas diarias y acceso a Gemas.</li>
+            <li><strong>IA Creativa (Suno):</strong> Se demostró el uso de IA para generar música y letras completas a partir de un simple prompt, mostrando el potencial creativo de estas herramientas.</li>
+        </ul>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px;">
+        <h3>Siguientes Pasos</h3>
+        <p>Refinar las Gemas creadas y colaborar (Julio y Rafael) para mejorar los prompts de validación de archivos.</p>
+        
+        <a href="https://drive.google.com/file/d/1gAq976yfrUZFF8pDbc_DsMtOe3Bj4rxM/view?usp=sharing" target="_blank" class="cta-button">
+            <i class="fas fa-video"></i> Ver Grabación de la Clase
+        </a>
+        <p class="cite" style="text-align: center;">Enlace obtenido del cronograma oficial</p>
+    </div>
+
+</div>
+
+</body>
+</html>
