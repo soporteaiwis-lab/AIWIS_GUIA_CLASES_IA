@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Dominando ChatGPT, Claude y Gemini - Día 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .option-btn {
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-bottom: 0.75rem;
+            text-align: left;
+            width: 100%;
+            transition: all 0.2s ease;
+            border: 2px solid #e5e7eb;
+            background-color: white;
+            color: #1f2937;
+        }
+        
+        .option-btn:hover:not(.disabled):not(.correct):not(.incorrect) {
+            border-color: #667eea;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .option-btn.correct {
+            background-color: #10b981;
+            color: white;
+            border-color: #059669;
+        }
+        
+        .option-btn.incorrect {
+            background-color: #ef4444;
+            color: white;
+            border-color: #dc2626;
+        }
+
+        .disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <header class="gradient-bg text-white py-8 shadow-xl">
+        <div class="container mx-auto px-6">
+            <h1 class="text-3xl md:text-4xl font-bold mb-2">🧠 Quiz: Dominando ChatGPT, Claude y Gemini</h1>
+            <p class="text-lg opacity-90">Evaluación del Contenido del Día 2 (5 Preguntas)</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+        <div id="quiz-container" class="bg-white rounded-2xl shadow-xl p-8 mb-8 max-w-2xl mx-auto">
+            </div>
+
+        <div id="results-container" class="bg-white rounded-2xl shadow-xl p-8 max-w-2xl mx-auto hidden">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800">✅ Resultados del Quiz</h2>
+            <div id="score-summary" class="text-xl mb-6 p-4 rounded-lg border-l-4 border-purple-500 bg-purple-50"></div>
+            
+            <h3 class="text-2xl font-bold mb-4 text-gray-800">📊 Análisis de Fortalezas y Debilidades</h3>
+            <div id="analysis-content" class="text-gray-700 space-y-4"></div>
+            <button onclick="window.location.reload()" class="mt-8 gradient-bg text-white font-bold py-3 px-6 rounded-lg shadow-md hover:opacity-90 transition duration-300">
+                Reiniciar Quiz
+            </button>
+        </div>
+    </main>
+
+    <script>
+        // ----------------------------------------------------
+        // 1. DATA DEL QUIZ
+        // ----------------------------------------------------
+        const quizData = [
+            {
+                questionNumber: 1,
+                question: "Según la comparativa presentada en la clase, ¿cuál es la principal ventaja de **Gemini** sobre ChatGPT y Claude?",
+                options: [
+                    { text: "Es el más creativo y versátil, ideal para *brainstorming*.", isCorrect: false, rationale: "Esa descripción corresponde a las fortalezas de **ChatGPT**, el cual es ideal para generar ideas creativas." },
+                    { text: "Se integra con herramientas de Google (Gmail, Docs) y busca información actualizada en internet.", isCorrect: true, rationale: "El documento destaca que Gemini está 'Conectado a Google', lo que facilita la integración con herramientas como Gmail y su capacidad de buscar información actualizada en línea." },
+                    { text: "Es el mejor para leer y resumir documentos muy largos y técnicos.", isCorrect: false, rationale: "Esta es la principal fortaleza de **Claude**, el 'Analista Preciso', el cual maneja mejor el análisis de documentos extensos." },
+                    { text: "Es el único que tiene una versión gratuita potente.", isCorrect: false, rationale: "Los tres modelos (ChatGPT, Claude y Gemini) ofrecen versiones gratuitas potentes para el uso personal." }
+                ],
+                topic: 'Estrategia (Gemini)'
+            },
+            {
+                questionNumber: 2,
+                question: "¿Qué es un **LLM** (Modelo de Lenguaje Grande), según la explicación simplificada?",
+                options: [
+                    { text: "Un chip gráfico ultra potente (GPU) que procesa datos de videojuegos.", isCorrect: false, rationale: "Los chips GPU son el hardware que se usa para entrenar los LLMs, pero no son el modelo de IA en sí mismo." },
+                    { text: "Una base de datos que memoriza toda la información de internet para luego repetirla.", isCorrect: false, rationale: "El documento explica que el LLM no memoriza la información, sino que aprende los patrones de conexión de las palabras." },
+                    { text: "Es un programa de IA entrenado para entender y generar texto prediciendo la siguiente palabra más lógica.", isCorrect: true, rationale: "Un LLM es un 'cerebro' digital que aprende patrones en grandes cantidades de texto para generar respuestas coherentes, prediciendo la siguiente palabra más probable." },
+                    { text: "Un sistema de gestión de documentos (Docs, Gmail) integrado por Google.", isCorrect: false, rationale: "Aunque Gemini se integra con estas herramientas, el término LLM es un concepto general que describe la inteligencia artificial subyacente de todos los modelos." }
+                ],
+                topic: 'Concepto (LLM)'
+            },
+            {
+                questionNumber: 3,
+                question: "Si tu tarea es **resumir un informe o documento muy largo** con la máxima precisión, ¿qué modelo se recomienda en la sección de 'Comparativa'?",
+                options: [
+                    { text: "ChatGPT", isCorrect: false, rationale: "ChatGPT es más recomendable para la creatividad y *brainstorming*, siendo menos fuerte en el análisis de documentos 'muy, muy largos'." },
+                    { text: "Claude", isCorrect: true, rationale: "El material de la clase etiqueta a Claude como el 'Analista Preciso' y señala que es 'El mejor para leer y resumir documentos largos', destacando su enfoque en la exactitud." },
+                    { text: "Gemini", isCorrect: false, rationale: "Gemini destaca en la búsqueda de información actualizada e integración con Google, pero no se menciona como el mejor para documentos muy extensos." },
+                    { text: "DALL-E", isCorrect: false, rationale: "DALL-E es una herramienta de creación de imágenes, no un modelo de lenguaje para resumir texto." }
+                ],
+                topic: 'Estrategia (Claude)'
+            },
+            {
+                questionNumber: 4,
+                question: "En el glosario de la IA, ¿a qué se refiere el término **'Prompt'**?",
+                options: [
+                    { text: "La memoria a corto plazo de la IA en una conversación, medida en tokens.", isCorrect: false, rationale: "La memoria a corto plazo de la IA se denomina 'Ventana de Contexto' en el glosario de la clase." },
+                    { text: "Simplemente la instrucción, pregunta o texto que tú le escribes a la IA.", isCorrect: true, rationale: "El glosario define el Prompt como 'simplemente la instrucción, pregunta o texto que tú le escribes a la IA', siendo la clave para obtener un buen resultado." },
+                    { text: "El costo de uso de la IA para desarrolladores, basado en tokens.", isCorrect: false, rationale: "El costo se basa en la cantidad de 'tokens' procesados, pero 'Prompt' es la instrucción de entrada que da el usuario." },
+                    { text: "Cuando la IA se 'inventa' información que parece real pero es falsa.", isCorrect: false, rationale: "El fenómeno donde la IA inventa información se conoce como 'Alucinación' en la terminología del glosario." }
+                ],
+                topic: 'Glosario (Prompt)'
+            },
+            {
+                questionNumber: 5,
+                question: "¿Cuál es la definición del término **'Token'** en el contexto de los LLMs?",
+                options: [
+                    { text: "Es el 'enchufe' que permite a los programadores conectar el cerebro de la IA a sus propias aplicaciones.", isCorrect: false, rationale: "El 'enchufe' para programadores se llama API (Interfaz de Programación de Aplicaciones) según el glosario." },
+                    { text: "Los millones de 'conexiones neuronales' que el modelo ajusta durante su entrenamiento.", isCorrect: false, rationale: "Las 'conexiones neuronales' que el modelo ajusta se denominan 'Parámetros'." },
+                    { text: "Son los 'ladrillos' con los que la IA construye el lenguaje: una palabra entera, un trozo de palabra o un signo de puntuación.", isCorrect: true, rationale: "El glosario describe el Token como los 'ladrillos' del lenguaje, unidades pequeñas que la IA usa para medir la longitud del texto y construir las respuestas." },
+                    { text: "La capacidad de la IA de entender texto, imágenes, audio o video a la vez.", isCorrect: false, rationale: "La capacidad de entender varios formatos (texto, imagen, audio) se describe como 'Multimodal'." }
+                ],
+                topic: 'Glosario (Token)'
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let incorrectAnswersByTopic = {};
+
+        // ----------------------------------------------------
+        // 2. FUNCIONES DE RENDERING
+        // ----------------------------------------------------
+
+        function renderQuestion() {
+            const container = document.getElementById('quiz-container');
+            if (currentQuestionIndex >= quizData.length) {
+                showResults();
+                return;
+            }
+
+            const questionData = quizData[currentQuestionIndex];
+            const optionsHtml = questionData.options.map((option, index) => `
+                <button class="option-btn" data-index="${index}" onclick="checkAnswer(this, ${questionData.questionNumber - 1})">
+                    ${option.text}
+                </button>
+            `).join('');
+
+            container.innerHTML = `
+                <div id="slide-${currentQuestionIndex}" class="animate-fade-in">
+                    <p class="text-sm font-semibold text-purple-600 mb-2">Pregunta ${questionData.questionNumber} de ${quizData.length}</p>
+                    <h2 class="text-2xl font-bold mb-6 text-gray-800">${questionData.question}</h2>
+                    <div id="options-container" class="space-y-3">
+                        ${optionsHtml}
+                    </div>
+                    <div id="feedback-${currentQuestionIndex}" class="mt-6 p-4 rounded-lg hidden"></div>
+                </div>
+            `;
+        }
+
+        function checkAnswer(selectedButton, questionIndex) {
+            const question = quizData[questionIndex];
+            const selectedIndex = parseInt(selectedButton.getAttribute('data-index'));
+            const isCorrect = question.options[selectedIndex].isCorrect;
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            const buttons = document.querySelectorAll('.option-btn');
+            
+            // Desactivar todos los botones
+            buttons.forEach(btn => btn.classList.add('disabled'));
+
+            // Resaltar la respuesta del usuario
+            if (isCorrect) {
+                selectedButton.classList.add('correct');
+                score++;
+                feedbackDiv.classList.remove('hidden', 'bg-red-100', 'border-red-500');
+                feedbackDiv.classList.add('bg-green-100', 'border-green-500', 'border-l-4');
+                feedbackDiv.innerHTML = `<p class="font-bold text-green-800">¡Correcto! ✅</p>`;
+            } else {
+                selectedButton.classList.add('incorrect');
+                const correctOption = question.options.find(opt => opt.isCorrect);
+                
+                // Resaltar la correcta
+                document.querySelector(`.option-btn[data-index="${question.options.indexOf(correctOption)}"]`).classList.add('correct');
+
+                // Registrar error por tema
+                incorrectAnswersByTopic[question.topic] = (incorrectAnswersByTopic[question.topic] || 0) + 1;
+
+                feedbackDiv.classList.remove('hidden', 'bg-green-100', 'border-green-500');
+                feedbackDiv.classList.add('bg-red-100', 'border-red-500', 'border-l-4');
+                feedbackDiv.innerHTML = `
+                    <p class="font-bold text-red-800">¡Incorrecto! ❌</p>
+                    <p class="mt-2 text-gray-700"><span class="font-semibold">Racionalización:</span> ${correctOption.rationale}</p>
+                `;
+            }
+
+            // Mostrar botón para la siguiente pregunta
+            setTimeout(() => {
+                feedbackDiv.innerHTML += `
+                    <button onclick="nextQuestion()" class="mt-4 gradient-bg text-white font-bold py-2 px-4 rounded-lg shadow-md hover:opacity-90 transition duration-300">
+                        Siguiente Pregunta 
+                    </button>
+                `;
+            }, 800);
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            renderQuestion();
+        }
+
+        function getAnalysis() {
+            let analysis = '';
+            let strengths = [];
+            let weaknesses = [];
+            const totalQuestions = quizData.length;
+            const topics = ['Estrategia (Gemini)', 'Estrategia (Claude)', 'Concepto (LLM)', 'Glosario (Prompt)', 'Glosario (Token)'];
+            
+            // Calcular aciertos por tema
+            const correctByTopic = {};
+            topics.forEach(topic => correctByTopic[topic] = 0);
+            quizData.forEach(q => {
+                if (!incorrectAnswersByTopic[q.topic]) {
+                    correctByTopic[q.topic] = (correctByTopic[q.topic] || 0) + 1;
+                }
+            });
+
+            // Analizar Estrategia (Gemini/Claude)
+            const strategyErrors = (incorrectAnswersByTopic['Estrategia (Gemini)'] || 0) + (incorrectAnswersByTopic['Estrategia (Claude)'] || 0);
+            if (strategyErrors === 0) {
+                strengths.push("Excelente comprensión de la **aplicación estratégica** de los modelos (cuándo usar ChatGPT, Claude o Gemini).");
+            } else if (strategyErrors > 0 && strategyErrors < 2) {
+                strengths.push("Buena capacidad para diferenciar las **fortalezas de los modelos**; revisa el caso específico que fallaste.");
+            } else {
+                weaknesses.push("Necesitas repasar la sección de **Comparativa** para saber qué modelo es el más eficiente en tareas de precisión vs. creatividad vs. investigación.");
+            }
+
+            // Analizar Glosario (Prompt/Token)
+            const glosaryErrors = (incorrectAnswersByTopic['Glosario (Prompt)'] || 0) + (incorrectAnswersByTopic['Glosario (Token)'] || 0);
+            if (glosaryErrors === 0) {
+                strengths.push("Fuerte manejo del **vocabulario fundamental** de IA (Prompt y Token), crucial para la comunicación efectiva con la herramienta.");
+            } else {
+                weaknesses.push("Revisa el **Glosario para Principiantes**, especialmente los términos como Prompt, Token y Ventana de Contexto.");
+            }
+
+            // Analizar Concepto (LLM)
+            const conceptErrors = (incorrectAnswersByTopic['Concepto (LLM)'] || 0);
+            if (conceptErrors === 0) {
+                strengths.push("Sólida comprensión del **concepto base** de un LLM: cómo 'piensa' y genera respuestas.");
+            } else {
+                weaknesses.push("Asegúrate de entender que un LLM funciona con **patrones y predicción** de la siguiente palabra, no por memorización simple.");
+            }
+
+            analysis += `<p><span class="font-bold text-green-700">Fortalezas:</span></p><ul class="list-disc list-inside ml-4">${strengths.map(s => `<li>${s}</li>`).join('')}</ul>`;
+            
+            if (weaknesses.length > 0) {
+                 analysis += `<p class="mt-4"><span class="font-bold text-red-700">Debilidades (Áreas a Repasar):</span></p><ul class="list-disc list-inside ml-4">${weaknesses.map(w => `<li>${w}</li>`).join('')}</ul>`;
+            } else {
+                analysis += `<p class="mt-4 text-green-800 font-semibold">¡No se detectaron debilidades importantes! ¡Excelente trabajo! 🎉</p>`;
+            }
+
+            return analysis;
+        }
+
+        function showResults() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('results-container').classList.remove('hidden');
+
+            const scoreSummary = document.getElementById('score-summary');
+            const correctCount = score;
+            const incorrectCount = quizData.length - score;
+
+            scoreSummary.innerHTML = `
+                <p>Total de Preguntas: ${quizData.length}</p>
+                <p class="text-green-600 font-bold">Respuestas Correctas: ${correctCount}</p>
+                <p class="text-red-600 font-bold">Respuestas Incorrectas: ${incorrectCount}</p>
+            `;
+
+            document.getElementById('analysis-content').innerHTML = getAnalysis();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ----------------------------------------------------
+        // 3. INICIO DEL QUIZ
+        // ----------------------------------------------------
+        document.addEventListener('DOMContentLoaded', renderQuestion);
+    </script>
+</body>
+</html>
