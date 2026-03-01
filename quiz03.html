@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interactivo: Ingeniería de Prompts Profesional (Día 3)</title>
+    <style>
+        /* CSS tomado del archivo clase03.html para consistencia visual */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8fafc;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .quiz-container {
+            width: 90%;
+            max-width: 700px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border: 3px solid #7e22ce;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #1e3c72;
+            font-size: 2em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #7e22ce;
+            font-size: 1.1em;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .slide {
+            display: none;
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.5s forwards;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .question-text {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #e0f2fe;
+            border-radius: 10px;
+            border-left: 5px solid #0284c7;
+        }
+
+        .option {
+            display: block;
+            background: #f0f9ff;
+            color: #1e3c72;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid #bae6fd;
+            font-size: 1.1em;
+        }
+
+        .option:hover {
+            background: #bae6fd;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .option.selected {
+            border: 2px solid #7e22ce;
+            background: #ddd6fe;
+        }
+
+        .option.correct {
+            background: #d1fae5;
+            border: 2px solid #10b981;
+            font-weight: bold;
+        }
+
+        .option.incorrect {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            font-weight: bold;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            color: #065f46;
+        }
+
+        .feedback.incorrect {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            color: #991b1b;
+        }
+
+        .feedback strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            align-items: center;
+        }
+
+        button {
+            background: linear-gradient(135deg, #7e22ce, #a855f7);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(126, 34, 206, 0.4);
+        }
+
+        button:hover:not(:disabled) {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        #quiz-progress {
+            font-size: 1.1em;
+            color: #64748b;
+        }
+
+        #results-screen h2 {
+            color: #7e22ce;
+            font-size: 2em;
+            border-bottom: 3px solid #e0f2fe;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        #results-screen .stat-card {
+            background: #f0f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .correct-score {
+            border: 2px solid #10b981;
+            color: #10b981;
+        }
+
+        .incorrect-score {
+            border: 2px solid #ef4444;
+            color: #ef4444;
+        }
+
+        .analysis-card {
+            background: #fff7ed;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 6px solid #f97316;
+            margin-top: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .analysis-card h3 {
+            color: #f97316;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container">
+        <h1>🚀 Quiz: Ingeniería de Prompts Profesional</h1>
+        <div class="subtitle">Clase: DÍA 3 - AIWIS Consultora IA & TI (5 Preguntas)</div>
+
+        <div id="quiz-slides">
+            </div>
+
+        <div id="results-screen" style="display: none;">
+            <h2>📊 Resumen del Quiz Terminado</h2>
+            
+            <div class="summary-grid">
+                <div class="stat-card correct-score">
+                    Correctas: <span id="correct-count">0</span>
+                </div>
+                <div class="stat-card incorrect-score">
+                    Incorrectas: <span id="incorrect-count">0</span>
+                </div>
+            </div>
+
+            <div class="analysis-card">
+                <h3>🧠 Análisis de Fortalezas y Debilidades</h3>
+                <p id="analysis-text"></p>
+                <p>¡Sigue practicando las técnicas avanzadas para convertirte en un experto!</p>
+            </div>
+
+            <div class="controls" style="justify-content: center;">
+                <button onclick="location.reload()">Reiniciar Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                "topic": "CoT",
+                "questionNumber": 1,
+                "question": "¿Cuál es la frase clave más efectiva mencionada en el documento para activar la técnica **Chain-of-Thought (CoT)**, que pide a la IA que muestre su razonamiento?",
+                "answerOptions": [
+                    {
+                        "text": "Desglosa el problema",
+                        "isCorrect": false,
+                        "rationale": "Aunque es una frase para CoT, la que se menciona como la 'más efectiva' en el documento es otra."
+                    },
+                    {
+                        "text": "Piensa paso a paso",
+                        "isCorrect": true,
+                        "rationale": "Esta frase es la más efectiva para activar el razonamiento secuencial de la IA, lo cual aumenta drásticamente la precisión y la confiabilidad."
+                    },
+                    {
+                        "text": "Sé un consultor experto",
+                        "isCorrect": false,
+                        "rationale": "Esta frase activa la técnica de Role Prompting, no la Chain-of-Thought."
+                    },
+                    {
+                        "text": "Genera un Tree-of-Thoughts",
+                        "isCorrect": false,
+                        "rationale": "Esta frase activa la técnica Tree-of-Thoughts, que es más avanzada y diferente a la CoT básica."
+                    }
+                ],
+                "hint": "Busca la frase que se describe como 'La más efectiva' para el razonamiento paso a paso."
+            },
+            {
+                "topic": "Role Prompting",
+                "questionNumber": 2,
+                "question": "¿Qué técnica avanzada de prompting le dice a la IA que **actúe como un profesional específico** (ej. 'analista de riesgo de BCI') para ajustar su vocabulario y expertise?",
+                "answerOptions": [
+                    {
+                        "text": "Few-Shot Learning",
+                        "isCorrect": false,
+                        "rationale": "Few-Shot Learning trata de dar ejemplos, no de asignar una personalidad o rol profesional."
+                    },
+                    {
+                        "text": "Self-Consistency",
+                        "isCorrect": false,
+                        "rationale": "Self-Consistency trata de generar múltiples respuestas para comparar su solidez, no de adoptar un rol."
+                    },
+                    {
+                        "text": "Role Prompting",
+                        "isCorrect": true,
+                        "rationale": "El Role Prompting ajusta el vocabulario, la perspectiva y el enfoque de la IA a la de un experto o profesional solicitado por el usuario."
+                    },
+                    {
+                        "text": "Prompt Chaining",
+                        "isCorrect": false,
+                        "rationale": "Prompt Chaining consiste en dividir una tarea en pasos secuenciales."
+                    }
+                ],
+                "hint": "Piensa en la técnica que utiliza una 'máscara' o 'persona' para la IA."
+            },
+            {
+                "topic": "Few-Shot",
+                "questionNumber": 3,
+                "question": "Según el documento, ¿cuántos ejemplos se recomienda dar a la IA para aplicar la técnica **Few-Shot Learning** y lograr patrones de respuesta complejos?",
+                "answerOptions": [
+                    {
+                        "text": "0 ejemplos (Zero-Shot)",
+                        "isCorrect": false,
+                        "rationale": "Zero-Shot se usa para tareas simples y conocidas, pero no para enseñar patrones complejos."
+                    },
+                    {
+                        "text": "1 ejemplo (One-Shot)",
+                        "isCorrect": false,
+                        "rationale": "One-Shot es útil para formatos específicos, pero 2-5 ejemplos son más efectivos para patrones complejos."
+                    },
+                    {
+                        "text": "2 a 5 ejemplos",
+                        "isCorrect": true,
+                        "rationale": "El Few-Shot Learning se define como el uso de 2 a 5 ejemplos, logrando una efectividad alta (85-95%) para patrones complejos."
+                    },
+                    {
+                        "text": "10 o más ejemplos (Many-Shot)",
+                        "isCorrect": false,
+                        "rationale": "Many-Shot es para casos muy específicos y consume muchos tokens, siendo 2-5 la recomendación estándar de Few-Shot."
+                    }
+                ],
+                "hint": "Revisa la tabla que compara la efectividad de los diferentes tipos de 'Shot Learning'."
+            },
+            {
+                "topic": "CoT",
+                "questionNumber": 4,
+                "question": "¿Cuál es el principal beneficio de usar la técnica Chain-of-Thought (CoT) en contextos como el análisis de riesgo bancario?",
+                "answerOptions": [
+                    {
+                        "text": "Ahorro de hasta un 70% en tiempo de respuesta",
+                        "isCorrect": false,
+                        "rationale": "El CoT puede aumentar el tiempo de respuesta, ya que la IA debe generar pasos intermedios, aunque aumenta la calidad."
+                    },
+                    {
+                        "text": "La IA ajusta su tono a un analista senior",
+                        "isCorrect": false,
+                        "rationale": "Esta es una característica del Role Prompting, no del Chain-of-Thought."
+                    },
+                    {
+                        "text": "La respuesta es verificable, educativa y confiable",
+                        "isCorrect": true,
+                        "rationale": "CoT obliga a la IA a mostrar su trabajo, haciendo que el proceso y el resultado final sean transparentes y fácilmente auditables por un experto."
+                    },
+                    {
+                        "text": "Permite explorar 3 enfoques diferentes (conservador, innovador, híbrido)",
+                        "isCorrect": false,
+                        "rationale": "Esta es una característica de la técnica Tree-of-Thoughts (Árbol de Pensamientos)."
+                    }
+                ],
+                "hint": "La técnica CoT está relacionada con la transparencia y el proceso de cálculo, similar a 'mostrar el trabajo' en matemáticas."
+            },
+            {
+                "topic": "Estructura",
+                "questionNumber": 5,
+                "question": "En la estructura de la **Plantilla Base para Generación de Código**, ¿cuál de los siguientes elementos es el que define las limitaciones y condiciones que el código NO debe tener?",
+                "answerOptions": [
+                    {
+                        "text": "REQUISITOS",
+                        "isCorrect": false,
+                        "rationale": "Los REQUISITOS definen lo que se espera que el código HAGA, no las limitaciones o aquello que debe evitarse."
+                    },
+                    {
+                        "text": "CONTEXTO",
+                        "isCorrect": false,
+                        "rationale": "El CONTEXTO describe el proyecto o sistema, pero no las reglas específicas que restringen la solución."
+                    },
+                    {
+                        "text": "RESTRICCIONES",
+                        "isCorrect": true,
+                        "rationale": "Las RESTRICCIONES se utilizan explícitamente en la plantilla para definir las limitaciones, prohibiciones o condiciones negativas del código."
+                    },
+                    {
+                        "text": "CALIDAD",
+                        "isCorrect": false,
+                        "rationale": "CALIDAD define los estándares a seguir (ej. estándares de seguridad o formato), pero las RESTRICCIONES definen las limitaciones directas."
+                    }
+                ],
+                "hint": "Este elemento de la plantilla de código se refiere a las cosas que la IA debe evitar o limitar en su respuesta."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        let score = { correct: 0, incorrect: 0 };
+        const quizSlidesElement = document.getElementById('quiz-slides');
+        const resultsScreenElement = document.getElementById('results-screen');
+        const totalQuestions = quizData.length;
+
+        function renderQuiz() {
+            quizSlidesElement.innerHTML = '';
+            quizData.forEach((q, index) => {
+                const slide = document.createElement('div');
+                slide.className = `slide ${index === currentQuestionIndex ? 'active' : ''}`;
+                slide.id = `q-${index}`;
+
+                slide.innerHTML = `
+                    <div id="quiz-progress">Pregunta ${q.questionNumber} de ${totalQuestions}</div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options-container">
+                        ${q.answerOptions.map((option, optIndex) => `
+                            <div class="option" data-option-index="${optIndex}" onclick="selectOption(${index}, ${optIndex})">
+                                ${option.text}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="feedback" id="feedback-${index}"></div>
+                    <div class="controls">
+                        <button onclick="showHint(${index})">Mostrar Pista 💡</button>
+                        <button id="submit-btn-${index}" disabled onclick="submitAnswer(${index})">
+                            ${index === totalQuestions - 1 ? 'Terminar Quiz 🏁' : 'Siguiente'}
+                        </button>
+                    </div>
+                `;
+                quizSlidesElement.appendChild(slide);
+            });
+            updateControlsVisibility(currentQuestionIndex);
+        }
+
+        function selectOption(qIndex, optIndex) {
+            if (userAnswers[qIndex] !== undefined) return; // Ya se ha respondido
+            const slide = document.getElementById(`q-${qIndex}`);
+            const options = slide.querySelectorAll('.option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            options[optIndex].classList.add('selected');
+            slide.querySelector(`#submit-btn-${qIndex}`).disabled = false;
+        }
+
+        function submitAnswer(qIndex) {
+            const slide = document.getElementById(`q-${qIndex}`);
+            const selectedOptionElement = slide.querySelector('.option.selected');
+
+            if (!selectedOptionElement) return;
+
+            const optIndex = parseInt(selectedOptionElement.getAttribute('data-option-index'));
+            const isCorrect = quizData[qIndex].answerOptions[optIndex].isCorrect;
+            const feedbackElement = slide.querySelector(`#feedback-${qIndex}`);
+            const options = slide.querySelectorAll('.option');
+
+            // 1. Marcar la respuesta
+            options.forEach(opt => {
+                opt.onclick = null; // Deshabilitar clics futuros
+                const index = parseInt(opt.getAttribute('data-option-index'));
+                const optionData = quizData[qIndex].answerOptions[index];
+
+                if (optionData.isCorrect) {
+                    opt.classList.add('correct');
+                } else if (opt === selectedOptionElement) {
+                    opt.classList.add('incorrect');
+                }
+            });
+
+            // 2. Mostrar feedback y rationale
+            const rationale = quizData[qIndex].answerOptions[optIndex].rationale;
+            const correctOption = quizData[qIndex].answerOptions.find(opt => opt.isCorrect).text;
+
+            feedbackElement.classList.remove('incorrect', 'correct');
+            feedbackElement.style.display = 'block';
+
+            if (isCorrect) {
+                feedbackElement.classList.add('correct');
+                feedbackElement.innerHTML = `<strong>¡Correcto! ✅</strong> Racionalización: ${rationale}`;
+                score.correct++;
+            } else {
+                feedbackElement.classList.add('incorrect');
+                feedbackElement.innerHTML = `<strong>¡Incorrecto! ❌</strong> Racionalización: ${rationale} <br> La respuesta correcta era: <strong>${correctOption}</strong>.`;
+                score.incorrect++;
+            }
+
+            userAnswers[qIndex] = { selected: optIndex, correct: isCorrect, topic: quizData[qIndex].topic };
+            
+            // 3. Modificar el botón
+            slide.querySelector(`#submit-btn-${qIndex}`).disabled = true;
+            if (qIndex < totalQuestions - 1) {
+                 // Cambia el botón de 'Siguiente' a un botón que avanza la slide
+                 const nextButton = slide.querySelector('.controls button:last-child');
+                 nextButton.innerText = 'Siguiente Pregunta →';
+                 nextButton.onclick = () => nextQuestion(qIndex);
+                 nextButton.disabled = false;
+            } else {
+                // Última pregunta: ir a resultados
+                const finishButton = slide.querySelector('.controls button:last-child');
+                finishButton.innerText = 'Ver Resultados 🏆';
+                finishButton.onclick = showResults;
+                finishButton.disabled = false;
+            }
+        }
+
+        function nextQuestion(qIndex) {
+            if (qIndex < totalQuestions - 1) {
+                currentQuestionIndex++;
+                const currentSlide = document.getElementById(`q-${qIndex}`);
+                const nextSlide = document.getElementById(`q-${currentQuestionIndex}`);
+                if (currentSlide) currentSlide.classList.remove('active');
+                if (nextSlide) nextSlide.classList.add('active');
+                updateControlsVisibility(currentQuestionIndex);
+            }
+        }
+
+        function showHint(qIndex) {
+            const hint = quizData[qIndex].hint;
+            alert(`💡 Pista: ${hint}`);
+        }
+
+        function updateControlsVisibility(qIndex) {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach((slide, index) => {
+                slide.style.display = (index === qIndex) ? 'block' : 'none';
+            });
+        }
+
+        function showResults() {
+            quizSlidesElement.style.display = 'none';
+            resultsScreenElement.style.display = 'block';
+
+            document.getElementById('correct-count').innerText = score.correct;
+            document.getElementById('incorrect-count').innerText = score.incorrect;
+
+            generateAnalysis();
+        }
+
+        function generateAnalysis() {
+            const resultsByTopic = {
+                'CoT': { correct: 0, total: 0, questions: [1, 4] },
+                'Role Prompting': { correct: 0, total: 0, questions: [2] },
+                'Few-Shot': { correct: 0, total: 0, questions: [3] },
+                'Estructura': { correct: 0, total: 0, questions: [5] }
+            };
+
+            // Rellenar resultados por tema
+            Object.values(userAnswers).forEach(answer => {
+                resultsByTopic[answer.topic].total++;
+                if (answer.correct) {
+                    resultsByTopic[answer.topic].correct++;
+                }
+            });
+
+            let strengths = [];
+            let weaknesses = [];
+            let analysisText = "";
+
+            // Lógica de análisis simple (Más del 50% de aciertos es Fortaleza)
+            if (resultsByTopic['CoT'].correct === resultsByTopic['CoT'].total) {
+                strengths.push('Chain-of-Thought (CoT)');
+            } else if (resultsByTopic['CoT'].correct < resultsByTopic['CoT'].total) {
+                weaknesses.push('Chain-of-Thought (CoT)');
+            }
+
+            if (resultsByTopic['Role Prompting'].correct === resultsByTopic['Role Prompting'].total) {
+                strengths.push('Role Prompting');
+            } else {
+                weaknesses.push('Role Prompting');
+            }
+
+            if (resultsByTopic['Few-Shot'].correct === resultsByTopic['Few-Shot'].total) {
+                strengths.push('Few-Shot Learning');
+            } else {
+                weaknesses.push('Few-Shot Learning');
+            }
+
+            if (resultsByTopic['Estructura'].correct === resultsByTopic['Estructura'].total) {
+                strengths.push('Estructura de Prompts para Código');
+            } else {
+                weaknesses.push('Estructura de Prompts para Código');
+            }
+            
+            // Generar el texto final
+            analysisText += "<strong>Fortalezas:</strong> Has demostrado un sólido entendimiento de los siguientes temas: " + 
+                            (strengths.length > 0 ? strengths.join(', ') + "." : "No se identificaron fortalezas claras en este quiz.");
+            
+            analysisText += "<br><br><strong>Oportunidades de Mejora:</strong> Sugerimos repasar los siguientes conceptos: " + 
+                            (weaknesses.length > 0 ? weaknesses.join(', ') + ". Céntrate en su definición y aplicación correcta." : "¡Excelente trabajo! No se identificaron debilidades mayores.");
+            
+            document.getElementById('analysis-text').innerHTML = analysisText;
+        }
+
+        // Inicializar el quiz al cargar la página
+        window.onload = renderQuiz;
+    </script>
+</body>
+</html>

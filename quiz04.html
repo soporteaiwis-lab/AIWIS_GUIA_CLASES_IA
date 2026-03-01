@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interactivo - Clase 4 de IA</title>
+    <style>
+        :root {
+            --azul: #3b82f6;
+            --verde: #10b981;
+            --rojo: #ef4444;
+            --amarillo: #f59e0b;
+            --morado: #8b5cf6;
+            --fondo: #f8fafc;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-size: 18px;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: var(--azul);
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--azul);
+            padding-bottom: 10px;
+        }
+
+        .question-slide {
+            display: none;
+            padding: 20px;
+            border: 2px solid var(--morado);
+            border-radius: 15px;
+            min-height: 350px; /* Para mantener consistencia de altura */
+        }
+
+        .question-slide.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--morado);
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 2px solid var(--azul);
+            border-radius: 10px;
+            background: var(--fondo);
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1em;
+        }
+
+        .option-btn:hover:not(.disabled):not(.correct):not(.incorrect) {
+            background: #e0f2fe;
+            transform: translateX(5px);
+        }
+
+        .option-btn.correct {
+            background: var(--verde);
+            color: white;
+            border-color: var(--verde);
+            font-weight: bold;
+        }
+
+        .option-btn.incorrect {
+            background: var(--rojo);
+            color: white;
+            border-color: var(--rojo);
+            font-weight: bold;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.9em;
+        }
+
+        .feedback-correct {
+            background: #dcfce7;
+            color: #166534;
+            border-left: 5px solid var(--verde);
+        }
+
+        .feedback-incorrect {
+            background: #fee2e2;
+            color: #dc2626;
+            border-left: 5px solid var(--rojo);
+        }
+
+        .navigation-btns {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #next-btn, #start-quiz-btn {
+            background: var(--azul);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        #next-btn:hover, #start-quiz-btn:hover {
+            background: #2563eb;
+        }
+
+        #next-btn:disabled {
+            background: var(--gris);
+            cursor: not-allowed;
+        }
+
+        #results-screen {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            border: 2px solid var(--verde);
+            border-radius: 15px;
+            background: #f0fff4;
+        }
+
+        #results-screen h2 {
+            color: var(--verde);
+            font-size: 2em;
+            border-bottom: 2px solid var(--verde);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .summary-box {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+
+        .summary-item {
+            padding: 15px 30px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .correct-count { background: var(--verde); }
+        .incorrect-count { background: var(--rojo); }
+
+        #analysis {
+            text-align: left;
+            padding: 20px;
+            background: #e0f2fe;
+            border-radius: 10px;
+            border-left: 5px solid var(--azul);
+            margin-top: 20px;
+        }
+        
+        #analysis h3 {
+            color: var(--azul);
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        .start-screen {
+            text-align: center;
+            padding: 50px;
+            border: 2px solid var(--azul);
+            border-radius: 15px;
+            background: #f0f4ff;
+        }
+        
+        .start-screen h2 {
+            color: var(--azul);
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>🎓 Quiz de Programación con IA</h1>
+    
+    <div id="start-screen" class="start-screen">
+        <h2>¡Ponte a prueba!</h2>
+        <p>Este quiz tiene **5 preguntas** sobre los temas de la Clase 4: Glosario, Chat vs. API, Tokens y Herramientas.</p>
+        <p>Recibirás retroalimentación inmediata en cada pregunta.</p>
+        <button id="start-quiz-btn">Comenzar Quiz</button>
+    </div>
+
+    <div id="slide-0" class="question-slide">
+        <h2>Pregunta 1/5: ¿Qué significa la sigla **LLM** en el contexto de la Inteligencia Artificial?</h2>
+        <div class="options-container">
+            <button class="option-btn" data-answer="A">A) Language Learning Module (Módulo de Aprendizaje de Lenguaje)</button>
+            <button class="option-btn" data-answer="B">B) Large Language Model (Modelo de Lenguaje Grande)</button>
+            <button class="option-btn" data-answer="C">C) Linear Logic Machine (Máquina de Lógica Lineal)</button>
+            <button class="option-btn" data-answer="D">D) Local Logic Management (Gestión de Lógica Local)</button>
+        </div>
+    </div>
+
+    <div id="slide-1" class="question-slide">
+        <h2>Pregunta 2/5: La principal **ventaja** de usar la IA mediante la interfaz de **CHAT** (como ChatGPT.com o claude.ai) es:</h2>
+        <div class="options-container">
+            <button class="option-btn" data-answer="A">A) Permite la automatización total de tareas.</button>
+            <button class="option-btn" data-answer="B">B) Es la única forma de pagar por uso (por tokens).</button>
+            <button class="option-btn" data-answer="C">C) Es la forma más simple de usar y **no requiere programar**.</button>
+            <button class="option-btn" data-answer="D">D) Es el único método que funciona 24/7 en un chatbot.</button>
+        </div>
+    </div>
+
+    <div id="slide-2" class="question-slide">
+        <h2>Pregunta 3/5: En la IA, un **Token** es la "moneda" o unidad de texto que se cobra en las APIs. ¿Cuál es la equivalencia aproximada de un token en letras para el español?</h2>
+        <div class="options-container">
+            <button class="option-btn" data-answer="A">A) 1 token ≈ 1 letra</button>
+            <button class="option-btn" data-answer="B">B) 1 token ≈ 1 palabra</button>
+            <button class="option-btn" data-answer="C">C) 1 token ≈ 4 letras</button>
+            <button class="option-btn" data-answer="D">D) 1 token ≈ 10 letras</button>
+        </div>
+    </div>
+
+    <div id="slide-3" class="question-slide">
+        <h2>Pregunta 4/5: ¿Cuál de las siguientes herramientas se describe como el **Editor de Código** donde escribes programas, similar a "Word pero para programadores"?</h2>
+        <div class="options-container">
+            <button class="option-btn" data-answer="A">A) GitHub Copilot</button>
+            <button class="option-btn" data-answer="B">B) Gemini Pro</button>
+            <button class="option-btn" data-answer="C">C) Visual Studio Code (VS Code)</button>
+            <button class="option-btn" data-answer="D">D) API Key</button>
+        </div>
+    </div>
+
+    <div id="slide-4" class="question-slide">
+        <h2>Pregunta 5/5: ¿Qué nombre recibe la **instrucción o pregunta** clara y detallada que le das a la IA para que te ayude a programar o resolver una duda?</h2>
+        <div class="options-container">
+            <button class="option-btn" data-answer="A">A) Algoritmo</button>
+            <button class="option-btn" data-answer="B">B) Stack Tecnológico</button>
+            <button class="option-btn" data-answer="C">C) API Key</button>
+            <button class="option-btn" data-answer="D">D) Prompt</button>
+        </div>
+    </div>
+
+    <div id="results-screen">
+        <h2>🎉 ¡Quiz Terminado!</h2>
+        <div class="summary-box">
+            <div class="summary-item correct-count" id="correct-count">Correctas: 0</div>
+            <div class="summary-item incorrect-count" id="incorrect-count">Incorrectas: 0</div>
+        </div>
+        <div id="analysis">
+            <h3>Análisis Personalizado</h3>
+            <p id="analysis-text"></p>
+            <p style="margin-top: 15px; font-style: italic; font-size: 0.9em;">
+                Vuelve a repasar las secciones donde tuviste más fallos. ¡La práctica hace al maestro!
+            </p>
+        </div>
+    </div>
+
+    <div id="navigation" class="navigation-btns">
+        <button id="next-btn" disabled>Siguiente Pregunta ➡️</button>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        {
+            topic: "Glosario/LLM",
+            correctAnswer: "B",
+            explanation: "LLM significa 'Large Language Model' (Modelo de Lenguaje Grande), que es el 'cerebro' de la IA, como se menciona en el glosario.",
+        },
+        {
+            topic: "Chat vs. API",
+            correctAnswer: "C",
+            explanation: "El Chat es la forma más sencilla y conversacional de usar la IA y no requiere saber programar, a diferencia de la API que sí lo requiere.",
+        },
+        {
+            topic: "Tokens",
+            correctAnswer: "C",
+            explanation: "Según la regla aproximada de la clase, en español, 1 token equivale a aproximadamente 4 letras. Es lo que se cobra al usar las APIs.",
+        },
+        {
+            topic: "Herramientas",
+            correctAnswer: "C",
+            explanation: "Visual Studio Code (VS Code) es el IDE (Editor de Código) recomendado, descrito como el 'Word pero para programadores'.",
+        },
+        {
+            topic: "Glosario/Prompts",
+            correctAnswer: "D",
+            explanation: "El 'Prompt' es la instrucción o pregunta específica que le das a la IA, la clave para obtener un buen resultado.",
+        },
+    ];
+
+    let currentSlide = 0;
+    let score = { correct: 0, incorrect: 0 };
+    const topicScores = {
+        "Glosario/LLM": 0,
+        "Chat vs. API": 0,
+        "Tokens": 0,
+        "Herramientas": 0,
+        "Glosario/Prompts": 0,
+    };
+    const questionElements = document.querySelectorAll('.question-slide');
+    const startScreen = document.getElementById('start-screen');
+    const resultsScreen = document.getElementById('results-screen');
+    const nextBtn = document.getElementById('next-btn');
+    const startBtn = document.getElementById('start-quiz-btn');
+
+    function showSlide(index) {
+        questionElements.forEach((slide, i) => {
+            slide.classList.remove('active');
+            if (i === index) {
+                slide.classList.add('active');
+            }
+        });
+
+        // Ocultar/Mostrar botón Siguiente
+        if (index < questions.length) {
+            document.getElementById('navigation').style.display = 'block';
+            nextBtn.disabled = true; // Deshabilita hasta que se responda
+            nextBtn.textContent = (index === questions.length - 1) ? 'Finalizar Quiz' : 'Siguiente Pregunta ➡️';
+        } else {
+            document.getElementById('navigation').style.display = 'none';
+        }
+    }
+    
+    function startQuiz() {
+        startScreen.style.display = 'none';
+        showSlide(currentSlide);
+    }
+
+    function checkAnswer(selectedOption) {
+        const questionData = questions[currentSlide];
+        const correct = selectedOption.dataset.answer === questionData.correctAnswer;
+        const options = selectedOption.parentElement.querySelectorAll('.option-btn');
+        let feedback = document.createElement('div');
+
+        // Deshabilitar todas las opciones y aplicar estilos
+        options.forEach(btn => {
+            btn.classList.add('disabled');
+            btn.style.pointerEvents = 'none';
+            if (btn.dataset.answer === questionData.correctAnswer) {
+                btn.classList.add('correct');
+            } else if (btn === selectedOption) {
+                btn.classList.add('incorrect');
+            }
+        });
+
+        // Mostrar feedback
+        if (correct) {
+            score.correct++;
+            topicScores[questionData.topic]++;
+            feedback.className = 'feedback feedback-correct';
+            feedback.innerHTML = `<strong>¡Correcto!</strong> ✅ ${questionData.explanation}`;
+        } else {
+            score.incorrect++;
+            feedback.className = 'feedback feedback-incorrect';
+            const correctText = Array.from(options).find(btn => btn.dataset.answer === questionData.correctAnswer).textContent;
+            feedback.innerHTML = `<strong>¡Incorrecto!</strong> ❌ La respuesta correcta era **${questionData.correctAnswer}: ${correctText}**. <br><br> **Razón:** ${questionData.explanation}`;
+        }
+        
+        // Agregar feedback al slide
+        questionElements[currentSlide].appendChild(feedback);
+
+        // Habilitar botón Siguiente
+        nextBtn.disabled = false;
+    }
+
+    function goToNextSlide() {
+        // Eliminar feedback
+        const feedback = questionElements[currentSlide].querySelector('.feedback');
+        if (feedback) feedback.remove();
+
+        currentSlide++;
+        if (currentSlide < questions.length) {
+            showSlide(currentSlide);
+        } else {
+            showResults();
+        }
+    }
+
+    function showResults() {
+        questionElements.forEach(s => s.style.display = 'none');
+        document.getElementById('navigation').style.display = 'none';
+        resultsScreen.style.display = 'block';
+
+        document.getElementById('correct-count').textContent = `Correctas: ${score.correct}`;
+        document.getElementById('incorrect-count').textContent = `Incorrectas: ${score.incorrect}`;
+        
+        generateAnalysis();
+    }
+    
+    function generateAnalysis() {
+        let analysisText = "";
+        
+        // Identificar fortalezas y debilidades
+        const totalQuestions = questions.length;
+        const totalTopics = Object.keys(topicScores).length;
+        const maxScorePerTopic = 1; // 1 pregunta por tema en este quiz
+        
+        let strengths = [];
+        let weaknesses = [];
+        let mixed = [];
+        
+        // Determinar qué temas se cubrieron
+        const coveredTopics = {
+            "Glosario/LLM": "Conceptos clave (LLM, Prompt, API)",
+            "Chat vs. API": "Diferencia entre la interfaz de usuario y la de programación",
+            "Tokens": "La 'moneda' de la IA y su coste",
+            "Herramientas": "Software de programación (VS Code, Copilot)",
+            "Glosario/Prompts": "Conceptos clave (LLM, Prompt, API)",
+        };
+        
+        // Agrupar los dos temas de Glosario para un análisis más limpio
+        const glosarioScore = topicScores["Glosario/LLM"] + topicScores["Glosario/Prompts"];
+        const glosarioTotal = 2;
+        
+        const simplifiedScores = {
+            "Conceptos Básicos (Glosario)": glosarioScore,
+            "Chat vs. API": topicScores["Chat vs. API"],
+            "Tokens": topicScores["Tokens"],
+            "Herramientas de Código": topicScores["Herramientas"],
+        };
+        
+        const simplifiedTopics = Object.keys(simplifiedScores);
+        
+        simplifiedTopics.forEach(topic => {
+            const currentScore = simplifiedScores[topic];
+            const total = (topic === "Conceptos Básicos (Glosario)") ? glosarioTotal : maxScorePerTopic;
+            
+            if (currentScore === total) {
+                strengths.push(topic);
+            } else if (currentScore === 0) {
+                weaknesses.push(topic);
+            } else {
+                mixed.push(topic);
+            }
+        });
+        
+        
+        // Generar texto del análisis
+        if (score.correct === totalQuestions) {
+            analysisText = "¡**Dominio Excelente**! Has demostrado un conocimiento sólido en todos los temas clave de la Clase 4: desde los **Conceptos Básicos (Glosario)** hasta la comprensión de **Tokens** y la distinción **Chat vs. API**.";
+        } else if (score.incorrect === totalQuestions) {
+            analysisText = "Necesitas un repaso completo. Te recomiendo encarecidamente volver a leer la sección **'Glosario'** y **'Chat vs API'** para entender la terminología fundamental.";
+        } else {
+            let strengthText = "";
+            let weaknessText = "";
+            
+            if (strengths.length > 0) {
+                strengthText = `**Fortaleza** 💪: Tienes una buena comprensión de **${strengths.join(', ')}**. ¡Sigue así!`;
+            }
+            
+            if (weaknesses.length > 0) {
+                let weaknessSection = (weaknesses.includes("Conceptos Básicos (Glosario)") || weaknesses.includes("Tokens")) ? 
+                    "el Glosario (LLM, Prompt, Token)" : 
+                    (weaknesses.includes("Chat vs. API") ? "la sección de Chat vs API" : "la sección de Herramientas");
+
+                weaknessText = `**Oportunidad de Mejora** 🚧: Te recomiendo repasar la sección sobre **${weaknesses.join(', ')}**. Vuelve a leer la explicación de **${weaknessSection}** para afianzar estos conceptos.`;
+            }
+            
+            analysisText = (strengthText ? strengthText + "<br><br>" : "") + weaknessText;
+        }
+
+        document.getElementById('analysis-text').innerHTML = analysisText;
+    }
+
+    // Configurar Listeners
+    startBtn.addEventListener('click', startQuiz);
+    nextBtn.addEventListener('click', goToNextSlide);
+    
+    questionElements.forEach(slide => {
+        const optionsContainer = slide.querySelector('.options-container');
+        optionsContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('option-btn') && !e.target.classList.contains('disabled')) {
+                checkAnswer(e.target);
+            }
+        });
+    });
+
+    // Iniciar con la pantalla de bienvenida
+    // showSlide(currentSlide); // Se llama después de pulsar el botón.
+
+</script>
+
+</body>
+</html>
