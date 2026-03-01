@@ -1,4 +1,4 @@
-import { X, Play, FileText, CheckCircle, MessageSquare, Database } from 'lucide-react';
+import { X, Play, FileText, CheckCircle, MessageSquare, Database, GraduationCap, User } from 'lucide-react';
 import { ClassItem, Role } from '../data/curriculum';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -129,13 +129,4 @@ export default function ClassModal({ item, role, onClose }: ClassModalProps) {
       </div>
     </AnimatePresence>
   );
-}
-
-// Need to import these icons that were used in the component
-function GraduationCap(props: any) {
-  return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M21.42 10.922a2 2 0 0 1-.01 3.016l-7.13 7.14a2 2 0 0 1-2.81 0l-7.13-7.14a2 2 0 0 1-.01-3.016l7.53-7.54a2 2 0 0 1 2.81 0l7.53 7.54z"/><path d="M22 10v6"/><path d="M6 12v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6"/></svg>;
-}
-
-function User(props: any) {
-  return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>;
 }
