@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Introducción a la IA Corporativa</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        #quiz-container {
+            width: 100%;
+            max-width: 700px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+        }
+
+        .quiz-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+        }
+
+        .quiz-header h1 {
+            margin: 0;
+            font-size: 1.8em;
+        }
+
+        #quiz-body {
+            padding: 30px;
+        }
+
+        .question-slide {
+            display: none;
+        }
+
+        .question-slide.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-slide h3 {
+            font-size: 1.4em;
+            color: #1e3c72;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .option {
+            background-color: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option:hover {
+            background-color: #e9ecef;
+            border-color: #667eea;
+        }
+
+        /* Estilos para respuestas seleccionadas */
+        .option.disabled {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .option.correct {
+            background-color: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+            font-weight: bold;
+        }
+
+        .option.incorrect {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+            font-weight: bold;
+        }
+
+        .feedback {
+            display: none;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 0.95em;
+        }
+
+        .feedback.active {
+            display: block;
+        }
+
+        .feedback.correct {
+            background-color: #e6f7ec;
+            border: 1px solid #28a745;
+            color: #155724;
+        }
+
+        .feedback.incorrect {
+            background-color: #fdedee;
+            border: 1px solid #dc3545;
+            color: #721c24;
+        }
+
+        .next-btn {
+            display: none;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 25px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 25px;
+            float: right;
+            transition: background-color 0.2s;
+        }
+
+        .next-btn:hover {
+            background: #5a6cdc;
+        }
+
+        /* Pantalla de resultados */
+        #results-slide {
+            padding: 30px;
+            text-align: center;
+        }
+
+        #score {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 20px;
+        }
+
+        #analysis {
+            text-align: left;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        #analysis h4 {
+            color: #1e3c72;
+            margin-top: 0;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        #analysis ul {
+            padding-left: 20px;
+        }
+
+        #analysis li {
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="quiz-container">
+        <div class="quiz-header">
+            <h1>Test Rápido: IA Corporativa</h1>
+        </div>
+
+        <div id="quiz-body">
+            <div class="question-slide active" data-topic="Concepto Central">
+                <h3>1. Según el documento, ¿cuál es una analogía simple para entender la IA en el contexto de BCI?</h3>
+                <ul class="options">
+                    <li class="option" data-correct="false" data-rationale="El texto se enfoca en la IA como una herramienta de software, no principalmente como un robot físico que piensa por sí mismo.">
+                        Un robot físico que piensa por sí mismo y toma decisiones.
+                    </li>
+                    <li class="option" data-correct="true" data-rationale="¡Correcto! Esta es la analogía central usada en el documento para describir la IA como una herramienta de apoyo que procesa datos rápidamente.">
+                        Un asistente junior increíblemente rápido que sigue instrucciones.
+                    </li>
+                    <li class="option" data-correct="false" data-rationale="El documento enfatiza que la IA es una herramienta que 'amplifica tus capacidades', no que reemplaza el criterio.">
+                        Un sistema que reemplazará completamente el criterio humano.
+                    </li>
+                    <li class="option" data-correct="false" data-rationale="El documento presenta la IA como una herramienta actual y necesaria para BCI, no como algo de ciencia ficción.">
+                        Una tecnología de ciencia ficción que aún no es práctica para el banco.
+                    </li>
+                </ul>
+                <div class="feedback"></div>
+                <button class="next-btn">Siguiente</button>
+            </div>
+
+            <div class="question-slide" data-topic="Funcionamiento">
+                <h3>2. ¿Cuál de los siguientes NO es uno de los 4 pasos del proceso simplificado de cómo funciona la IA, según la clase?</h3>
+                <ul class="options">
+                    <li class="option" data-correct="false" data-rationale="La 'Entrada de Datos' es el primer paso descrito en el proceso de 4 etapas.">
+                        Entrada de Datos
+                    </li>
+                    <li class="option" data-correct="false" data-rationale="El 'Aprendizaje' (identificar patrones) es el tercer paso clave en el proceso.">
+                        Aprendizaje
+                    </li>
+                    <li class="option" data-correct="true" data-rationale="¡Correcto! El documento no menciona la 'conciencia'; se enfoca en un proceso de 4 pasos: Entrada, Procesamiento, Aprendizaje y Resultado.">
+                        Obtención de Conciencia
+                    </li>
+                    <li class="option" data-correct="false" data-rationale="El 'Resultado' (predicción o respuesta) es el paso final del proceso descrito.">
+                        Resultado
+                    </li>
+                </ul>
+                <div class="feedback"></div>
+                <button class="next-btn">Siguiente</button>
+            </div>
+
+            <div class="question-slide" data-topic="Tipos (Capacidad)">
+                <h3>3. ¿Qué tipo de IA, según su capacidad, usamos hoy en día en aplicaciones como Siri, Alexa o las recomendaciones de Netflix?</h3>
+                <ul class="options">
+                    <li class="option" data-correct="false" data-rationale="La IA General (AGI) es la que tendría capacidades humanas y, según el texto, aún no existe.">
+                        IA General (AGI)
+                    </li>
+                    <li class="option" data-correct="true" data-rationale="¡Correcto! La IA Estrecha (ANI) es la que se especializa en una tarea específica, como las que usamos todos los días.">
+                        IA Estrecha (ANI)
+                    </li>
+                    <li class="option" data-correct="false" data-rationale="La Superinteligencia (ASI) es un nivel teórico futuro que superaría la inteligencia humana.">
+                        Superinteligencia (ASI)
+                    </li>
+                    <li class="option" data-correct="false" data-rationale="Aunque la ASI es teórica, el término para la IA que usamos hoy es 'IA Estrecha' o ANI.">
+                        IA Teórica
+                    </li>
+                </ul>
+                <div class="feedback"></div>
+                <button class="next-btn">Siguiente</button>
+            </div>
+
+            <div class="question-slide" data-topic="Tipos (Funcionalidad)">
+                <h3>4. ¿Qué tipo de IA se especializa en predecir resultados futuros basándose en datos históricos, como el análisis de riesgo crediticio?</h3>
+                <ul class="options">
+                    <li class="option" data-correct="false" data-rationale="La IA Conversacional, como ChatGPT, se especializa en interactuar mediante lenguaje natural.">
+                        IA Conversacional
+                    </li>
+                    <li class="option" data-correct="false" data-rationale="La IA Generativa se enfoca en crear contenido nuevo (textos, imágenes), no solo en predecir.">
+                        IA Generativa
+                    </li>
+                    <li class="option" data-correct="false" data-rationale="La IA de Visión se especializa en analizar imágenes y videos, como la verificación de documentos.">
+                        IA de Visión
+                    </li>
+                    <li class="option" data-correct="true" data-rationale="¡Correcto! Esta es la definición de la IA Predictiva (Machine Learning), que usa datos históricos para predecir el futuro.">
+                        IA Predictiva
+                    </li>
+                </ul>
+                <div class="feedback"></div>
+                <button class="next-btn">Siguiente</button>
+            </div>
+
+            <div class="question-slide" data-topic="El 'Porqué'">
+                <h3>5. Según el texto, ¿cuál es una de las razones principales por las que BCI necesita IA?</h3>
+                <ul class="options">
+                    <li class="option" data-correct="false" data-rationale="El documento enfatiza que la IA es una herramienta de colaboración ('IA + Humanos'), no un reemplazo.">
+                        Para reemplazar completamente el trabajo de los equipos de ventas.
+                    </li>
+                    <li class="option" data-correct="true" data-rationale="¡Correcto! Esta es la razón clave; usar la IA para ser más relevantes y proactivos con los clientes.">
+                        Para cortar el ruido, personalizar la comunicación y anticiparse a las necesidades.
+                    </li>
+                    <li class="option" data-correct="false" data-rationale="El texto no lo plantea como una moda, sino como una necesidad estratégica con beneficios medibles.">
+                        Porque es una moda tecnológica que todos los bancos deben tener.
+                    </li>
+                    <li class="option" data-correct="false" data-rationale="Aunque los asistentes son una aplicación, la razón principal es más estratégica: personalizar y anticipar.">
+                        Para crear asistentes virtuales que atiendan todas las consultas en 10 años.
+                    </li>
+                </ul>
+                <div class="feedback"></div>
+                <button class="next-btn">Ver Resultados</button>
+            </div>
+        </div>
+
+        <div id="results-slide" class="question-slide">
+            <div id="score"></div>
+            <div id="analysis"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let currentQuestion = 0;
+            let score = 0;
+            const missedTopics = [];
+            const slides = document.querySelectorAll('.question-slide');
+            const totalQuestions = slides.length - 1; // -1 porque el último slide es de resultados
+
+            // Función para mostrar la pregunta activa
+            function showQuestion(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === index);
+                });
+            }
+
+            // Función para manejar la selección de respuesta
+            function selectAnswer(optionEl) {
+                const slide = optionEl.closest('.question-slide');
+                const isCorrect = optionEl.getAttribute('data-correct') === 'true';
+                const rationale = optionEl.getAttribute('data-rationale');
+                const feedbackEl = slide.querySelector('.feedback');
+                const nextBtn = slide.querySelector('.next-btn');
+                
+                // Deshabilitar todas las opciones para esta pregunta
+                slide.querySelectorAll('.option').forEach(opt => opt.classList.add('disabled'));
+
+                // Mostrar feedback
+                feedbackEl.innerHTML = `<strong>${isCorrect ? '¡Correcto!' : 'Incorrecto.'}</strong> ${rationale}`;
+                feedbackEl.classList.add(isCorrect ? 'correct' : 'incorrect');
+                feedbackEl.classList.add('active');
+
+                // Resaltar la opción seleccionada
+                optionEl.classList.add(isCorrect ? 'correct' : 'incorrect');
+
+                if (isCorrect) {
+                    score++;
+                } else {
+                    // Si es incorrecto, buscar y resaltar la respuesta correcta
+                    const correctOption = slide.querySelector('.option[data-correct="true"]');
+                    if (correctOption) {
+                        correctOption.classList.add('correct');
+                    }
+                    // Guardar el tema de la pregunta fallada
+                    const topic = slide.getAttribute('data-topic');
+                    if (topic) {
+                        missedTopics.push(topic);
+                    }
+                }
+                
+                // Mostrar el botón de siguiente
+                nextBtn.style.display = 'block';
+            }
+
+            // Función para mostrar los resultados finales
+            function showResults() {
+                // Ocultar el cuerpo principal del quiz (todas las preguntas)
+                document.getElementById('quiz-body').style.display = 'none';
+                
+                // Mostrar la diapositiva de resultados
+                const resultsEl = document.getElementById('results-slide');
+                resultsEl.classList.add('active');
+                
+                // Mostrar puntuación
+                document.getElementById('score').innerText = `Obtuviste ${score} de ${totalQuestions} correctas.`;
+
+                // Generar análisis
+                const analysisEl = document.getElementById('analysis');
+                let analysisText = '<h4>Análisis de tu desempeño:</h4>';
+                
+                if (score === totalQuestions) {
+                    analysisText += '<p>¡Excelente! Dominas todos los conceptos fundamentales de esta introducción.</p>';
+                } else {
+                    let strengths = '<p><strong>Fortalezas:</strong></p><ul>';
+                    let weaknesses = '<p><strong>Áreas de Repaso:</strong></p><ul>';
+                    const allTopics = ["Concepto Central", "El 'Porqué'", "Funcionamiento", "Tipos (Capacidad)", "Tipos (Funcionalidad)"];
+                    let hasStrengths = false;
+                    let hasWeaknesses = false;
+
+                    allTopics.forEach(topic => {
+                        if (missedTopics.includes(topic)) {
+                            hasWeaknesses = true;
+                            if (topic === 'Concepto Central') weaknesses += '<li>Repasa la analogía principal de la IA (el asistente junior).</li>';
+                            if (topic === 'Funcionamiento') weaknesses += '<li>Revisa el proceso de 4 pasos de cómo funciona la IA.</li>';
+                            if (topic === 'Tipos (Capacidad)' || topic === 'Tipos (Funcionalidad)') weaknesses += '<li>Da un vistazo a las clasificaciones de los "Tipos de IA".</li>';
+                            if (topic === 'El "Porqué"') weaknesses += '<li>Revisa la sección sobre "Por Qué BCI Necesita IA".</li>';
+                        } else {
+                            hasStrengths = true;
+                            if (topic === 'Concepto Central' || topic === 'El "Porqué"') strengths += `<li>¡Muy bien! Entiendes bien el "qué" y el "porqué" de la IA.</li>`;
+                            if (topic === 'Funcionamiento' || topic === 'Tipos (Capacidad)' || topic === 'Tipos (Funcionalidad)') strengths += `<li>¡Genial! Dominas los conceptos técnicos y las clasificaciones.</li>`;
+                        }
+                    });
+                    
+                    // Para evitar duplicados en fortalezas
+                    const uniqueStrengths = [];
+                    if (!missedTopics.includes('Concepto Central') && !missedTopics.includes('El "Porqué"')) {
+                        uniqueStrengths.push('<li>¡Muy bien! Entiendes bien el "qué" y el "porqué" de la IA.</li>');
+                    }
+                     if (!missedTopics.includes('Funcionamiento') && !missedTopics.includes('Tipos (Capacidad)') && !missedTopics.includes('Tipos (Funcionalidad)')) {
+                        uniqueStrengths.push('<li>¡Genial! Dominas los conceptos técnicos y las clasificaciones.</li>');
+                    }
+
+                    if (uniqueStrengths.length > 0) {
+                        strengths = '<p><strong>Fortalezas:</strong></p><ul>' + uniqueStrengths.join('') + '</ul>';
+                    } else {
+                        strengths = ''; // No hay fortalezas claras si se fallan la mayoría
+                    }
+
+                    if (hasWeaknesses) {
+                        analysisText += strengths + weaknesses + '</ul>';
+                    } else {
+                        analysisText += strengths + '</ul>';
+                    }
+                }
+                analysisEl.innerHTML = analysisText;
+            }
+
+            // Añadir Event Listeners a las opciones
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', () => selectAnswer(option));
+            });
+
+            // Añadir Event Listeners a los botones "Siguiente"
+            document.querySelectorAll('.next-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentQuestion++;
+                    if (currentQuestion < totalQuestions) {
+                        showQuestion(currentQuestion);
+                    } else {
+                        showResults();
+                    }
+                });
+            });
+
+            // Mostrar la primera pregunta al cargar
+            showQuestion(0);
+        });
+    </script>
+</body>
+</html>
