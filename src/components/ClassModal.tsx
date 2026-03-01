@@ -57,7 +57,7 @@ export default function ClassModal({ item, role, onClose }: ClassModalProps) {
                 isExtra ? 'bg-accent-secondary/20 text-accent-secondary border-accent-secondary/50' : 
                 'bg-accent-primary/20 text-accent-primary border-accent-primary/50'
               }`}>
-                {item.module}
+                {item.classNumber}
               </span>
               <h2 className="text-2xl font-bold text-white leading-tight">{item.title}</h2>
             </div>
@@ -71,7 +71,7 @@ export default function ClassModal({ item, role, onClose }: ClassModalProps) {
                 isExtra ? 'bg-accent-secondary/10 text-accent-secondary border-accent-secondary/30' : 
                 'bg-accent-primary/10 text-accent-primary border-accent-primary/30'
               }`}>
-                {item.module}
+                {item.classNumber}
               </span>
               <h2 className="text-3xl font-bold text-text-primary leading-tight">{item.title}</h2>
             </div>

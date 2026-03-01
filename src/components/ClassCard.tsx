@@ -42,7 +42,7 @@ export default function ClassCard({ item, role, onClick }: ClassCardProps) {
                 : 'bg-accent-primary/20 text-accent-primary border-accent-primary/50'
             }`}
           >
-            {item.module}
+            {item.classNumber}
           </span>
           {isLocked && (
             <div className="bg-bg-base/80 p-2 rounded-full backdrop-blur-md">

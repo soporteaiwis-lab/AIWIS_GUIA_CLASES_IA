@@ -2,7 +2,8 @@ export type Role = 'student' | 'mentor';
 
 export interface ClassItem {
   id: number;
-  module: string;
+  moduleId: number;
+  classNumber: string;
   title: string;
   description: string;
   image: string;
@@ -13,9 +14,11 @@ export interface ClassItem {
 }
 
 export const curriculumData: ClassItem[] = [
+  // MÓDULO 1
   {
     id: 1,
-    module: "MÓDULO 01",
+    moduleId: 1,
+    classNumber: "CLASE 01",
     title: "Introducción a la IA Corporativa",
     description: "Fundamentos de la Inteligencia Artificial, historia, tipos de IA y su impacto directo en el negocio.",
     image: "https://picsum.photos/seed/ai-intro/600/900?blur=2",
@@ -34,7 +37,8 @@ export const curriculumData: ClassItem[] = [
   },
   {
     id: 2,
-    module: "MÓDULO 02",
+    moduleId: 1,
+    classNumber: "CLASE 02",
     title: "Dominando ChatGPT, Claude y Gemini",
     description: "Comparativa técnica y práctica de los principales LLMs del mercado. ¿Cuál usar, cuándo y por qué?",
     image: "https://picsum.photos/seed/llm-compare/600/900?blur=2",
@@ -53,7 +57,8 @@ export const curriculumData: ClassItem[] = [
   },
   {
     id: 3,
-    module: "MÓDULO 03",
+    moduleId: 1,
+    classNumber: "CLASE 03",
     title: "Ingeniería de Prompts Profesional",
     description: "Técnicas avanzadas de comunicación con IA: Chain-of-Thought, Few-Shot, y Role Prompting orientados a finanzas.",
     image: "https://picsum.photos/seed/prompt-eng/600/900?blur=2",
@@ -72,7 +77,8 @@ export const curriculumData: ClassItem[] = [
   },
   {
     id: 4,
-    module: "MÓDULO 04",
+    moduleId: 1,
+    classNumber: "CLASE 04",
     title: "Programa con IA desde Cero",
     description: "Introducción a la creación de código (Python, Scripts) usando asistentes como Copilot y Cursor sin experiencia previa.",
     image: "https://picsum.photos/seed/coding-ai/600/900?blur=2",
@@ -91,7 +97,8 @@ export const curriculumData: ClassItem[] = [
   },
   {
     id: 5,
-    module: "TALLER A",
+    moduleId: 1,
+    classNumber: "TALLER A",
     title: "Miniproyecto 1: Automatización Básica",
     description: "Aplicación práctica de los primeros módulos. Automatización de una tarea cotidiana en el entorno corporativo.",
     image: "https://picsum.photos/seed/workshop-a/600/900?blur=2",
@@ -108,9 +115,12 @@ export const curriculumData: ClassItem[] = [
     type: 'workshop',
     status: 'available'
   },
+  
+  // MÓDULO 2
   {
     id: 6,
-    module: "MÓDULO 06",
+    moduleId: 2,
+    classNumber: "CLASE 06",
     title: "Bases Vectoriales y RAG",
     description: "Cómo hacer que la IA lea y analice documentos internos y privados de forma segura sin alucinar.",
     image: "https://picsum.photos/seed/rag-vector/600/900?blur=2",
@@ -128,7 +138,8 @@ export const curriculumData: ClassItem[] = [
   },
   {
     id: 7,
-    module: "MÓDULO 07",
+    moduleId: 2,
+    classNumber: "CLASE 07",
     title: "Herramientas Low-Code: Make y n8n",
     description: "Conectando aplicaciones sin programar. Creación de flujos de trabajo visuales para conectar correos, CRMs y LLMs.",
     image: "https://picsum.photos/seed/low-code/600/900?blur=2",
@@ -146,7 +157,8 @@ export const curriculumData: ClassItem[] = [
   },
   {
     id: 8,
-    module: "MÓDULO 08",
+    moduleId: 2,
+    classNumber: "CLASE 08",
     title: "Creación de Agentes IA y Asistentes",
     description: "El paso de modelos reactivos a modelos proactivos. Cómo los Agentes pueden tomar decisiones multi-paso.",
     image: "https://picsum.photos/seed/ai-agents/600/900?blur=2",
@@ -164,7 +176,8 @@ export const curriculumData: ClassItem[] = [
   },
   {
     id: 9,
-    module: "MÓDULO 09",
+    moduleId: 2,
+    classNumber: "CLASE 09",
     title: "Gemas y Estrategias 'Paso a Paso'",
     description: "Creación de 'Gemas' (asistentes personalizados en Gemini) y el poder de dividir problemas complejos en pasos pequeños.",
     image: "https://picsum.photos/seed/gemini-gems/600/900?blur=2",
@@ -183,7 +196,8 @@ export const curriculumData: ClassItem[] = [
   },
   {
     id: 10,
-    module: "TALLER B",
+    moduleId: 2,
+    classNumber: "TALLER B",
     title: "Miniproyecto 2: Agentes y RAG",
     description: "Construcción de un asistente corporativo capaz de consultar documentos internos y ejecutar acciones.",
     image: "https://picsum.photos/seed/workshop-b/600/900?blur=2",
@@ -200,9 +214,12 @@ export const curriculumData: ClassItem[] = [
     type: 'workshop',
     status: 'available'
   },
+  
+  // MÓDULO 3
   {
     id: 11,
-    module: "MÓDULO 11",
+    moduleId: 3,
+    classNumber: "CLASE 11",
     title: "Integración de APIs y Servicios Cognitivos",
     description: "Arquitectura tecnológica para conectar los sistemas Legacy con modelos de lenguaje de última generación.",
     image: "https://picsum.photos/seed/api-integration/600/900?blur=2",
@@ -220,7 +237,8 @@ export const curriculumData: ClassItem[] = [
   },
   {
     id: 12,
-    module: "MÓDULO 12",
+    moduleId: 3,
+    classNumber: "CLASE 12",
     title: "Escalabilidad de IA en la Empresa",
     description: "De la prueba de concepto (PoC) a la producción. Cómo escalar soluciones de IA a toda la organización.",
     image: "https://picsum.photos/seed/ai-scale/600/900?blur=2",
@@ -238,7 +256,8 @@ export const curriculumData: ClassItem[] = [
   },
   {
     id: 13,
-    module: "MÓDULO 13",
+    moduleId: 3,
+    classNumber: "CLASE 13",
     title: "Arquitecturas Cloud IA",
     description: "Despliegue de soluciones en la nube (GCP, AWS, Azure) y consideraciones de infraestructura.",
     image: "https://picsum.photos/seed/cloud-ai/600/900?blur=2",
@@ -256,7 +275,8 @@ export const curriculumData: ClassItem[] = [
   },
   {
     id: 14,
-    module: "MÓDULO 14",
+    moduleId: 3,
+    classNumber: "CLASE 14",
     title: "Preparación de Proyecto Final",
     description: "Definición del alcance, arquitectura y plan de ejecución para el proyecto final de adopción.",
     image: "https://picsum.photos/seed/final-prep/600/900?blur=2",
@@ -274,7 +294,8 @@ export const curriculumData: ClassItem[] = [
   },
   {
     id: 15,
-    module: "TALLER C",
+    moduleId: 3,
+    classNumber: "TALLER C",
     title: "Miniproyecto 3: Proyecto Final",
     description: "Cierre del programa. Exposición de las soluciones construidas, feedback gerencial y graduación.",
     image: "https://picsum.photos/seed/workshop-c/600/900?blur=2",
@@ -294,8 +315,9 @@ export const curriculumData: ClassItem[] = [
   
   // Extra Material
   {
-    id: 101,
-    module: "MATERIAL EXTRA",
+    id: 16,
+    moduleId: 4,
+    classNumber: "CLASE 16",
     title: "Casos de Uso Bancarios Avanzados",
     description: "Análisis de implementaciones reales en banca: Detección de fraude, evaluación de riesgo crediticio y atención al cliente.",
     image: "https://picsum.photos/seed/banking-ai/600/900?blur=2",
@@ -311,8 +333,9 @@ export const curriculumData: ClassItem[] = [
     status: 'available'
   },
   {
-    id: 102,
-    module: "MATERIAL EXTRA",
+    id: 17,
+    moduleId: 4,
+    classNumber: "CLASE 17",
     title: "IA Generativa para Análisis de Datos",
     description: "Interpretación de grandes volúmenes de datos. Generación de gráficos, SQL automático y dashboards ejecutivos.",
     image: "https://picsum.photos/seed/data-analysis/600/900?blur=2",
@@ -329,8 +352,9 @@ export const curriculumData: ClassItem[] = [
     status: 'available'
   },
   {
-    id: 103,
-    module: "MATERIAL EXTRA",
+    id: 18,
+    moduleId: 4,
+    classNumber: "CLASE 18",
     title: "Seguridad, Ética y Compliance en IA",
     description: "Navegando el marco regulatorio, protección de datos personales y sesgos algorítmicos.",
     image: "https://picsum.photos/seed/ai-ethics/600/900?blur=2",
