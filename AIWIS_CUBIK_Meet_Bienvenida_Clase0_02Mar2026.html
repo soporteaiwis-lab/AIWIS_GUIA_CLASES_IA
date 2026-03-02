@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>AIWIS & CUBI-K | Meet Bienvenida | Adopción de IA Corporativa</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0a0e1a;
+  --bg-secondary: #111827;
+  --bg-card: #1a2035;
+  --bg-card-hover: #1f2847;
+  --accent-blue: #3b82f6;
+  --accent-cyan: #06b6d4;
+  --accent-emerald: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-rose: #f43f5e;
+  --accent-violet: #8b5cf6;
+  --accent-orange: #f97316;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border-color: rgba(148,163,184,0.12);
+  --gradient-hero: linear-gradient(135deg, #0a0e1a 0%, #1e1b4b 40%, #0f172a 100%);
+  --gradient-card: linear-gradient(145deg, rgba(30,41,68,0.7), rgba(15,23,42,0.9));
+  --shadow-glow: 0 0 40px rgba(59,130,246,0.1);
+  --shadow-card: 0 8px 32px rgba(0,0,0,0.3);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--accent-blue); border-radius: 4px; }
+
+/* ===== NAVIGATION ===== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(10,14,26,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 1.5rem;
+  transition: all 0.3s;
+}
+.nav-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+.nav-brand .logo-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+}
+.nav-links {
+  display: flex;
+  gap: 0.25rem;
+  list-style: none;
+  flex-wrap: wrap;
+}
+.nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-xs);
+  transition: all 0.2s;
+}
+.nav-links a:hover {
+  color: var(--text-primary);
+  background: rgba(59,130,246,0.1);
+}
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-hero);
+  position: relative;
+  overflow: hidden;
+  padding: 100px 1.5rem 60px;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(139,92,246,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-content {
+  max-width: 900px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(59,130,246,0.12);
+  border: 1px solid rgba(59,130,246,0.25);
+  padding: 0.4rem 1.2rem;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-blue);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  animation: fadeInDown 0.8s ease;
+}
+.hero-badge .dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent-emerald);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  animation: fadeInUp 0.8s ease 0.2s both;
+}
+.hero h1 .gradient-text {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan), var(--accent-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  font-weight: 300;
+  animation: fadeInUp 0.8s ease 0.4s both;
+}
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  animation: fadeInUp 0.8s ease 0.6s both;
+}
+.hero-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+.hero-meta-item .icon {
+  font-size: 1.1rem;
+}
+.hero-actions {
+  margin-top: 2.5rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.8s ease 0.8s both;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.75rem 1.75rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.3s;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+  color: white;
+  box-shadow: 0 4px 20px rgba(59,130,246,0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(59,130,246,0.4);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+.btn-outline:hover {
+  border-color: var(--accent-blue);
+  background: rgba(59,130,246,0.05);
+}
+
+/* ===== SECTIONS ===== */
+.section {
+  padding: 5rem 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.section-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+.section-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--accent-cyan);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 400;
+  margin-bottom: 0.75rem;
+}
+.section-desc {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  max-width: 650px;
+  margin: 0 auto;
+  font-weight: 300;
+}
+
+/* ===== DASHBOARD STATS ===== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+}
+.stat-card {
+  background: var(--gradient-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.stat-card:nth-child(1)::before { background: var(--accent-blue); }
+.stat-card:nth-child(2)::before { background: var(--accent-emerald); }
+.stat-card:nth-child(3)::before { background: var(--accent-amber); }
+.stat-card:nth-child(4)::before { background: var(--accent-violet); }
+.stat-card:nth-child(5)::before { background: var(--accent-rose); }
+.stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-glow); }
+.stat-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.stat-value {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 0.25rem;
+}
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+/* ===== TIMELINE / PHASES ===== */
+.phases-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+.phase-card {
+  background: var(--gradient-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s;
+}
+.phase-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-glow);
+}
+.phase-number {
+  position: absolute;
+  top: -10px;
+  right: 15px;
+  font-size: 5rem;
+  font-weight: 900;
+  opacity: 0.06;
+  line-height: 1;
+}
+.phase-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.phase-card:nth-child(1) .phase-icon { background: rgba(59,130,246,0.15); }
+.phase-card:nth-child(2) .phase-icon { background: rgba(139,92,246,0.15); }
+.phase-card:nth-child(3) .phase-icon { background: rgba(16,185,129,0.15); }
+.phase-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+.phase-desc {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.phase-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.tag {
+  font-size: 0.72rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 50px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+.tag-blue { background: rgba(59,130,246,0.12); color: var(--accent-blue); }
+.tag-violet { background: rgba(139,92,246,0.12); color: var(--accent-violet); }
+.tag-emerald { background: rgba(16,185,129,0.12); color: var(--accent-emerald); }
+.tag-amber { background: rgba(245,158,11,0.12); color: var(--accent-amber); }
+.tag-rose { background: rgba(244,63,94,0.12); color: var(--accent-rose); }
+
+/* ===== PARTICIPANT CARDS ===== */
+.participants-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.25rem;
+}
+.participant-card {
+  background: var(--gradient-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  transition: all 0.3s;
+  position: relative;
+}
+.participant-card:hover {
+  border-color: rgba(59,130,246,0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+}
+.participant-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 1rem;
+}
+.participant-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  color: white;
+  flex-shrink: 0;
+}
+.participant-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+.participant-role {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.participant-body {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.participant-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.tool-badge {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(6,182,212,0.1);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(6,182,212,0.15);
+}
+.level-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 0.65rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 50px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.level-intermedio { background: rgba(245,158,11,0.15); color: var(--accent-amber); }
+.level-basico { background: rgba(59,130,246,0.15); color: var(--accent-blue); }
+
+/* ===== CONCEPTS / INFOGRAPHIC ===== */
+.concepts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+.concept-card {
+  background: var(--gradient-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 2rem;
+  transition: all 0.3s;
+}
+.concept-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow);
+}
+.concept-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+.concept-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+.concept-text {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+/* ===== VS COMPARISON ===== */
+.vs-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1.5rem;
+  align-items: stretch;
+  margin: 2rem 0;
+}
+.vs-card {
+  background: var(--gradient-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 2rem;
+}
+.vs-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vs-badge {
+  background: var(--bg-card);
+  border: 2px solid var(--accent-rose);
+  color: var(--accent-rose);
+  font-weight: 800;
+  font-size: 1rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vs-card h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.vs-list {
+  list-style: none;
+}
+.vs-list li {
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.vs-list li:last-child { border: none; }
+.vs-list .check { color: var(--accent-emerald); flex-shrink: 0; }
+.vs-list .arrow { color: var(--accent-amber); flex-shrink: 0; }
+
+/* ===== TIPS SECTION ===== */
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+.tip-card {
+  background: var(--gradient-card);
+  border-left: 4px solid;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 1.5rem 1.5rem 1.5rem 1.25rem;
+}
+.tip-card:nth-child(1) { border-color: var(--accent-blue); }
+.tip-card:nth-child(2) { border-color: var(--accent-emerald); }
+.tip-card:nth-child(3) { border-color: var(--accent-amber); }
+.tip-card:nth-child(4) { border-color: var(--accent-violet); }
+.tip-card:nth-child(5) { border-color: var(--accent-cyan); }
+.tip-card:nth-child(6) { border-color: var(--accent-rose); }
+.tip-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+}
+.tip-title {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+.tip-text {
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+/* ===== TOOLS CHART ===== */
+.tools-chart {
+  background: var(--gradient-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin: 2rem 0;
+}
+.chart-bar-group {
+  margin-bottom: 1rem;
+}
+.chart-bar-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+.chart-bar-label span:last-child {
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+}
+.chart-bar-track {
+  height: 28px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.chart-bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 1.5s ease;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: white;
+}
+
+/* ===== TASKS / CHECKLIST ===== */
+.tasks-container {
+  background: var(--gradient-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.task-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+.task-item:last-child { border: none; }
+.task-check {
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--accent-blue);
+  border-radius: 8px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: rgba(59,130,246,0.05);
+}
+.task-check:hover { background: rgba(59,130,246,0.15); }
+.task-check.checked {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+}
+.task-check.checked::after {
+  content: '✓';
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.task-content h4 {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+.task-content p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ===== MENTOR CARD ===== */
+.mentor-card {
+  background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(139,92,246,0.08));
+  border: 1px solid rgba(59,130,246,0.2);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto 3rem;
+}
+.mentor-avatar {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+.mentor-info h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.mentor-info .subtitle {
+  color: var(--accent-cyan);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+.mentor-info p {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+/* ===== CALLOUT ===== */
+.callout {
+  background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(249,115,22,0.05));
+  border: 1px solid rgba(245,158,11,0.2);
+  border-radius: var(--radius);
+  padding: 1.75rem 2rem;
+  margin: 2rem 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.callout-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.callout-title {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+  color: var(--accent-amber);
+}
+.callout-text {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* ===== JOURNEY MAP ===== */
+.journey-track {
+  position: relative;
+  padding-left: 40px;
+}
+.journey-track::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--accent-blue), var(--accent-violet), var(--accent-emerald));
+}
+.journey-step {
+  position: relative;
+  padding: 1.25rem 0 2rem;
+}
+.journey-dot {
+  position: absolute;
+  left: -33px;
+  top: 1.5rem;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent-blue);
+  border: 3px solid var(--bg-primary);
+  z-index: 1;
+}
+.journey-step:nth-child(2) .journey-dot { background: var(--accent-violet); }
+.journey-step:nth-child(3) .journey-dot { background: var(--accent-cyan); }
+.journey-step:nth-child(4) .journey-dot { background: var(--accent-emerald); }
+.journey-step:nth-child(5) .journey-dot { background: var(--accent-amber); }
+.journey-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+.journey-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 0.4rem;
+}
+.journey-desc {
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+.footer-brand {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.footer p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+}
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  color: var(--accent-blue);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--accent-cyan); }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.fade-in {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: all 0.7s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .vs-container {
+    grid-template-columns: 1fr;
+  }
+  .vs-divider { 
+    padding: 0.5rem 0;
+  }
+  .mentor-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  .participants-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-links.active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: rgba(10,14,26,0.98);
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .nav-toggle { display: block; }
+  .section { padding: 3rem 1rem; }
+  .hero { padding: 80px 1rem 40px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .phases-container { grid-template-columns: 1fr; }
+  .concepts-grid { grid-template-columns: 1fr; }
+  .tips-grid { grid-template-columns: 1fr; }
+  .tasks-container { padding: 1.5rem; }
+}
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .hero-meta { flex-direction: column; align-items: center; }
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress-bar-fixed {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 999;
+  background: rgba(255,255,255,0.05);
+}
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan), var(--accent-violet));
+  transition: width 0.15s;
+}
+
+/* Separator */
+.section-sep {
+  border: none;
+  height: 1px;
+  background: var(--border-color);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Quote block */
+.quote-block {
+  background: rgba(139,92,246,0.06);
+  border-left: 4px solid var(--accent-violet);
+  padding: 1.5rem 2rem;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin: 2rem 0;
+}
+.quote-text {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.3rem;
+  font-style: italic;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+.quote-author {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar-fixed"><div class="progress-bar-fill" id="progressBar"></div></div>
+
+<!-- NAVIGATION -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">
+      <div class="logo-icon">AI</div>
+      AIWIS Academy
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#resumen">Resumen</a></li>
+      <li><a href="#programa">Programa</a></li>
+      <li><a href="#diagnostico">Diagnóstico</a></li>
+      <li><a href="#conceptos">Conceptos</a></li>
+      <li><a href="#herramientas">Herramientas</a></li>
+      <li><a href="#tips">Tips</a></li>
+      <li><a href="#tareas">Tareas</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Menú">☰</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Sesión Introductoria — Clase 0
+    </div>
+    <h1>Meet de <span class="gradient-text">Bienvenida</span></h1>
+    <h1 style="font-size:clamp(1.4rem,3.5vw,2.2rem); margin-top:-0.3rem;">Adopción de IA Corporativa</h1>
+    <p class="hero-subtitle">
+      Diagnóstico inicial del equipo CUBI-K para el programa de adopción de Inteligencia Artificial. 
+      Identificación de niveles, herramientas y dolores del equipo.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span class="icon">📅</span> 2 de marzo, 2026</div>
+      <div class="hero-meta-item"><span class="icon">🕒</span> 15:46 hrs (GMT-3)</div>
+      <div class="hero-meta-item"><span class="icon">👥</span> ~20 participantes</div>
+      <div class="hero-meta-item"><span class="icon">📍</span> Google Meet</div>
+    </div>
+    <div class="hero-actions">
+      <a href="https://drive.google.com/file/d/1-QEXotraorRJQN7UNX4xSvOYpxcITQdx/view?usp=drive_web" target="_blank" class="btn btn-primary">▶ Ver Grabación</a>
+      <a href="https://drive.google.com/file/d/1S6bKO74JsGFtCo7ZwIwGu2yVKWyL_0rP/view?usp=drive_web" target="_blank" class="btn btn-outline">▶ Grabación 2</a>
+    </div>
+  </div>
+</section>
+
+<!-- RESUMEN EJECUTIVO -->
+<section class="section" id="resumen">
+  <div class="section-header fade-in">
+    <p class="section-label">Dashboard de la Sesión</p>
+    <h2 class="section-title">Resumen Ejecutivo</h2>
+    <p class="section-desc">Vista general de los datos clave de la sesión de diagnóstico inicial</p>
+  </div>
+
+  <div class="stats-grid fade-in">
+    <div class="stat-card">
+      <div class="stat-icon">🎯</div>
+      <div class="stat-value">Fase 1</div>
+      <div class="stat-label">Adopción IA</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">👥</div>
+      <div class="stat-value">~20</div>
+      <div class="stat-label">Participantes</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🛠</div>
+      <div class="stat-value">6+</div>
+      <div class="stat-label">Herramientas IA</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">📦</div>
+      <div class="stat-value">3</div>
+      <div class="stat-label">Fases del Programa</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">📆</div>
+      <div class="stat-value">Mi-Vi</div>
+      <div class="stat-label">Horario: 19:00</div>
+    </div>
+  </div>
+
+  <!-- Mentor Card -->
+  <div class="mentor-card fade-in">
+    <div class="mentor-avatar">🧠</div>
+    <div class="mentor-info">
+      <h3>Armin Salazar (AIWIS)</h3>
+      <div class="subtitle">Mentor & Consultor en Adopción de IA</div>
+      <p>Formación como músico, productor musical e informático. Experiencia previa en BCI con Cobol y sistemas bancarios. Especialista en automatización, agentes de IA, y creación de plataformas innovadoras. Fundador de AIWIS, empresa de investigación e innovación tecnológica con enfoque en audio, IA y transformación digital.</p>
+    </div>
+  </div>
+
+  <div class="quote-block fade-in">
+    <p class="quote-text">"No se espera que se conviertan en desarrolladores de IA en un mes. Nos concentraremos en tips específicos y avanzados sobre lo que se espera para el futuro del campo."</p>
+    <p class="quote-author">— Armin (AIWIS), Sesión de Bienvenida</p>
+  </div>
+</section>
+
+<hr class="section-sep">
+
+<!-- PROGRAMA / FASES -->
+<section class="section" id="programa">
+  <div class="section-header fade-in">
+    <p class="section-label">Hoja de Ruta</p>
+    <h2 class="section-title">Programa de 3 Fases</h2>
+    <p class="section-desc">Estructura escalonada para llevar al equipo desde la adopción básica hasta la creación de un área de IA propia</p>
+  </div>
+
+  <div class="phases-container fade-in">
+    <div class="phase-card">
+      <div class="phase-number">01</div>
+      <div class="phase-icon">🚀</div>
+      <div class="phase-title">Fase 1 — Adopción Corporativa</div>
+      <div class="phase-desc">
+        Se parte desde cero para diagnosticar el nivel del equipo, identificar "dolores" operativos y descubrir qué tareas pueden automatizarse. El objetivo es crear un ecosistema interno de asistentes (<strong>"Gemflix"</strong>) que ayuden en tareas repetitivas como análisis de datos, generación de pipelines y documentación.
+      </div>
+      <div class="phase-tags">
+        <span class="tag tag-blue">Diagnóstico</span>
+        <span class="tag tag-blue">Asistentes IA</span>
+        <span class="tag tag-blue">Gemini</span>
+        <span class="tag tag-blue">Notebook LM</span>
+        <span class="tag tag-blue">Claude</span>
+      </div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-number">02</div>
+      <div class="phase-icon">⚡</div>
+      <div class="phase-title">Fase 2 — Programación Avanzada</div>
+      <div class="phase-desc">
+        Un grupo seleccionado aprenderá a programar software con plataformas avanzadas como <strong>Antigravity</strong> y <strong>Google Studio</strong>. Se trabaja con herramientas de codificación, automatización con N8N, Zapier y Make, y desarrollo de agentes de IA funcionales con backend propio.
+      </div>
+      <div class="phase-tags">
+        <span class="tag tag-violet">Antigravity</span>
+        <span class="tag tag-violet">Google Studio</span>
+        <span class="tag tag-violet">N8N</span>
+        <span class="tag tag-violet">Agentes IA</span>
+      </div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-number">03</div>
+      <div class="phase-icon">🏗</div>
+      <div class="phase-title">Fase 3 — Área de IA Propia</div>
+      <div class="phase-desc">
+        Alianza estratégica donde los recursos de CUBI-K desarrollan el área de programación de IA internamente. Co-desarrollo de soluciones propias, autonomía tecnológica y capacidad de innovar desde dentro de la organización.
+      </div>
+      <div class="phase-tags">
+        <span class="tag tag-emerald">Co-desarrollo</span>
+        <span class="tag tag-emerald">Autonomía</span>
+        <span class="tag tag-emerald">Innovación interna</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Course structure details -->
+  <div class="callout fade-in" style="margin-top:2rem;">
+    <div class="callout-icon">📋</div>
+    <div>
+      <div class="callout-title">Estructura del Curso</div>
+      <div class="callout-text">
+        <strong>3 módulos presenciales</strong> + 1 módulo de contenido grabado. Clases los <strong>miércoles y viernes a las 19:00 hrs</strong>. 
+        Cada módulo cierra con un taller evaluado. Proyecto final grupal (~15 abril): desarrollar un software interno para CUBI-K. 
+        Las entregas se realizan vía Drive o portal. Cada clase incluye un quiz de refuerzo.
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-sep">
+
+<!-- DIAGNÓSTICO PARTICIPANTES -->
+<section class="section" id="diagnostico">
+  <div class="section-header fade-in">
+    <p class="section-label">Diagnóstico Inicial</p>
+    <h2 class="section-title">Perfil de los Participantes</h2>
+    <p class="section-desc">Cada miembro compartió su experiencia con herramientas de IA, revelando un equipo con base sólida en uso práctico</p>
+  </div>
+
+  <div class="participants-grid fade-in">
+
+    <div class="participant-card">
+      <span class="level-badge level-intermedio">Intermedio</span>
+      <div class="participant-header">
+        <div class="participant-avatar" style="background:linear-gradient(135deg,#3b82f6,#06b6d4);">AL</div>
+        <div>
+          <div class="participant-name">Alfredo Lobos Vázquez</div>
+          <div class="participant-role">Ingeniero — Área de Producción</div>
+        </div>
+      </div>
+      <div class="participant-body">
+        Usa Gemini en contexto de Azure Kubernetes (K8S) para consultas y simulación del rol de arquitecto. Ha construido un asistente K8S enfocado en FinOps. Lleva <strong>más de 6 meses</strong> usando IA como referencia experta para decisiones, eficiencia y análisis de costos.
+      </div>
+      <div class="participant-tools">
+        <span class="tool-badge">Gemini</span>
+        <span class="tool-badge">Azure K8S</span>
+        <span class="tool-badge">FinOps</span>
+      </div>
+    </div>
+
+    <div class="participant-card">
+      <span class="level-badge level-intermedio">Intermedio</span>
+      <div class="participant-header">
+        <div class="participant-avatar" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);">OL</div>
+        <div>
+          <div class="participant-name">Oscar Leiva Cessap</div>
+          <div class="participant-role">Gestión de Problemas & Causa Raíz</div>
+        </div>
+      </div>
+      <div class="participant-body">
+        Usa Gemini como apoyo experto para productividad ante grandes volúmenes de información. Experiencia con ChatGPT, Deepseek y <strong>Claude</strong> (destacando que Opus 4.6 es excelente para programación e informes).
+      </div>
+      <div class="participant-tools">
+        <span class="tool-badge">Gemini</span>
+        <span class="tool-badge">ChatGPT</span>
+        <span class="tool-badge">Claude</span>
+        <span class="tool-badge">Deepseek</span>
+      </div>
+    </div>
+
+    <div class="participant-card">
+      <span class="level-badge level-intermedio">Intermedio</span>
+      <div class="participant-header">
+        <div class="participant-avatar" style="background:linear-gradient(135deg,#10b981,#06b6d4);">JM</div>
+        <div>
+          <div class="participant-name">José Martínez Palomé</div>
+          <div class="participant-role">Ingeniero de Datos</div>
+        </div>
+      </div>
+      <div class="participant-body">
+        Utiliza IA para análisis de datos, configurar notebooks en Databricks, documentación de capacity planning y resolución de problemas. Proyecto 2026: implementar <strong>Azure Data Factory</strong> con IA para limpiar pipelines fallidos y reducir costos.
+      </div>
+      <div class="participant-tools">
+        <span class="tool-badge">Gemini</span>
+        <span class="tool-badge">ChatGPT</span>
+        <span class="tool-badge">Databricks</span>
+        <span class="tool-badge">ADF</span>
+      </div>
+    </div>
+
+    <div class="participant-card">
+      <span class="level-badge level-intermedio">Intermedio</span>
+      <div class="participant-header">
+        <div class="participant-avatar" style="background:linear-gradient(135deg,#f59e0b,#f97316);">BH</div>
+        <div>
+          <div class="participant-name">Benjamín Henríquez Naranjo</div>
+          <div class="participant-role">Ingeniería de Causas Raíz</div>
+        </div>
+      </div>
+      <div class="participant-body">
+        Procesa información de fuentes de datos e incidentes con Gemini y <strong>Notebook LM</strong>. Usa IA para generar código y automatizaciones. Identifica que el mayor desafío es la <strong>contextualización</strong> de la IA.
+      </div>
+      <div class="participant-tools">
+        <span class="tool-badge">Gemini</span>
+        <span class="tool-badge">ChatGPT</span>
+        <span class="tool-badge">Notebook LM</span>
+      </div>
+    </div>
+
+    <div class="participant-card">
+      <span class="level-badge level-basico">Básico-Intermedio</span>
+      <div class="participant-header">
+        <div class="participant-avatar" style="background:linear-gradient(135deg,#ec4899,#f43f5e);">EF</div>
+        <div>
+          <div class="participant-name">Evelyn Figueroa Zamora</div>
+          <div class="participant-role">Coordinadora de Mesa de Soporte</div>
+        </div>
+      </div>
+      <div class="participant-body">
+        Usa IA para generar informes y analizar datos de incidentes. Procesa reportes de <strong>Elix</strong> para obtener datos más depurados y accionables.
+      </div>
+      <div class="participant-tools">
+        <span class="tool-badge">Gemini</span>
+        <span class="tool-badge">Elix</span>
+      </div>
+    </div>
+
+    <div class="participant-card">
+      <span class="level-badge level-intermedio">Intermedio</span>
+      <div class="participant-header">
+        <div class="participant-avatar" style="background:linear-gradient(135deg,#06b6d4,#3b82f6);">FA</div>
+        <div>
+          <div class="participant-name">Felipe Álvarez Hermosilla</div>
+          <div class="participant-role">Mesa Preproductiva</div>
+        </div>
+      </div>
+      <div class="participant-body">
+        Usa IA para crear <strong>automatizaciones y scripts</strong>, además de revisar logs de WebLogic de gran volumen. Aprovecha la IA para tareas que serían tediosas manualmente.
+      </div>
+      <div class="participant-tools">
+        <span class="tool-badge">Gemini</span>
+        <span class="tool-badge">Scripts</span>
+        <span class="tool-badge">WebLogic</span>
+      </div>
+    </div>
+
+    <div class="participant-card">
+      <span class="level-badge level-intermedio">Intermedio</span>
+      <div class="participant-header">
+        <div class="participant-avatar" style="background:linear-gradient(135deg,#f97316,#f59e0b);">AA</div>
+        <div>
+          <div class="participant-name">Alfredo Aguayo</div>
+          <div class="participant-role">Ingeniería & Desarrollo</div>
+        </div>
+      </div>
+      <div class="participant-body">
+        Comenzó con <strong>Blackbox</strong> (IA para código), migró a Gemini por su potencia. Usa IA para resolver errores complejos analizando capturas de pantalla y para documentar código traduciéndolo a lenguaje natural, logrando un <strong>90% de precisión</strong>.
+      </div>
+      <div class="participant-tools">
+        <span class="tool-badge">Gemini</span>
+        <span class="tool-badge">Blackbox</span>
+      </div>
+    </div>
+
+    <div class="participant-card">
+      <span class="level-badge level-basico">Básico</span>
+      <div class="participant-header">
+        <div class="participant-avatar" style="background:linear-gradient(135deg,#f43f5e,#ec4899);">AM</div>
+        <div>
+          <div class="participant-name">Alondra Martínez Paloma</div>
+          <div class="participant-role">Resolución de Vulnerabilidades & Parcheo</div>
+        </div>
+      </div>
+      <div class="participant-body">
+        Comenzó con Gemini en enero. Enfrenta dificultades con la <strong>transcripción de datos específicos</strong> (números KB, datos de Microsoft) y análisis de hojas de cálculo. La IA se confunde con solicitudes muy puntuales.
+      </div>
+      <div class="participant-tools">
+        <span class="tool-badge">Gemini</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-sep">
+
+<!-- CONCEPTOS CLAVE -->
+<section class="section" id="conceptos">
+  <div class="section-header fade-in">
+    <p class="section-label">Base de Conocimiento</p>
+    <h2 class="section-title">Conceptos Clave</h2>
+    <p class="section-desc">Ideas fundamentales discutidas en la sesión que todo participante debe dominar</p>
+  </div>
+
+  <div class="concepts-grid fade-in">
+    <div class="concept-card">
+      <div class="concept-icon">🤖</div>
+      <div class="concept-title">Gema (Asistente)</div>
+      <div class="concept-text">
+        Un asistente de IA preconfigurado dentro de plataformas como Gemini. Funciona bien para tareas simples y consultas directas, pero tiene <strong>limitaciones</strong> cuando la asistencia se vuelve compleja o requiere múltiples pasos automatizados.
+      </div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">⚙️</div>
+      <div class="concept-title">Agente de IA</div>
+      <div class="concept-text">
+        Va más allá de un asistente. Requiere su propia aplicación con <strong>backend y automatización</strong>. Es más escalable que una gema y puede ejecutar tareas complejas de forma autónoma. Se programa con herramientas como N8N, Zapier o Make.
+      </div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">🔗</div>
+      <div class="concept-title">Contextualización</div>
+      <div class="concept-text">
+        El paso más difícil al usar IA: proporcionar el contexto adecuado para obtener respuestas precisas. Sin buen contexto, la IA genera información genérica o incorrecta. Es <strong>la habilidad #1</strong> para dominar como usuario de IA.
+      </div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">📓</div>
+      <div class="concept-title">Notebook LM</div>
+      <div class="concept-text">
+        Herramienta de Google que actúa como repositorio de conocimiento. Permite crear cuadernos con fuentes de datos, hacer consultas inteligentes, generar resúmenes y hasta videos. Se usará intensivamente en el curso.
+      </div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">🔄</div>
+      <div class="concept-title">Tokens y Limitaciones</div>
+      <div class="concept-text">
+        Las versiones gratuitas de herramientas como Claude o Gemini permiten usar los modelos, pero limitan la cantidad de <strong>tokens</strong> (unidades de texto) o tiempo de uso, causando bloqueos temporales. Las versiones Pro eliminan estas restricciones.
+      </div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">🏢</div>
+      <div class="concept-title">"Gemflix" — Ecosistema Interno</div>
+      <div class="concept-text">
+        Concepto meta de la Fase 1: crear una especie de "Netflix de asistentes de IA" dentro de CUBI-K, con una galería de herramientas IA especializadas para tareas repetitivas del equipo (análisis, documentación, pipelines, etc.).
+      </div>
+    </div>
+  </div>
+
+  <!-- Gema vs Agente comparison -->
+  <div class="fade-in" style="margin-top:3rem;">
+    <h3 style="text-align:center; margin-bottom:1.5rem; font-size:1.3rem;">
+      🔍 Comparativa: Gema (Asistente) vs Agente de IA
+    </h3>
+    <div class="vs-container">
+      <div class="vs-card">
+        <h3 style="color:var(--accent-amber)">🟡 Gema / Asistente</h3>
+        <ul class="vs-list">
+          <li><span class="check">→</span> Funciona dentro de la plataforma (Gemini, ChatGPT)</li>
+          <li><span class="check">→</span> Responde consultas y genera texto</li>
+          <li><span class="check">→</span> Configuración limitada a prompts</li>
+          <li><span class="check">→</span> No tiene backend propio</li>
+          <li><span class="check">→</span> Ideal para tareas simples y puntuales</li>
+          <li><span class="check">→</span> Nivel 1 en la curva de aprendizaje</li>
+        </ul>
+      </div>
+      <div class="vs-divider">
+        <div class="vs-badge">VS</div>
+      </div>
+      <div class="vs-card">
+        <h3 style="color:var(--accent-emerald)">🟢 Agente de IA</h3>
+        <ul class="vs-list">
+          <li><span class="arrow">→</span> Aplicación independiente con backend</li>
+          <li><span class="arrow">→</span> Ejecuta acciones y automatizaciones</li>
+          <li><span class="arrow">→</span> Integra múltiples fuentes y APIs</li>
+          <li><span class="arrow">→</span> Escalable y personalizable</li>
+          <li><span class="arrow">→</span> Gestiona tareas complejas autónomamente</li>
+          <li><span class="arrow">→</span> Nivel 2+ en la curva de aprendizaje</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-sep">
+
+<!-- HERRAMIENTAS MENCIONADAS -->
+<section class="section" id="herramientas">
+  <div class="section-header fade-in">
+    <p class="section-label">Ecosistema Tecnológico</p>
+    <h2 class="section-title">Herramientas IA del Equipo</h2>
+    <p class="section-desc">Mapa de las herramientas mencionadas por los participantes y su nivel de adopción</p>
+  </div>
+
+  <div class="tools-chart fade-in">
+    <div class="chart-bar-group">
+      <div class="chart-bar-label">
+        <span>🔵 Gemini (Google)</span>
+        <span>8 / 8 mencionaron</span>
+      </div>
+      <div class="chart-bar-track">
+        <div class="chart-bar-fill" style="width:100%; background:linear-gradient(90deg,#3b82f6,#06b6d4);" data-width="100">Herramienta principal</div>
+      </div>
+    </div>
+    <div class="chart-bar-group">
+      <div class="chart-bar-label">
+        <span>🟢 ChatGPT (OpenAI)</span>
+        <span>4 / 8 mencionaron</span>
+      </div>
+      <div class="chart-bar-track">
+        <div class="chart-bar-fill" style="width:50%; background:linear-gradient(90deg,#10b981,#06b6d4);" data-width="50">Uso personal</div>
+      </div>
+    </div>
+    <div class="chart-bar-group">
+      <div class="chart-bar-label">
+        <span>🟣 Claude (Anthropic)</span>
+        <span>2 / 8 mencionaron</span>
+      </div>
+      <div class="chart-bar-track">
+        <div class="chart-bar-fill" style="width:25%; background:linear-gradient(90deg,#8b5cf6,#a78bfa);" data-width="25">Informes & código</div>
+      </div>
+    </div>
+    <div class="chart-bar-group">
+      <div class="chart-bar-label">
+        <span>🔴 Deepseek</span>
+        <span>1 / 8 mencionaron</span>
+      </div>
+      <div class="chart-bar-track">
+        <div class="chart-bar-fill" style="width:12.5%; background:linear-gradient(90deg,#f43f5e,#ec4899);" data-width="12.5"></div>
+      </div>
+    </div>
+    <div class="chart-bar-group">
+      <div class="chart-bar-label">
+        <span>📓 Notebook LM (Google)</span>
+        <span>2 / 8 mencionaron</span>
+      </div>
+      <div class="chart-bar-track">
+        <div class="chart-bar-fill" style="width:25%; background:linear-gradient(90deg,#f59e0b,#f97316);" data-width="25">Repositorio de conocimiento</div>
+      </div>
+    </div>
+    <div class="chart-bar-group">
+      <div class="chart-bar-label">
+        <span>⬛ Blackbox</span>
+        <span>1 / 8 mencionaron</span>
+      </div>
+      <div class="chart-bar-track">
+        <div class="chart-bar-fill" style="width:12.5%; background:linear-gradient(90deg,#64748b,#94a3b8);" data-width="12.5">IA para código</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout fade-in">
+    <div class="callout-icon">💡</div>
+    <div>
+      <div class="callout-title">Hallazgo clave del diagnóstico</div>
+      <div class="callout-text">
+        El equipo ya tiene experiencia con múltiples herramientas IA, pero el uso es mayoritariamente como <strong>"asistente de consultas"</strong> (preguntar y obtener respuestas). 
+        El siguiente paso natural es evolucionar hacia el uso de <strong>agentes</strong> que ejecuten tareas de forma autónoma y se integren con los flujos de trabajo existentes.
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-sep">
+
+<!-- RECORRIDO DE LA SESIÓN -->
+<section class="section" id="recorrido">
+  <div class="section-header fade-in">
+    <p class="section-label">Línea de Tiempo</p>
+    <h2 class="section-title">Recorrido de la Sesión</h2>
+    <p class="section-desc">Flujo cronológico de los temas abordados durante la meet de bienvenida</p>
+  </div>
+
+  <div class="journey-track fade-in" style="max-width:800px; margin:0 auto;">
+    <div class="journey-step">
+      <div class="journey-dot"></div>
+      <div class="journey-label">Apertura</div>
+      <div class="journey-title">Presentación del Mentor y Diagnóstico</div>
+      <div class="journey-desc">Armin (AIWIS) se presenta, explica su trayectoria y establece el objetivo: diagnosticar el nivel de cada participante clasificándolos entre cero, intermedio o avanzado en IA.</div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-dot"></div>
+      <div class="journey-label">Diagnóstico</div>
+      <div class="journey-title">Ronda de Experiencias con IA</div>
+      <div class="journey-desc">Cada participante comparte qué herramientas usa, para qué las usa y qué limitaciones ha encontrado. Se identifican patrones comunes: todos usan Gemini, el mayor desafío es la contextualización.</div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-dot"></div>
+      <div class="journey-label">Conceptual</div>
+      <div class="journey-title">De Gemas a Agentes: La Evolución</div>
+      <div class="journey-desc">Se explica la diferencia fundamental entre un asistente (gema) y un agente de IA. Se introduce el concepto de backend, automatización con N8N/Zapier/Make y la visión del "Gemflix" corporativo.</div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-dot"></div>
+      <div class="journey-label">Programa</div>
+      <div class="journey-title">Presentación del Portal y Estructura</div>
+      <div class="journey-desc">Se muestra el portal de estudio (GitHub Pages + Vercel), el Drive compartido, la estructura de 3 módulos + contenido grabado, y el sistema de evaluación con quizzes y talleres.</div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-dot"></div>
+      <div class="journey-label">Cierre</div>
+      <div class="journey-title">Tareas y Próximos Pasos</div>
+      <div class="journey-desc">Se asignan tareas iniciales para la próxima clase del miércoles: revisar el portal, crear un cuaderno en Notebook LM, revisar el Drive personal y activar cuenta de GitHub.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-sep">
+
+<!-- TIPS Y NOTAS DESTACADAS -->
+<section class="section" id="tips">
+  <div class="section-header fade-in">
+    <p class="section-label">Anotaciones del Mentor</p>
+    <h2 class="section-title">Tips y Notas Destacadas</h2>
+    <p class="section-desc">Consejos prácticos y reflexiones importantes compartidos durante la sesión</p>
+  </div>
+
+  <div class="tips-grid fade-in">
+    <div class="tip-card">
+      <div class="tip-number">TIP 01</div>
+      <div class="tip-title">La contextualización es la habilidad #1</div>
+      <div class="tip-text">El mayor obstáculo al usar IA no es la herramienta, sino la capacidad de darle el contexto correcto. Sin contexto, las respuestas serán genéricas. Con buen contexto, la IA se vuelve un experto personalizado.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-number">TIP 02</div>
+      <div class="tip-title">Usa tu cuenta personal de Gmail</div>
+      <div class="tip-text">Las cuentas corporativas de BCI no tienen habilitado Notebook LM ni acceso completo a herramientas. Usar cuentas personales garantiza acceso libre a todas las funcionalidades sin restricciones del banco.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-number">TIP 03</div>
+      <div class="tip-title">Las versiones gratuitas sí funcionan</div>
+      <div class="tip-text">Claude, Gemini y otras herramientas gratuitas usan los mismos modelos que las de pago. La limitación está en los tokens y tiempo de uso. Una cuenta Pro de Claude puede compartirse entre compañeros para reducir costos.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-number">TIP 04</div>
+      <div class="tip-title">De consultar a ejecutar: el cambio de mentalidad</div>
+      <div class="tip-text">La mayoría del equipo usa IA para "hacer preguntas". El salto está en pasar de preguntar a que la IA <strong>ejecute tareas directas</strong>: generar scripts, procesar datos, automatizar flujos completos.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-number">TIP 05</div>
+      <div class="tip-title">Notebook LM como base de conocimiento</div>
+      <div class="tip-text">Crear un cuaderno en Notebook LM desde el inicio del curso permite acumular conocimiento progresivamente. Se puede consultar, generar resúmenes, crear mapas mentales y hasta producir videos con el contenido.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-number">TIP 06</div>
+      <div class="tip-title">Google Sheets + App Script = Apps gratis</div>
+      <div class="tip-text">El portal del curso usa Google Sheets como base de datos con extensiones de App Script. Esto demuestra que se pueden crear aplicaciones completas con herramientas gratuitas, un concepto que se profundizará en Fase 2.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-sep">
+
+<!-- PROYECTOS SHOWCASE -->
+<section class="section" id="showcase">
+  <div class="section-header fade-in">
+    <p class="section-label">Lo Que Es Posible</p>
+    <h2 class="section-title">Demos de AIWIS</h2>
+    <p class="section-desc">Ejemplos de proyectos reales creados con IA mostrados durante la sesión para inspirar al equipo</p>
+  </div>
+
+  <div class="concepts-grid fade-in">
+    <div class="concept-card">
+      <div class="concept-icon">🎸</div>
+      <div class="concept-title">Transformador de Guitarras con IA</div>
+      <div class="concept-text">Plataforma que cambia automáticamente las partes de una guitarra en una foto según indicaciones (prompts) del usuario. Ejemplo de IA generativa aplicada a la personalización visual.</div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">🎬</div>
+      <div class="concept-title">Analizador de Video con Filtros IA</div>
+      <div class="concept-text">Plataforma que analiza videos y genera capturas de pantalla de una persona específica usando filtros de lenguaje natural. Demostración de IA con visión por computador.</div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">📊</div>
+      <div class="concept-title">Generador de Excel con Lenguaje Natural</div>
+      <div class="concept-text">Capacidad de generar libros de Excel complejos con hojas, columnas, títulos, fórmulas y gráficos usando solo lenguaje natural. Ejemplo de productividad extrema con IA.</div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">🎹</div>
+      <div class="concept-title">Controlador MIDI Personalizado</div>
+      <div class="concept-text">Controlador que ofrece solo los sonidos deseados por el músico, más un pedal de guitarra virtual que clona sonidos de audio para crear efectos personalizados.</div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">🏥</div>
+      <div class="concept-title">App de Rehabilitación para Adultos Mayores</div>
+      <div class="concept-text">Desarrollada para la Universidad Austral. Promueve actividad física y genera recetas saludables basadas en ingredientes disponibles, priorizando alimentos económicos.</div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">💬</div>
+      <div class="concept-title">Chatbot Asistente del Curso</div>
+      <div class="concept-text">Asistente desarrollado en Notebook LM que actúa como repositorio de conocimiento del curso. Puede responder preguntas sobre el contenido y generar videos de resumen.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-sep">
+
+<!-- TAREAS -->
+<section class="section" id="tareas">
+  <div class="section-header fade-in">
+    <p class="section-label">Para la Próxima Clase</p>
+    <h2 class="section-title">Tareas Iniciales</h2>
+    <p class="section-desc">Actividades asignadas para completar antes de la próxima sesión del miércoles</p>
+  </div>
+
+  <div class="tasks-container fade-in">
+    <div class="task-item">
+      <div class="task-check" onclick="this.classList.toggle('checked')"></div>
+      <div class="task-content">
+        <h4>📌 Revisar el Portal de Estudio</h4>
+        <p>Navegar el portal alojado en GitHub Pages y Vercel. Reportar cualquier error o problema de acceso encontrado.</p>
+      </div>
+    </div>
+    <div class="task-item">
+      <div class="task-check" onclick="this.classList.toggle('checked')"></div>
+      <div class="task-content">
+        <h4>📓 Crear un Cuaderno en Notebook LM</h4>
+        <p>Acceder a Notebook LM con tu cuenta personal de Gmail y crear tu primer cuaderno para el curso.</p>
+      </div>
+    </div>
+    <div class="task-item">
+      <div class="task-check" onclick="this.classList.toggle('checked')"></div>
+      <div class="task-content">
+        <h4>📁 Revisar tu Carpeta en el Drive</h4>
+        <p>Verificar que puedes acceder a tu carpeta personal en el Drive compartido. Revisar el contenido disponible.</p>
+      </div>
+    </div>
+    <div class="task-item">
+      <div class="task-check" onclick="this.classList.toggle('checked')"></div>
+      <div class="task-content">
+        <h4>🐙 Activar Cuenta de GitHub</h4>
+        <p>Si tienes cuenta de GitHub asociada a tu Gmail personal, intenta activarla. Si no tienes, créala.</p>
+      </div>
+    </div>
+    <div class="task-item">
+      <div class="task-check" onclick="this.classList.toggle('checked')"></div>
+      <div class="task-content">
+        <h4>🎥 Ver la Grabación de esta Sesión</h4>
+        <p>Si no pudiste asistir o quieres repasar, revisa la grabación completa disponible en los enlaces de arriba.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout fade-in" style="margin-top:2rem;">
+    <div class="callout-icon">📅</div>
+    <div>
+      <div class="callout-title">Próxima Clase: Miércoles</div>
+      <div class="callout-text">
+        Las clases se realizan los <strong>miércoles y viernes a las 19:00 hrs</strong> (GMT-3). 
+        Asegúrate de completar las tareas antes de la próxima sesión para aprovechar al máximo el contenido.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">AIWIS × CUBI-K Academy</div>
+  <p>Programa de Adopción de IA Corporativa — 2026</p>
+  <p style="margin-top:0.5rem; font-size:0.78rem; color:var(--text-muted);">
+    Resumen pedagógico generado desde la transcripción de la sesión de bienvenida del 2 de marzo, 2026
+  </p>
+  <div class="footer-links">
+    <a href="https://drive.google.com/file/d/1-QEXotraorRJQN7UNX4xSvOYpxcITQdx/view?usp=drive_web" target="_blank">📹 Grabación 1</a>
+    <a href="https://drive.google.com/file/d/1S6bKO74JsGFtCo7ZwIwGu2yVKWyL_0rP/view?usp=drive_web" target="_blank">📹 Grabación 2</a>
+    <a href="#resumen">⬆ Volver al inicio</a>
+  </div>
+</footer>
+
+<script>
+// Mobile nav toggle
+document.getElementById('navToggle').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('active');
+});
+
+// Close nav on link click (mobile)
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('active');
+  });
+});
+
+// Progress bar
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  document.getElementById('progressBar').style.width = progress + '%';
+});
+
+// Intersection Observer for fade-in animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Animate chart bars on scroll
+const chartObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const bars = entry.target.querySelectorAll('.chart-bar-fill');
+      bars.forEach((bar, i) => {
+        const targetWidth = bar.getAttribute('data-width');
+        bar.style.width = '0%';
+        setTimeout(() => {
+          bar.style.width = targetWidth + '%';
+        }, i * 150);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.tools-chart').forEach(el => chartObserver.observe(el));
+</script>
+</body>
+</html>
