@@ -3,428 +3,1289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dominando ChatGPT, Claude y Gemini - Día 2 (Versión Mejorada)</title>
+    <title>AIWIS | Día 2: Dominando ChatGPT, Claude y Gemini — Edición 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
-        
-        * {
-            font-family: 'Inter', sans-serif;
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        .card {
-            transition: all 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-        
-        .tab-active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-bottom-color: transparent;
-        }
-        
-        .tab-btn {
-            border-bottom: 4px solid transparent;
+        :root {
+            --aiwis-primary: #0f172a;
+            --aiwis-accent: #f59e0b;
+            --aiwis-accent2: #06b6d4;
+            --aiwis-gpt: #10a37f;
+            --aiwis-claude: #d97706;
+            --aiwis-gemini: #4285f4;
+            --aiwis-surface: #f8fafc;
+            --aiwis-card: #ffffff;
+            --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
         }
 
-        .animate-fade-in {
-            animation: fadeIn 0.5s ease-in;
+        * { font-family: 'DM Sans', sans-serif; scroll-behavior: smooth; }
+        h1, h2, .display-font { font-family: 'Playfair Display', serif; }
+        code, .mono { font-family: 'JetBrains Mono', monospace; }
+
+        body { background: var(--aiwis-surface); }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #334155 70%, #0f172a 100%);
+            position: relative;
+            overflow: hidden;
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+        .hero-gradient::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(245,158,11,0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 30%, rgba(6,182,212,0.1) 0%, transparent 50%);
+            animation: heroFloat 15s ease-in-out infinite;
+        }
+        @keyframes heroFloat {
+            0%, 100% { transform: translate(0,0) rotate(0deg); }
+            33% { transform: translate(2%,-1%) rotate(1deg); }
+            66% { transform: translate(-1%,1%) rotate(-0.5deg); }
+        }
+        .hero-gradient::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: var(--grain);
+            background-repeat: repeat;
+            pointer-events: none;
+        }
+
+        .nav-pill { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .nav-pill:hover { background: rgba(245,158,11,0.1); }
+        .nav-pill.active {
+            background: var(--aiwis-accent);
+            color: var(--aiwis-primary);
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(245,158,11,0.3);
+        }
+
+        .card-hover { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-hover:hover { transform: translateY(-6px); box-shadow: 0 25px 50px rgba(0,0,0,0.12); }
+
+        .animate-in {
+            animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            opacity: 0;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
-        .price-card {
-            border: 2px solid #e5e7eb;
-            transition: all 0.3s ease;
-        }
-        
-        .price-card:hover {
-            border-color: #667eea;
-            transform: scale(1.05);
-        }
-        
-        .feature-check { color: #10b981; }
-        .feature-cross { color: #ef4444; }
 
-        .glossary-term {
-            border-left: 4px solid #667eea;
+        .badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px; border-radius: 9999px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+        .badge-gpt { background: rgba(16,163,127,0.12); color: #059669; }
+        .badge-claude { background: rgba(217,119,6,0.12); color: #b45309; }
+        .badge-gemini { background: rgba(66,133,244,0.12); color: #2563eb; }
+        .badge-new { background: rgba(239,68,68,0.12); color: #dc2626; }
+
+        .timeline-line { position: relative; }
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            left: 23px; top: 0; bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--aiwis-accent), var(--aiwis-accent2));
         }
 
+        .glossary-card { border-left: 4px solid; transition: all 0.3s ease; }
+        .glossary-card:hover { transform: translateX(4px); }
+
+        .compare-table th { position: sticky; top: 0; z-index: 10; }
+
+        .infographic-step {
+            counter-increment: step;
+            position: relative;
+        }
+        .infographic-step::before {
+            content: counter(step);
+            display: flex; align-items: center; justify-content: center;
+            width: 40px; height: 40px;
+            background: var(--aiwis-accent);
+            color: var(--aiwis-primary);
+            font-weight: 800;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .pulse-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+
+        .diagram-box {
+            border: 2px solid;
+            border-radius: 12px;
+            padding: 12px 16px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+            position: relative;
+        }
+        .diagram-arrow {
+            display: flex; align-items: center; justify-content: center;
+            color: #94a3b8;
+            font-size: 1.5rem;
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            .tab-content { display: block !important; page-break-inside: avoid; }
+        }
     </style>
 </head>
-<body class="bg-gray-50">
-    <!-- Header -->
-    <header class="gradient-bg text-white py-8 shadow-xl">
-        <div class="container mx-auto px-6">
-            <h1 class="text-4xl md:text-5xl font-bold mb-2">🚀 Día 2: Dominando ChatGPT, Claude y Gemini</h1>
-            <p class="text-xl opacity-90">Tu guía simple para entender la Inteligencia Artificial Generativa</p>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- ========== HERO ========== -->
+    <header class="hero-gradient text-white py-12 md:py-16 relative z-10">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="badge" style="background:rgba(245,158,11,0.25);color:#fbbf24;">AIWIS ACADEMY</span>
+                <span class="badge badge-new">Actualizado Marzo 2026</span>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black mb-3 leading-tight">
+                Día 2: Dominando<br>
+                <span style="color:var(--aiwis-accent)">ChatGPT</span>,
+                <span style="color:var(--aiwis-claude)">Claude</span> &
+                <span style="color:var(--aiwis-gemini)">Gemini</span>
+            </h1>
+            <p class="text-lg md:text-xl opacity-80 max-w-2xl mb-6">
+                Tu guía completa y actualizada para entender, comparar y dominar las herramientas de Inteligencia Artificial Generativa más poderosas del mundo.
+            </p>
+            <div class="flex flex-wrap gap-4 text-sm opacity-70">
+                <span>👨‍🏫 Instructor: <strong class="text-amber-400">Armin Salazar San Martín</strong></span>
+                <span>·</span>
+                <span>🏢 CEO de <strong class="text-amber-400">AIWIS</strong></span>
+                <span>·</span>
+                <span>📅 Edición 2026</span>
+            </div>
         </div>
     </header>
 
-    <!-- Navigation Tabs -->
-    <nav class="bg-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-6">
-            <div class="flex overflow-x-auto">
-                <button onclick="showTab('introduccion')" class="tab-btn px-6 py-4 font-semibold whitespace-nowrap tab-active" id="tab-introduccion">📚 Introducción</button>
-                <button onclick="showTab('llms')" class="tab-btn px-6 py-4 font-semibold whitespace-nowrap" id="tab-llms">🧠 ¿Qué son los LLMs?</button>
-                <button onclick="showTab('comparativa')" class="tab-btn px-6 py-4 font-semibold whitespace-nowrap" id="tab-comparativa">⚖️ Comparativa</button>
-                <button onclick="showTab('precios')" class="tab-btn px-6 py-4 font-semibold whitespace-nowrap" id="tab-precios">💰 Precios y Planes</button>
-                <button onclick="showTab('glosario')" class="tab-btn px-6 py-4 font-semibold whitespace-nowrap" id="tab-glosario">📖 Glosario para Principiantes</button>
-                <button onclick="showTab('arquitectura')" class="tab-btn px-6 py-4 font-semibold whitespace-nowrap" id="tab-arquitectura">⚙️ ¿Cómo Funciona por Dentro?</button>
-                <button onclick="showTab('practica')" class="tab-btn px-6 py-4 font-semibold whitespace-nowrap" id="tab-practica">⚡ Actividad Práctica</button>
+    <!-- ========== NAVIGATION ========== -->
+    <nav class="bg-white/90 backdrop-blur-lg shadow-sm sticky top-0 z-50 no-print border-b border-slate-200">
+        <div class="container mx-auto px-4">
+            <div class="flex overflow-x-auto gap-1 py-2 scrollbar-hide" id="navContainer">
+                <button onclick="showTab('intro')" class="nav-pill active px-4 py-2 rounded-full text-sm whitespace-nowrap" data-tab="intro">📚 Introducción</button>
+                <button onclick="showTab('llms')" class="nav-pill px-4 py-2 rounded-full text-sm whitespace-nowrap" data-tab="llms">🧠 ¿Qué son los LLMs?</button>
+                <button onclick="showTab('modelos')" class="nav-pill px-4 py-2 rounded-full text-sm whitespace-nowrap" data-tab="modelos">🚀 Modelos 2026</button>
+                <button onclick="showTab('comparativa')" class="nav-pill px-4 py-2 rounded-full text-sm whitespace-nowrap" data-tab="comparativa">⚖️ Comparativa</button>
+                <button onclick="showTab('funciones')" class="nav-pill px-4 py-2 rounded-full text-sm whitespace-nowrap" data-tab="funciones">⚡ Funciones Clave</button>
+                <button onclick="showTab('precios')" class="nav-pill px-4 py-2 rounded-full text-sm whitespace-nowrap" data-tab="precios">💰 Precios 2026</button>
+                <button onclick="showTab('glosario')" class="nav-pill px-4 py-2 rounded-full text-sm whitespace-nowrap" data-tab="glosario">📖 Glosario</button>
+                <button onclick="showTab('arquitectura')" class="nav-pill px-4 py-2 rounded-full text-sm whitespace-nowrap" data-tab="arquitectura">⚙️ Cómo Funciona</button>
+                <button onclick="showTab('practica')" class="nav-pill px-4 py-2 rounded-full text-sm whitespace-nowrap" data-tab="practica">🎯 Actividad Práctica</button>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-6 py-8">
-        
-        <!-- Tab: Introducción -->
-        <div id="content-introduccion" class="tab-content animate-fade-in">
-            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
-                <h2 class="text-3xl font-bold mb-6 text-gray-800">🎯 Objetivo del Día</h2>
-                <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl mb-6">
-                    <p class="text-lg text-gray-700">
-                        Al terminar esta clase, sabrás usar <strong>ChatGPT, Claude y Gemini</strong> para ayudarte en tareas diarias, como escribir correos, resumir documentos largos o tener nuevas ideas para tu trabajo.
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="container mx-auto px-4 md:px-6 py-8 max-w-7xl">
+
+        <!-- ==================== TAB: INTRODUCCIÓN ==================== -->
+        <section id="content-intro" class="tab-content animate-in space-y-8">
+            <div class="bg-white rounded-2xl shadow-lg p-8 border border-slate-100">
+                <h2 class="text-3xl font-black mb-6 text-slate-900">🎯 Objetivo del Día</h2>
+                <div class="bg-gradient-to-r from-amber-50 to-cyan-50 p-6 rounded-xl mb-8 border border-amber-100">
+                    <p class="text-lg text-slate-700 leading-relaxed">
+                        Al terminar esta clase, sabrás usar <strong>ChatGPT, Claude y Gemini</strong> para ayudarte en tareas diarias: escribir correos, resumir documentos largos, generar ideas, analizar datos, crear código y mucho más. Conocerás sus <strong>modelos actualizados a 2026</strong>, sus funciones exclusivas y cómo elegir el mejor para cada tarea.
                     </p>
                 </div>
 
-                <div class="grid md:grid-cols-3 gap-6 mt-8">
-                    <div class="card bg-gradient-to-br from-green-400 to-blue-500 text-white p-6 rounded-xl">
-                        <div class="text-5xl mb-4">🤖</div>
-                        <h3 class="text-xl font-bold mb-2">ChatGPT</h3>
-                        <p class="text-sm opacity-90">El Creativo y Versátil</p>
-                        <ul class="mt-4 space-y-2 text-sm">
-                            <li>✨ Ideal para tener ideas nuevas.</li>
-                            <li>📝 Muy bueno para escribir textos creativos.</li>
-                            <li>💡 Ayuda a explorar diferentes posibilidades.</li>
-                            <li>📚 Explica temas complejos de forma fácil.</li>
-                        </ul>
+                <!-- Tarjetas de los 3 asistentes -->
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- ChatGPT -->
+                    <div class="card-hover rounded-2xl overflow-hidden border-2 border-emerald-100">
+                        <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white p-6">
+                            <div class="text-4xl mb-3">🤖</div>
+                            <h3 class="text-xl font-bold">ChatGPT</h3>
+                            <p class="text-sm opacity-80 mt-1">por OpenAI</p>
+                            <span class="badge mt-2" style="background:rgba(255,255,255,0.2);color:white;">GPT-5.2 · 2026</span>
+                        </div>
+                        <div class="p-5 bg-white">
+                            <p class="font-semibold text-emerald-700 mb-2">El Creativo y Versátil</p>
+                            <ul class="space-y-2 text-sm text-slate-600">
+                                <li>✨ Ideas creativas y brainstorming avanzado</li>
+                                <li>📝 Escritura de textos, emails y posts de alto nivel</li>
+                                <li>🎨 Genera imágenes con GPT Image (DALL-E integrado)</li>
+                                <li>🔍 Búsqueda web con citaciones en tiempo real</li>
+                                <li>🖥️ Custom GPTs personalizables</li>
+                                <li>🎤 Voz avanzada conversacional</li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <div class="card bg-gradient-to-br from-orange-400 to-red-500 text-white p-6 rounded-xl">
-                        <div class="text-5xl mb-4">🧠</div>
-                        <h3 class="text-xl font-bold mb-2">Claude</h3>
-                        <p class="text-sm opacity-90">El Analista Preciso</p>
-                        <ul class="mt-4 space-y-2 text-sm">
-                            <li>📄 El mejor para leer y resumir documentos largos.</li>
-                            <li>🎯 Da respuestas muy exactas y cuidadosas.</li>
-                            <li>🔒 Se enfoca mucho en la seguridad.</li>
-                            <li>💬 Mantiene conversaciones lógicas y coherentes.</li>
-                        </ul>
+                    <!-- Claude -->
+                    <div class="card-hover rounded-2xl overflow-hidden border-2 border-amber-100">
+                        <div class="bg-gradient-to-br from-amber-500 to-orange-600 text-white p-6">
+                            <div class="text-4xl mb-3">🧠</div>
+                            <h3 class="text-xl font-bold">Claude</h3>
+                            <p class="text-sm opacity-80 mt-1">por Anthropic</p>
+                            <span class="badge mt-2" style="background:rgba(255,255,255,0.2);color:white;">Opus 4.6 · Feb 2026</span>
+                        </div>
+                        <div class="p-5 bg-white">
+                            <p class="font-semibold text-amber-700 mb-2">El Analista Preciso y Seguro</p>
+                            <ul class="space-y-2 text-sm text-slate-600">
+                                <li>📄 Líder en análisis de documentos largos (1M tokens)</li>
+                                <li>🎯 Respuestas precisas con IA Constitucional</li>
+                                <li>💻 Claude Code: agente de programación autónomo</li>
+                                <li>🤝 Cowork: automatización sin código</li>
+                                <li>📊 Artifacts: crea documentos, apps y visualizaciones</li>
+                                <li>📁 Projects: organiza conocimiento por proyecto</li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <div class="card bg-gradient-to-br from-purple-400 to-pink-500 text-white p-6 rounded-xl">
-                        <div class="text-5xl mb-4">✨</div>
-                        <h3 class="text-xl font-bold mb-2">Gemini</h3>
-                        <p class="text-sm opacity-90">El Conectado a Google</p>
-                        <ul class="mt-4 space-y-2 text-sm">
-                            <li>🖼️ Entiende y describe imágenes.</li>
-                            <li>🔗 Se integra con Gmail, Docs, etc.</li>
-                            <li>🌐 Busca información actualizada en internet.</li>
-                            <li>🎨 Puede analizar lo que ve en fotos y videos.</li>
-                        </ul>
+                    <!-- Gemini -->
+                    <div class="card-hover rounded-2xl overflow-hidden border-2 border-blue-100">
+                        <div class="bg-gradient-to-br from-blue-500 to-indigo-600 text-white p-6">
+                            <div class="text-4xl mb-3">✨</div>
+                            <h3 class="text-xl font-bold">Gemini</h3>
+                            <p class="text-sm opacity-80 mt-1">por Google</p>
+                            <span class="badge mt-2" style="background:rgba(255,255,255,0.2);color:white;">3.1 Pro · Feb 2026</span>
+                        </div>
+                        <div class="p-5 bg-white">
+                            <p class="font-semibold text-blue-700 mb-2">El Ecosistema Google Completo</p>
+                            <ul class="space-y-2 text-sm text-slate-600">
+                                <li>🔗 Integrado con Gmail, Docs, Sheets, Meet, Drive</li>
+                                <li>📓 NotebookLM: asistente de investigación con citaciones</li>
+                                <li>💎 Gems: versiones personalizadas de Gemini</li>
+                                <li>🎬 Veo 3: generación de videos con IA</li>
+                                <li>🔬 Deep Research: informes multi-página automáticos</li>
+                                <li>🎵 Lyria 3: generación de música con IA</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Otros LLMs relevantes -->
+                <div class="mt-8 bg-slate-50 rounded-xl p-6 border border-slate-200">
+                    <h3 class="text-lg font-bold mb-4 text-slate-800">🌐 Otros LLMs Relevantes en 2026</h3>
+                    <div class="grid md:grid-cols-4 gap-4">
+                        <div class="bg-white p-4 rounded-lg border border-slate-100 card-hover">
+                            <p class="font-bold text-sm">🦙 Meta Llama 4</p>
+                            <p class="text-xs text-slate-500 mt-1">Open Source. Ideal para empresas que quieren IA propia sin pagar licencias. Disponible gratis.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg border border-slate-100 card-hover">
+                            <p class="font-bold text-sm">🟣 Grok (xAI)</p>
+                            <p class="text-xs text-slate-500 mt-1">De Elon Musk. Integrado en X (Twitter). Acceso a información en tiempo real de la red social.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg border border-slate-100 card-hover">
+                            <p class="font-bold text-sm">🔵 Mistral (Francia)</p>
+                            <p class="text-xs text-slate-500 mt-1">Europeo y eficiente. Modelos compactos y potentes. Excelente relación costo/rendimiento para empresas.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg border border-slate-100 card-hover">
+                            <p class="font-bold text-sm">🇨🇳 DeepSeek R1</p>
+                            <p class="text-xs text-slate-500 mt-1">De China. Destaca en razonamiento matemático y código. Modelo open-source muy competitivo.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Tab: ¿Qué son los LLMs? -->
-        <div id="content-llms" class="tab-content hidden">
-            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
-                <h2 class="text-3xl font-bold mb-6 text-gray-800">🧠 ¿Qué son los LLMs (Modelos de Lenguaje Grandes)?</h2>
-                
-                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-xl mb-8">
-                    <p class="text-lg text-gray-700 leading-relaxed">
-                        Imagina un "cerebro" digital que ha leído casi toda la información de internet (libros, artículos, sitios web). No la memoriza, sino que aprende los <strong>patrones</strong> de cómo se conectan las palabras y las ideas.
-                        <br><br>
+        <!-- ==================== TAB: ¿QUÉ SON LOS LLMs? ==================== -->
+        <section id="content-llms" class="tab-content hidden space-y-8">
+            <div class="bg-white rounded-2xl shadow-lg p-8 border border-slate-100">
+                <h2 class="text-3xl font-black mb-6 text-slate-900">🧠 ¿Qué son los LLMs?</h2>
+                <p class="text-lg text-slate-600 mb-2">(Modelos de Lenguaje Grandes — Large Language Models)</p>
+
+                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-xl mb-8 border border-indigo-100">
+                    <p class="text-lg text-slate-700 leading-relaxed">
+                        Imagina un <strong>"cerebro" digital</strong> que ha leído casi toda la información de internet: libros, artículos, sitios web, código fuente. No memoriza los datos textualmente, sino que aprende los <strong>patrones</strong> de cómo se conectan las palabras, las ideas y los conceptos.
+                    </p>
+                    <p class="text-lg text-slate-700 leading-relaxed mt-3">
                         Eso es un <strong>LLM</strong>. Es un programa de inteligencia artificial entrenado para entender y generar texto como si fuera un humano. Es el motor que hace funcionar a ChatGPT, Claude y Gemini.
                     </p>
                 </div>
 
-                <h3 class="text-2xl font-bold mb-6 text-gray-800">🔬 ¿Cómo "piensa" un LLM? (Explicación simple)</h3>
-                <div class="space-y-6">
-                    <div class="flex items-start space-x-4">
-                        <div class="bg-purple-100 rounded-full p-3 flex-shrink-0"><span class="text-2xl">1️⃣</span></div>
-                        <div>
-                            <h4 class="font-bold text-lg mb-2">Divide la pregunta</h4>
-                            <p class="text-gray-600">Cuando le escribes, primero descompone tu frase en pedazos pequeños llamados "tokens" (similares a palabras o sílabas).</p>
+                <!-- Diagrama visual: Cómo funciona un LLM -->
+                <h3 class="text-2xl font-bold mb-6">🔬 ¿Cómo "piensa" un LLM? — Diagrama paso a paso</h3>
+
+                <div class="grid md:grid-cols-4 gap-4 mb-8" style="counter-reset: step;">
+                    <div class="infographic-step flex flex-col items-center text-center bg-purple-50 rounded-xl p-5 border border-purple-100">
+                        <div class="w-12 h-12 bg-amber-400 text-slate-900 rounded-full flex items-center justify-center font-black text-lg mb-3">1</div>
+                        <h4 class="font-bold mb-2 text-purple-800">Tokenización</h4>
+                        <p class="text-sm text-slate-600">Divide tu texto en pedazos pequeños llamados "tokens" (palabras o fragmentos de palabras).</p>
+                        <div class="mt-3 mono text-xs bg-white rounded-lg p-2 w-full">"Hola mundo" → <span class="text-purple-600">["Hola", " mundo"]</span></div>
+                    </div>
+                    <div class="infographic-step flex flex-col items-center text-center bg-blue-50 rounded-xl p-5 border border-blue-100">
+                        <div class="w-12 h-12 bg-amber-400 text-slate-900 rounded-full flex items-center justify-center font-black text-lg mb-3">2</div>
+                        <h4 class="font-bold mb-2 text-blue-800">Embeddings</h4>
+                        <p class="text-sm text-slate-600">Convierte cada token en números (vectores) que representan su significado y contexto.</p>
+                        <div class="mt-3 mono text-xs bg-white rounded-lg p-2 w-full">"Hola" → <span class="text-blue-600">[0.23, -0.5, 0.8...]</span></div>
+                    </div>
+                    <div class="infographic-step flex flex-col items-center text-center bg-green-50 rounded-xl p-5 border border-green-100">
+                        <div class="w-12 h-12 bg-amber-400 text-slate-900 rounded-full flex items-center justify-center font-black text-lg mb-3">3</div>
+                        <h4 class="font-bold mb-2 text-green-800">Atención (Transformer)</h4>
+                        <p class="text-sm text-slate-600">Su "cerebro" (red neuronal) analiza las relaciones entre TODAS las palabras simultáneamente.</p>
+                        <div class="mt-3 text-xs bg-white rounded-lg p-2 w-full">El mecanismo de <span class="font-bold text-green-600">atención</span> conecta ideas lejanas</div>
+                    </div>
+                    <div class="infographic-step flex flex-col items-center text-center bg-amber-50 rounded-xl p-5 border border-amber-100">
+                        <div class="w-12 h-12 bg-amber-400 text-slate-900 rounded-full flex items-center justify-center font-black text-lg mb-3">4</div>
+                        <h4 class="font-bold mb-2 text-amber-800">Predicción</h4>
+                        <p class="text-sm text-slate-600">Predice la siguiente palabra más probable. Repite esto token por token, ¡miles de veces por segundo!</p>
+                        <div class="mt-3 text-xs bg-white rounded-lg p-2 w-full">"El gato se sentó en el..." → <span class="font-bold text-amber-600">"sofá"</span> (95%)</div>
+                    </div>
+                </div>
+
+                <!-- Diagrama de flujo visual -->
+                <div class="bg-slate-50 rounded-xl p-6 border border-slate-200">
+                    <h4 class="font-bold mb-4 text-center text-slate-700">📊 Flujo Completo: De tu pregunta a la respuesta</h4>
+                    <div class="flex flex-wrap items-center justify-center gap-3 text-sm">
+                        <div class="diagram-box border-amber-400 bg-amber-50 text-amber-800">👤 Tu Prompt</div>
+                        <div class="diagram-arrow">→</div>
+                        <div class="diagram-box border-purple-400 bg-purple-50 text-purple-800">🔤 Tokenización</div>
+                        <div class="diagram-arrow">→</div>
+                        <div class="diagram-box border-blue-400 bg-blue-50 text-blue-800">🔢 Embeddings</div>
+                        <div class="diagram-arrow">→</div>
+                        <div class="diagram-box border-green-400 bg-green-50 text-green-800">🧠 Transformer<br><span class="text-xs font-normal">(capas de atención)</span></div>
+                        <div class="diagram-arrow">→</div>
+                        <div class="diagram-box border-red-400 bg-red-50 text-red-800">📊 Probabilidades</div>
+                        <div class="diagram-arrow">→</div>
+                        <div class="diagram-box border-emerald-400 bg-emerald-50 text-emerald-800">💬 Respuesta</div>
+                    </div>
+                </div>
+
+                <!-- Dato pedagógico -->
+                <div class="mt-6 bg-cyan-50 p-5 rounded-xl border border-cyan-200">
+                    <p class="font-bold text-cyan-800 mb-2">💡 Analogía para Recordar</p>
+                    <p class="text-sm text-slate-700">Un LLM es como un <strong>chef que nunca ha comido</strong>: ha leído millones de recetas y sabe combinar ingredientes perfectamente, pero no "saborea" ni "entiende" la comida como tú. Genera texto prediciendo patrones, no porque realmente "comprenda" el mundo.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB: MODELOS 2026 ==================== -->
+        <section id="content-modelos" class="tab-content hidden space-y-8">
+            <div class="bg-white rounded-2xl shadow-lg p-8 border border-slate-100">
+                <h2 class="text-3xl font-black mb-2 text-slate-900">🚀 Modelos Actuales — Marzo 2026</h2>
+                <p class="text-slate-500 mb-8">Los modelos evolucionan rápidamente. Aquí tienes el panorama actualizado de cada plataforma.</p>
+
+                <!-- ChatGPT Models -->
+                <div class="mb-10">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-xl">🤖</div>
+                        <h3 class="text-2xl font-bold text-emerald-700">ChatGPT / OpenAI</h3>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="bg-emerald-50 rounded-xl p-5 border border-emerald-100">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="badge badge-new">Flagship</span>
+                                <h4 class="font-bold">GPT-5.2</h4>
+                            </div>
+                            <p class="text-sm text-slate-600 mb-3">Modelo principal desde diciembre 2025. Tres modos: Auto, Instant y Thinking. Conocimiento hasta agosto 2025.</p>
+                            <ul class="text-xs text-slate-500 space-y-1">
+                                <li>• Modo Thinking para razonamiento profundo</li>
+                                <li>• 196K tokens de contexto en Thinking</li>
+                                <li>• Menos alucinaciones que GPT-5</li>
+                            </ul>
+                        </div>
+                        <div class="bg-emerald-50 rounded-xl p-5 border border-emerald-100">
+                            <h4 class="font-bold mb-2">GPT-5</h4>
+                            <p class="text-sm text-slate-600 mb-3">Lanzado agosto 2025. Gran salto en coding (74.9% SWE-bench). Reemplazó a GPT-4o como modelo principal.</p>
+                            <ul class="text-xs text-slate-500 space-y-1">
+                                <li>• Variantes: GPT-5, Mini, Nano, Thinking</li>
+                                <li>• API: $1.25/M input, $10/M output</li>
+                                <li>• Capacidades agénticas mejoradas</li>
+                            </ul>
+                        </div>
+                        <div class="bg-emerald-50 rounded-xl p-5 border border-emerald-100">
+                            <h4 class="font-bold mb-2">GPT-4o / o3 / o4-mini</h4>
+                            <p class="text-sm text-slate-600 mb-3">Modelos legacy pero aún disponibles. GPT-4o para tareas multimodales; o3/o4-mini para razonamiento con herramientas.</p>
+                            <ul class="text-xs text-slate-500 space-y-1">
+                                <li>• GPT-4o: gratuito con límites</li>
+                                <li>• o3: razonamiento paso a paso</li>
+                                <li>• 4o-mini: versión económica y rápida</li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="flex items-start space-x-4">
-                        <div class="bg-blue-100 rounded-full p-3 flex-shrink-0"><span class="text-2xl">2️⃣</span></div>
-                        <div>
-                            <h4 class="font-bold text-lg mb-2">Entiende el significado</h4>
-                            <p class="text-gray-600">Convierte cada "token" en números para poder entender el contexto y el significado de lo que pediste.</p>
+                </div>
+
+                <!-- Claude Models -->
+                <div class="mb-10">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center text-xl">🧠</div>
+                        <h3 class="text-2xl font-bold text-amber-700">Claude / Anthropic</h3>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="bg-amber-50 rounded-xl p-5 border border-amber-100">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="badge badge-new">Más Reciente</span>
+                                <h4 class="font-bold">Claude Opus 4.6</h4>
+                            </div>
+                            <p class="text-sm text-slate-600 mb-3">Lanzado 5 de febrero de 2026. El modelo más inteligente de Anthropic. Ventana de 1 millón de tokens.</p>
+                            <ul class="text-xs text-slate-500 space-y-1">
+                                <li>• Agent Teams: equipos de agentes paralelos</li>
+                                <li>• Horizonte de tareas de hasta 14.5 horas</li>
+                                <li>• Líder en benchmarks de coding (80.9% SWE-bench)</li>
+                                <li>• API: $5/M input, $25/M output</li>
+                            </ul>
+                        </div>
+                        <div class="bg-amber-50 rounded-xl p-5 border border-amber-100">
+                            <h4 class="font-bold mb-2">Claude Sonnet 4.6</h4>
+                            <p class="text-sm text-slate-600 mb-3">Lanzado 17 de febrero de 2026. Balance ideal entre inteligencia y velocidad. El modelo por defecto en la versión gratuita.</p>
+                            <ul class="text-xs text-slate-500 space-y-1">
+                                <li>• 200K tokens de contexto</li>
+                                <li>• Modo Extended Thinking</li>
+                                <li>• API: $3/M input, $15/M output</li>
+                                <li>• Rápido y eficiente para uso diario</li>
+                            </ul>
+                        </div>
+                        <div class="bg-amber-50 rounded-xl p-5 border border-amber-100">
+                            <h4 class="font-bold mb-2">Claude Haiku 4.5</h4>
+                            <p class="text-sm text-slate-600 mb-3">Modelo ultrarrápido y económico. 200+ tokens por segundo. Ideal para tareas de alto volumen.</p>
+                            <ul class="text-xs text-slate-500 space-y-1">
+                                <li>• 73.3% SWE-bench (impresionante para su clase)</li>
+                                <li>• Soporta Extended Thinking</li>
+                                <li>• API: $0.80/M input, $4/M output</li>
+                                <li>• Ideal para chatbots y automatización</li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="flex items-start space-x-4">
-                        <div class="bg-green-100 rounded-full p-3 flex-shrink-0"><span class="text-2xl">3️⃣</span></div>
-                        <div>
-                            <h4 class="font-bold text-lg mb-2">Procesa y conecta ideas</h4>
-                            <p class="text-gray-600">Su "cerebro" (la red neuronal) analiza estos números para encontrar las relaciones y el contexto entre todas las palabras.</p>
-                        </div>
+                </div>
+
+                <!-- Gemini Models -->
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-xl">✨</div>
+                        <h3 class="text-2xl font-bold text-blue-700">Gemini / Google</h3>
                     </div>
-                    <div class="flex items-start space-x-4">
-                        <div class="bg-yellow-100 rounded-full p-3 flex-shrink-0"><span class="text-2xl">4️⃣</span></div>
-                        <div>
-                            <h4 class="font-bold text-lg mb-2">Predice la respuesta</h4>
-                            <p class="text-gray-600">Basado en todo lo que ha aprendido, predice cuál es la siguiente palabra más lógica para formar una respuesta coherente. Repite este paso palabra por palabra, ¡muy rápido!</p>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="badge badge-new">Flagship</span>
+                                <h4 class="font-bold">Gemini 3.1 Pro</h4>
+                            </div>
+                            <p class="text-sm text-slate-600 mb-3">Lanzado 19 de febrero de 2026. Modelo más capaz de Google. Duplicó el rendimiento de razonamiento vs 3 Pro.</p>
+                            <ul class="text-xs text-slate-500 space-y-1">
+                                <li>• 77.1% en ARC-AGI-2 (razonamiento)</li>
+                                <li>• 1M tokens de contexto</li>
+                                <li>• API: $2/M input, $12/M output</li>
+                                <li>• Generación de imágenes nativa</li>
+                            </ul>
+                        </div>
+                        <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                            <h4 class="font-bold mb-2">Gemini 3 Flash</h4>
+                            <p class="text-sm text-slate-600 mb-3">Lanzado diciembre 2025. Modelo rápido por defecto en la versión gratuita. Rendimiento frontier a alta velocidad.</p>
+                            <ul class="text-xs text-slate-500 space-y-1">
+                                <li>• Modelo gratuito predeterminado</li>
+                                <li>• Baja latencia, alta calidad</li>
+                                <li>• Ideal para tareas cotidianas</li>
+                            </ul>
+                        </div>
+                        <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                            <h4 class="font-bold mb-2">Deep Think + Veo 3.1</h4>
+                            <p class="text-sm text-slate-600 mb-3">Modo Deep Think para razonamiento nivel olímpico. Veo 3.1 para generación de videos de 8 segundos con audio.</p>
+                            <ul class="text-xs text-slate-500 space-y-1">
+                                <li>• Deep Think: 41% en Humanity's Last Exam</li>
+                                <li>• Veo 3.1: videos con efectos de sonido</li>
+                                <li>• Solo en plan Ultra ($249.99/mes Deep Think)</li>
+                                <li>• Lyria 3: generación de música</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Tab: Comparativa -->
-        <div id="content-comparativa" class="tab-content hidden">
-            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
-                <h2 class="text-3xl font-bold mb-6 text-gray-800">⚖️ Comparativa: ChatGPT vs Claude vs Gemini</h2>
-                <p class="mb-6 text-gray-600">Piensa en ellos como tres expertos diferentes. No hay uno "mejor" en todo, cada uno brilla en tareas distintas.</p>
-                
-                <div class="grid md:grid-cols-3 gap-6 mb-8">
-                    <!-- ChatGPT -->
-                    <div class="bg-white rounded-2xl shadow-xl p-6">
-                        <div class="flex items-center mb-4"><div class="bg-green-100 rounded-full p-3 mr-3"><span class="text-2xl">🤖</span></div><h3 class="text-xl font-bold">ChatGPT</h3></div>
-                        <h4 class="font-semibold text-green-600 mb-2">✅ Ideal para...</h4>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li>• Generar ideas creativas (brainstorming).</li>
-                            <li>• Escribir borradores de textos, emails o posts.</li>
-                            <li>• Crear imágenes a partir de texto (con DALL-E).</li>
-                            <li>• Conversar y obtener explicaciones sencillas.</li>
-                        </ul>
-                        <h4 class="font-semibold text-red-600 mb-2 mt-4">❌ Menos fuerte en...</h4>
-                        <ul class="space-y-2 text-sm text-gray-600"><li>• A veces puede "inventar" datos si no está seguro.</li><li>• Analizar documentos muy, muy largos.</li></ul>
+        <!-- ==================== TAB: COMPARATIVA ==================== -->
+        <section id="content-comparativa" class="tab-content hidden space-y-8">
+            <div class="bg-white rounded-2xl shadow-lg p-8 border border-slate-100">
+                <h2 class="text-3xl font-black mb-2 text-slate-900">⚖️ Comparativa Completa 2026</h2>
+                <p class="text-slate-500 mb-6">No hay uno "mejor" en todo. Cada uno brilla en tareas distintas. Piensa en ellos como tres expertos diferentes.</p>
+
+                <!-- Tabla comparativa -->
+                <div class="overflow-x-auto mb-8">
+                    <table class="w-full text-sm border-collapse">
+                        <thead>
+                            <tr class="bg-slate-800 text-white">
+                                <th class="p-3 text-left rounded-tl-lg">Característica</th>
+                                <th class="p-3 text-center" style="background:#065f46;">🤖 ChatGPT</th>
+                                <th class="p-3 text-center" style="background:#92400e;">🧠 Claude</th>
+                                <th class="p-3 text-center rounded-tr-lg" style="background:#1e40af;">✨ Gemini</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold">Modelo Principal</td>
+                                <td class="p-3 text-center">GPT-5.2</td>
+                                <td class="p-3 text-center">Opus 4.6 / Sonnet 4.6</td>
+                                <td class="p-3 text-center">Gemini 3.1 Pro</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold">Ventana de Contexto</td>
+                                <td class="p-3 text-center">196K (Thinking)</td>
+                                <td class="p-3 text-center font-bold text-amber-600">1M tokens (Opus)</td>
+                                <td class="p-3 text-center font-bold text-blue-600">1M tokens</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold">Búsqueda Web</td>
+                                <td class="p-3 text-center">✅ Integrada</td>
+                                <td class="p-3 text-center">✅ Integrada</td>
+                                <td class="p-3 text-center">✅ Google Search</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold">Generación de Imágenes</td>
+                                <td class="p-3 text-center">✅ GPT Image</td>
+                                <td class="p-3 text-center">❌ No genera</td>
+                                <td class="p-3 text-center">✅ Nano Banana Pro</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold">Generación de Video</td>
+                                <td class="p-3 text-center">✅ Sora</td>
+                                <td class="p-3 text-center">❌ No</td>
+                                <td class="p-3 text-center">✅ Veo 3.1</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold">Generación de Música</td>
+                                <td class="p-3 text-center">❌ No</td>
+                                <td class="p-3 text-center">❌ No</td>
+                                <td class="p-3 text-center">✅ Lyria 3</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold">Coding (SWE-bench)</td>
+                                <td class="p-3 text-center">74.9% (GPT-5)</td>
+                                <td class="p-3 text-center font-bold text-amber-600">80.9% (Opus 4.6)</td>
+                                <td class="p-3 text-center">~72%</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold">Personalización</td>
+                                <td class="p-3 text-center">Custom GPTs</td>
+                                <td class="p-3 text-center">Projects + Skills</td>
+                                <td class="p-3 text-center">Gems + NotebookLM</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold">Agente Autónomo</td>
+                                <td class="p-3 text-center">ChatGPT Agent</td>
+                                <td class="p-3 text-center">Claude Code + Cowork</td>
+                                <td class="p-3 text-center">Jules + Project Mariner</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold">Integración Office</td>
+                                <td class="p-3 text-center">60+ apps (Slack, GitHub...)</td>
+                                <td class="p-3 text-center">Google Workspace, MCP</td>
+                                <td class="p-3 text-center font-bold text-blue-600">Todo Google nativo</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold">Publicidad</td>
+                                <td class="p-3 text-center text-red-500">Tiene ads (2025+)</td>
+                                <td class="p-3 text-center text-green-600">Sin publicidad</td>
+                                <td class="p-3 text-center text-slate-400">—</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold rounded-bl-lg">Ideal Para...</td>
+                                <td class="p-3 text-center text-xs">Creatividad, multimedia, versatilidad</td>
+                                <td class="p-3 text-center text-xs">Análisis, código, documentos largos</td>
+                                <td class="p-3 text-center text-xs rounded-br-lg">Ecosistema Google, investigación, video</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Tarjetas: Fortalezas y Debilidades -->
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="border-2 border-emerald-200 rounded-xl overflow-hidden">
+                        <div class="bg-emerald-50 p-4">
+                            <h4 class="font-bold text-emerald-800">🤖 ChatGPT — Lo Mejor y Lo Peor</h4>
+                        </div>
+                        <div class="p-4 space-y-3">
+                            <div>
+                                <p class="font-semibold text-emerald-600 text-sm">✅ Ideal para...</p>
+                                <ul class="text-xs text-slate-600 space-y-1 mt-1">
+                                    <li>• Generar ideas creativas y brainstorming</li>
+                                    <li>• Crear imágenes y videos con IA</li>
+                                    <li>• Custom GPTs para tareas repetitivas</li>
+                                    <li>• Ecosistema más grande (60+ conectores)</li>
+                                    <li>• Modo voz avanzado y natural</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-red-500 text-sm">❌ Menos fuerte en...</p>
+                                <ul class="text-xs text-slate-600 space-y-1 mt-1">
+                                    <li>• Contexto más limitado (196K vs 1M)</li>
+                                    <li>• Introdujo publicidad en la plataforma</li>
+                                    <li>• Puede ser verboso o "inventar" datos</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <!-- Claude -->
-                    <div class="bg-white rounded-2xl shadow-xl p-6">
-                        <div class="flex items-center mb-4"><div class="bg-orange-100 rounded-full p-3 mr-3"><span class="text-2xl">🧠</span></div><h3 class="text-xl font-bold">Claude</h3></div>
-                        <h4 class="font-semibold text-green-600 mb-2">✅ Ideal para...</h4>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li>• Resumir y analizar archivos largos (PDFs, informes).</li>
-                            <li>• Tareas que requieren mucha precisión y pocos errores.</li>
-                            <li>• Redactar textos profesionales y técnicos.</li>
-                            <li>• Mantener conversaciones largas y lógicas.</li>
-                        </ul>
-                        <h4 class="font-semibold text-red-600 mb-2 mt-4">❌ Menos fuerte en...</h4>
-                        <ul class="space-y-2 text-sm text-gray-600"><li>• No tiene acceso directo a internet.</li><li>• Es menos "creativo" o "juguetón" que ChatGPT.</li></ul>
+
+                    <div class="border-2 border-amber-200 rounded-xl overflow-hidden">
+                        <div class="bg-amber-50 p-4">
+                            <h4 class="font-bold text-amber-800">🧠 Claude — Lo Mejor y Lo Peor</h4>
+                        </div>
+                        <div class="p-4 space-y-3">
+                            <div>
+                                <p class="font-semibold text-emerald-600 text-sm">✅ Ideal para...</p>
+                                <ul class="text-xs text-slate-600 space-y-1 mt-1">
+                                    <li>• Análisis de documentos enormes (1M tokens)</li>
+                                    <li>• Programación y debugging (líder en coding)</li>
+                                    <li>• Artifacts: crea apps, docs y visualizaciones</li>
+                                    <li>• Cowork: automatización sin programar</li>
+                                    <li>• Sin publicidad, enfoque en seguridad</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-red-500 text-sm">❌ Menos fuerte en...</p>
+                                <ul class="text-xs text-slate-600 space-y-1 mt-1">
+                                    <li>• No genera imágenes ni video</li>
+                                    <li>• Menos integraciones que ChatGPT</li>
+                                    <li>• Cowork solo en macOS (por ahora)</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <!-- Gemini -->
-                    <div class="bg-white rounded-2xl shadow-xl p-6">
-                        <div class="flex items-center mb-4"><div class="bg-purple-100 rounded-full p-3 mr-3"><span class="text-2xl">✨</span></div><h3 class="text-xl font-bold">Gemini</h3></div>
-                        <h4 class="font-semibold text-green-600 mb-2">✅ Ideal para...</h4>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li>• Buscar información actualizada en Google.</li>
-                            <li>• Integrarse con tus herramientas de Google (Gmail, Docs).</li>
-                            <li>• Analizar imágenes, gráficos y hasta videos.</li>
-                            <li>• Planificar viajes o buscar resúmenes de temas actuales.</li>
-                        </ul>
-                        <h4 class="font-semibold text-red-600 mb-2 mt-4">❌ Menos fuerte en...</h4>
-                        <ul class="space-y-2 text-sm text-gray-600"><li>• A veces sus respuestas pueden ser menos detalladas.</li><li>• Su razonamiento en tareas muy complejas es superado por GPT-4 y Claude.</li></ul>
+
+                    <div class="border-2 border-blue-200 rounded-xl overflow-hidden">
+                        <div class="bg-blue-50 p-4">
+                            <h4 class="font-bold text-blue-800">✨ Gemini — Lo Mejor y Lo Peor</h4>
+                        </div>
+                        <div class="p-4 space-y-3">
+                            <div>
+                                <p class="font-semibold text-emerald-600 text-sm">✅ Ideal para...</p>
+                                <ul class="text-xs text-slate-600 space-y-1 mt-1">
+                                    <li>• Integración total con Google Workspace</li>
+                                    <li>• NotebookLM para investigación con citaciones</li>
+                                    <li>• Gems personalizados con conocimiento propio</li>
+                                    <li>• Generación de video (Veo 3) y música (Lyria 3)</li>
+                                    <li>• Deep Research: informes automáticos</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-red-500 text-sm">❌ Menos fuerte en...</p>
+                                <ul class="text-xs text-slate-600 space-y-1 mt-1">
+                                    <li>• Las mejores funciones requieren pago ($19.99+)</li>
+                                    <li>• Deep Think solo en Ultra ($249.99/mes)</li>
+                                    <li>• Menos preciso que Claude en tareas analíticas</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500">
-                    <p class="font-semibold text-blue-800 mb-2">💡 Consejo Profesional:</p>
-                    <p class="text-sm text-gray-700">No te cases con uno solo. Los expertos usan los tres según la necesidad: <strong>ChatGPT para crear, Claude para analizar y Gemini para investigar.</strong> ¡Combínalos!</p>
+                <div class="mt-6 bg-amber-50 p-5 rounded-xl border-l-4 border-amber-400">
+                    <p class="font-bold text-amber-800 mb-2">💡 Consejo Profesional AIWIS:</p>
+                    <p class="text-sm text-slate-700">No te cases con uno solo. Los expertos usan los tres según la necesidad: <strong>ChatGPT para crear contenido multimedia, Claude para analizar documentos y programar, y Gemini para investigar y trabajar dentro de Google</strong>. ¡Combínalos para máxima productividad!</p>
                 </div>
             </div>
-        </div>
-        
-        <!-- Tab: Precios -->
-        <div id="content-precios" class="tab-content hidden">
-            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
-                <h2 class="text-3xl font-bold mb-2 text-gray-800">💰 Precios y Planes</h2>
-                <p class="text-gray-600 mb-8">Todos tienen una versión gratuita potente. Los planes de pago ofrecen los modelos más avanzados y más capacidad de uso.</p>
+        </section>
 
-                <!-- Planes para Usuarios -->
-                <h3 class="text-2xl font-bold mb-6 text-gray-800">Para Usuarios (Uso Personal y Profesional)</h3>
-                <div class="grid md:grid-cols-3 gap-8 mb-12">
-                    <!-- ChatGPT -->
-                    <div class="price-card bg-white rounded-2xl p-6 shadow-lg">
-                        <div class="text-center mb-6"><div class="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4"><span class="text-3xl">🤖</span></div><h3 class="text-2xl font-bold mb-2">ChatGPT</h3></div>
-                        <div class="mb-6 pb-6 border-b"><p class="font-semibold mb-3">Plan Gratuito</p><p class="text-sm text-gray-600">Acceso al modelo GPT-3.5, que es muy bueno para tareas generales.</p></div>
-                        <div class="bg-gradient-to-r from-green-50 to-blue-50 p-4 rounded-lg"><div class="flex items-baseline mb-2"><span class="text-3xl font-bold">$20</span><span class="text-gray-600 ml-2">/mes</span></div><p class="font-semibold mb-3">ChatGPT Plus</p><p class="text-sm text-gray-600">Acceso al modelo más potente (GPT-4), creación de imágenes, plugins y respuestas más rápidas.</p></div>
-                    </div>
-                    <!-- Claude -->
-                    <div class="price-card bg-white rounded-2xl p-6 shadow-lg">
-                        <div class="text-center mb-6"><div class="bg-orange-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4"><span class="text-3xl">🧠</span></div><h3 class="text-2xl font-bold mb-2">Claude</h3></div>
-                        <div class="mb-6 pb-6 border-b"><p class="font-semibold mb-3">Plan Gratuito</p><p class="text-sm text-gray-600">Uso limitado del excelente modelo Sonnet 3.5, con un límite de mensajes diarios.</p></div>
-                        <div class="bg-gradient-to-r from-orange-50 to-red-50 p-4 rounded-lg"><div class="flex items-baseline mb-2"><span class="text-3xl font-bold">$20</span><span class="text-gray-600 ml-2">/mes</span></div><p class="font-semibold mb-3">Claude Pro</p><p class="text-sm text-gray-600">Permite 5 veces más mensajes, acceso prioritario y usar los modelos más potentes para analizar documentos enormes.</p></div>
-                    </div>
-                    <!-- Gemini -->
-                    <div class="price-card bg-white rounded-2xl p-6 shadow-lg">
-                        <div class="text-center mb-6"><div class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4"><span class="text-3xl">✨</span></div><h3 class="text-2xl font-bold mb-2">Gemini</h3></div>
-                        <div class="mb-6 pb-6 border-b"><p class="font-semibold mb-3">Gemini Gratis</p><p class="text-sm text-gray-600">Acceso ilimitado al potente modelo Gemini Pro y conexión a internet.</p></div>
-                        <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-lg"><div class="flex items-baseline mb-2"><span class="text-3xl font-bold">$19.99</span><span class="text-gray-600 ml-2">/mes</span></div><p class="font-semibold mb-3">Gemini Advanced</p><p class="text-sm text-gray-600">Usa el modelo más avanzado (Gemini Ultra), se integra en Gmail/Docs y te da 2TB de espacio en Google Drive.</p></div>
+        <!-- ==================== TAB: FUNCIONES CLAVE ==================== -->
+        <section id="content-funciones" class="tab-content hidden space-y-8">
+            <div class="bg-white rounded-2xl shadow-lg p-8 border border-slate-100">
+                <h2 class="text-3xl font-black mb-2 text-slate-900">⚡ Funciones Exclusivas que Debes Conocer</h2>
+                <p class="text-slate-500 mb-8">Cada plataforma tiene herramientas únicas. Aquí las más importantes explicadas de forma simple.</p>
+
+                <!-- GEMINI FUNCTIONS -->
+                <div class="mb-10">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4 flex items-center gap-2">✨ Funciones de Gemini</h3>
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div class="card-hover bg-blue-50 rounded-xl p-6 border border-blue-100">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-2xl">📓</span>
+                                <h4 class="font-bold text-blue-800">NotebookLM</h4>
+                                <span class="badge badge-new">Muy Popular</span>
+                            </div>
+                            <p class="text-sm text-slate-600 mb-3">Tu <strong>asistente de investigación personal</strong>. Sube PDFs, Google Docs, videos de YouTube y más. NotebookLM lee TODO y responde basándose SOLO en tus fuentes, con citaciones exactas.</p>
+                            <div class="bg-white rounded-lg p-3 text-xs space-y-1">
+                                <p>🎙️ <strong>Audio Overviews:</strong> Convierte tus documentos en podcasts con dos hosts de IA discutiendo tu contenido</p>
+                                <p>📝 <strong>Quizzes y Flashcards:</strong> Genera evaluaciones automáticas de tus materiales</p>
+                                <p>🗺️ <strong>Mind Maps:</strong> Crea mapas mentales interactivos de tus fuentes</p>
+                                <p>📊 <strong>Hasta 300 fuentes por notebook</strong> en plan Pro</p>
+                            </div>
+                        </div>
+
+                        <div class="card-hover bg-blue-50 rounded-xl p-6 border border-blue-100">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-2xl">💎</span>
+                                <h4 class="font-bold text-blue-800">Gems (Gemas)</h4>
+                            </div>
+                            <p class="text-sm text-slate-600 mb-3"><strong>Versiones personalizadas de Gemini</strong> para tareas específicas. Similar a los Custom GPTs de ChatGPT pero conectados al ecosistema Google.</p>
+                            <div class="bg-white rounded-lg p-3 text-xs space-y-1">
+                                <p>🎯 Crea un Gem experto en tu industria o tema</p>
+                                <p>📓 Conecta Gems con NotebookLM como base de conocimiento dinámico</p>
+                                <p>🔄 Si actualizas el notebook, el Gem se actualiza automáticamente</p>
+                                <p>👥 Comparte Gems con tu equipo</p>
+                            </div>
+                        </div>
+
+                        <div class="card-hover bg-blue-50 rounded-xl p-6 border border-blue-100">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-2xl">🔬</span>
+                                <h4 class="font-bold text-blue-800">Deep Research</h4>
+                            </div>
+                            <p class="text-sm text-slate-600 mb-3">Gemini realiza <strong>cientos de búsquedas automáticas</strong> y genera un informe completo de varias páginas con citaciones. Tarda unos minutos pero el resultado es impresionante.</p>
+                            <div class="bg-white rounded-lg p-3 text-xs space-y-1">
+                                <p>📄 Informes multi-página con fuentes verificables</p>
+                                <p>🖼️ Puedes subir tus propios archivos como fuente</p>
+                                <p>🎨 Transforma reportes en Canvas interactivos</p>
+                            </div>
+                        </div>
+
+                        <div class="card-hover bg-blue-50 rounded-xl p-6 border border-blue-100">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-2xl">🎬</span>
+                                <h4 class="font-bold text-blue-800">Veo 3 + Nano Banana + Lyria 3</h4>
+                            </div>
+                            <p class="text-sm text-slate-600 mb-3">El <strong>estudio creativo de Google</strong>. Genera videos de hasta 8 segundos con audio, imágenes con "Nano Banana Pro", y música con Lyria 3.</p>
+                            <div class="bg-white rounded-lg p-3 text-xs space-y-1">
+                                <p>🎬 <strong>Veo 3.1:</strong> Videos cinematográficos con sonido</p>
+                                <p>🎨 <strong>Nano Banana Pro:</strong> Generación y edición de imágenes</p>
+                                <p>🎵 <strong>Lyria 3:</strong> Crea bandas sonoras personalizadas</p>
+                                <p>🌊 <strong>Flow:</strong> Suite de filmmaking con IA</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Precios para Desarrolladores -->
-                <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-8">
-                    <h3 class="text-2xl font-bold mb-4 text-gray-800">🔌 Para Desarrolladores (Precios de API)</h3>
-                    <div class="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500 mb-6">
-                        <p class="font-semibold text-yellow-800">¿Qué es esto?</p>
-                        <p class="text-sm text-gray-700">Esta sección es para programadores que quieren usar estos "cerebros" de IA dentro de sus propias aplicaciones o sitios web. El precio se basa en la cantidad de texto que procesan (medido en "tokens"). <strong>Si solo usas las webs de ChatGPT, Claude o Gemini, puedes ignorar esta parte.</strong></p>
+                <!-- CLAUDE FUNCTIONS -->
+                <div class="mb-10">
+                    <h3 class="text-2xl font-bold text-amber-700 mb-4 flex items-center gap-2">🧠 Funciones de Claude</h3>
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div class="card-hover bg-amber-50 rounded-xl p-6 border border-amber-100">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-2xl">📊</span>
+                                <h4 class="font-bold text-amber-800">Artifacts</h4>
+                            </div>
+                            <p class="text-sm text-slate-600 mb-3"><strong>Crea entregables reales</strong> mientras conversas. No solo texto: genera apps interactivas, visualizaciones de datos, documentos, código ejecutable, diagramas SVG y más.</p>
+                            <div class="bg-white rounded-lg p-3 text-xs space-y-1">
+                                <p>📱 Apps web funcionales sin necesidad de programar</p>
+                                <p>📈 Gráficos y dashboards interactivos</p>
+                                <p>📄 Documentos Word, Excel, PowerPoint, PDFs</p>
+                                <p>🔗 Comparte artifacts con un enlace</p>
+                            </div>
+                        </div>
+
+                        <div class="card-hover bg-amber-50 rounded-xl p-6 border border-amber-100">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-2xl">📁</span>
+                                <h4 class="font-bold text-amber-800">Projects (Proyectos)</h4>
+                            </div>
+                            <p class="text-sm text-slate-600 mb-3"><strong>Organiza tu trabajo por proyecto</strong>. Sube documentos, define instrucciones personalizadas y Claude tendrá ese contexto en cada conversación del proyecto.</p>
+                            <div class="bg-white rounded-lg p-3 text-xs space-y-1">
+                                <p>📚 200K tokens de contexto por proyecto</p>
+                                <p>👥 Permisos: privado, ver, editar</p>
+                                <p>📌 Sube guías de estilo, código, transcripciones</p>
+                                <p>🔄 Comparte con tu equipo</p>
+                            </div>
+                        </div>
+
+                        <div class="card-hover bg-amber-50 rounded-xl p-6 border border-amber-100">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-2xl">💻</span>
+                                <h4 class="font-bold text-amber-800">Claude Code</h4>
+                                <span class="badge badge-new">Top Coding</span>
+                            </div>
+                            <p class="text-sm text-slate-600 mb-3"><strong>Agente de programación autónomo</strong> desde la terminal. Lee tu código, escribe archivos, ejecuta comandos y resuelve bugs de forma independiente. Considerado el mejor asistente de código en 2026.</p>
+                            <div class="bg-white rounded-lg p-3 text-xs space-y-1">
+                                <p>🖥️ Funciona desde la línea de comandos</p>
+                                <p>📂 Lee repositorios completos de código</p>
+                                <p>🔄 Escribe, edita y ejecuta archivos</p>
+                                <p>🌐 Versión web disponible desde octubre 2025</p>
+                            </div>
+                        </div>
+
+                        <div class="card-hover bg-amber-50 rounded-xl p-6 border border-amber-100">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-2xl">🤝</span>
+                                <h4 class="font-bold text-amber-800">Cowork</h4>
+                                <span class="badge badge-new">Nuevo 2026</span>
+                            </div>
+                            <p class="text-sm text-slate-600 mb-3"><strong>"Claude Code sin código"</strong>. Para NO programadores. Dale acceso a una carpeta de tu computador y Claude organiza, crea y modifica archivos de forma autónoma.</p>
+                            <div class="bg-white rounded-lg p-3 text-xs space-y-1">
+                                <p>📂 Acceso directo a carpetas de tu Mac</p>
+                                <p>📝 Crea documentos, presentaciones, hojas de cálculo</p>
+                                <p>🔗 Se conecta con Asana, Notion y más</p>
+                                <p>🧩 Skills integrados para automatización</p>
+                            </div>
+                        </div>
                     </div>
-                    <p class="text-gray-600">Los precios varían mucho, pero como referencia, los modelos más económicos y rápidos (como GPT-3.5 o Gemini Pro) cuestan alrededor de $1.50 por procesar el texto equivalente a un libro de 300 páginas. Los modelos más potentes (como GPT-4 o Claude Opus) pueden costar 10 o 20 veces más por la misma cantidad de texto, pero ofrecen una calidad y un razonamiento muy superiores.</p>
+                </div>
+
+                <!-- CHATGPT FUNCTIONS -->
+                <div>
+                    <h3 class="text-2xl font-bold text-emerald-700 mb-4 flex items-center gap-2">🤖 Funciones de ChatGPT</h3>
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div class="card-hover bg-emerald-50 rounded-xl p-6 border border-emerald-100">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-2xl">🧩</span>
+                                <h4 class="font-bold text-emerald-800">Custom GPTs</h4>
+                            </div>
+                            <p class="text-sm text-slate-600 mb-3"><strong>Crea tu propio asistente especializado</strong> sin código. Sube documentos, define instrucciones y compártelo con otros a través del GPT Store.</p>
+                            <div class="bg-white rounded-lg p-3 text-xs space-y-1">
+                                <p>🏪 GPT Store: marketplace de asistentes creados por la comunidad</p>
+                                <p>📄 Sube archivos como base de conocimiento</p>
+                                <p>⚡ Ahora soportan todos los modelos (GPT-5.2, o3, etc.)</p>
+                                <p>🔗 60+ conectores: Slack, GitHub, SharePoint...</p>
+                            </div>
+                        </div>
+
+                        <div class="card-hover bg-emerald-50 rounded-xl p-6 border border-emerald-100">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-2xl">🎨</span>
+                                <h4 class="font-bold text-emerald-800">Canvas + GPT Image + Sora</h4>
+                            </div>
+                            <p class="text-sm text-slate-600 mb-3">El <strong>estudio multimedia más completo</strong>. Canvas para edición colaborativa de documentos y código. GPT Image para imágenes. Sora para videos.</p>
+                            <div class="bg-white rounded-lg p-3 text-xs space-y-1">
+                                <p>🖼️ <strong>GPT Image:</strong> Genera y edita imágenes fotorrealistas</p>
+                                <p>🎬 <strong>Sora:</strong> Generación de video con IA</p>
+                                <p>📝 <strong>Canvas:</strong> Edición colaborativa de documentos</p>
+                                <p>🎤 <strong>Advanced Voice:</strong> Conversación natural por voz</p>
+                            </div>
+                        </div>
+
+                        <div class="card-hover bg-emerald-50 rounded-xl p-6 border border-emerald-100">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-2xl">🤖</span>
+                                <h4 class="font-bold text-emerald-800">ChatGPT Agent + Codex</h4>
+                            </div>
+                            <p class="text-sm text-slate-600 mb-3"><strong>Agentes que ejecutan tareas</strong> de forma autónoma. Pueden navegar, investigar, escribir y tomar decisiones por ti.</p>
+                            <div class="bg-white rounded-lg p-3 text-xs space-y-1">
+                                <p>🔄 Ejecutan tareas multi-paso de forma autónoma</p>
+                                <p>💻 Codex: agente de programación asíncrono</p>
+                                <p>🎙️ Record: transcribe reuniones y genera resúmenes</p>
+                                <p>📷 Library: galería de imágenes generadas</p>
+                            </div>
+                        </div>
+
+                        <div class="card-hover bg-emerald-50 rounded-xl p-6 border border-emerald-100">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-2xl">🧠</span>
+                                <h4 class="font-bold text-emerald-800">Thinking Mode</h4>
+                            </div>
+                            <p class="text-sm text-slate-600 mb-3"><strong>Razonamiento profundo</strong> donde GPT-5.2 "piensa" paso a paso antes de responder. Ideal para problemas complejos de lógica, matemáticas, estrategia y debugging.</p>
+                            <div class="bg-white rounded-lg p-3 text-xs space-y-1">
+                                <p>🔍 Auto: elige profundidad de pensamiento automáticamente</p>
+                                <p>⚡ Instant: respuestas rápidas sin deliberación</p>
+                                <p>🧠 Thinking: razonamiento extendido para problemas difíciles</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Tab: Glosario -->
-        <div id="content-glosario" class="tab-content hidden">
-            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
-                <h2 class="text-3xl font-bold mb-6 text-gray-800">📖 Glosario para Principiantes</h2>
-                <p class="text-gray-600 mb-8">Algunas palabras pueden sonar complicadas. Aquí te las explicamos de forma muy sencilla.</p>
-                
-                <div class="space-y-6">
-                    <div class="glossary-term bg-blue-50 p-4 rounded-lg">
-                        <h4 class="font-bold text-lg text-blue-800">Alucinación</h4>
-                        <p class="text-gray-700">Cuando la IA se "inventa" información que parece real pero es falsa. Ocurre cuando no está segura de la respuesta y trata de rellenar los huecos de forma creativa. Siempre es bueno verificar datos importantes.</p>
+        <!-- ==================== TAB: PRECIOS ==================== -->
+        <section id="content-precios" class="tab-content hidden space-y-8">
+            <div class="bg-white rounded-2xl shadow-lg p-8 border border-slate-100">
+                <h2 class="text-3xl font-black mb-2 text-slate-900">💰 Precios y Planes — Marzo 2026</h2>
+                <p class="text-slate-500 mb-8">Todos tienen una versión gratuita potente. Los planes de pago desbloquean modelos avanzados y más capacidad.</p>
+
+                <!-- Individual Plans -->
+                <h3 class="text-xl font-bold mb-4">👤 Planes Individuales</h3>
+                <div class="grid md:grid-cols-3 gap-6 mb-10">
+                    <!-- ChatGPT Pricing -->
+                    <div class="card-hover border-2 border-emerald-200 rounded-2xl overflow-hidden">
+                        <div class="bg-emerald-600 text-white p-5">
+                            <div class="text-2xl mb-2">🤖</div>
+                            <h4 class="text-xl font-bold">ChatGPT</h4>
+                        </div>
+                        <div class="p-5 space-y-4">
+                            <div class="pb-3 border-b">
+                                <p class="font-bold text-sm">Gratis</p>
+                                <p class="text-xs text-slate-500">GPT-4o-mini + acceso limitado a GPT-5.2. 30 turnos/hora.</p>
+                            </div>
+                            <div class="pb-3 border-b">
+                                <div class="flex items-baseline gap-1">
+                                    <span class="text-2xl font-black text-emerald-600">$20</span>
+                                    <span class="text-sm text-slate-400">/mes</span>
+                                </div>
+                                <p class="font-bold text-sm">ChatGPT Plus</p>
+                                <p class="text-xs text-slate-500">GPT-5.2 (Auto/Thinking), GPT Image, Canvas, Voice, 3000 msgs/semana Thinking.</p>
+                            </div>
+                            <div>
+                                <div class="flex items-baseline gap-1">
+                                    <span class="text-2xl font-black text-emerald-600">$200</span>
+                                    <span class="text-sm text-slate-400">/mes</span>
+                                </div>
+                                <p class="font-bold text-sm">ChatGPT Pro</p>
+                                <p class="text-xs text-slate-500">Uso ilimitado, GPT-5.2 Pro, máxima profundidad de razonamiento, acceso anticipado.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="glossary-term bg-purple-50 p-4 rounded-lg">
-                        <h4 class="font-bold text-lg text-purple-800">API (Interfaz de Programación de Aplicaciones)</h4>
-                        <p class="text-gray-700">Imagina que es un "enchufe" que permite a los programadores conectar el cerebro de la IA a sus propias aplicaciones. Así es como muchas apps de tu celular usan la tecnología de ChatGPT sin que tengas que ir a su web.</p>
+
+                    <!-- Claude Pricing -->
+                    <div class="card-hover border-2 border-amber-200 rounded-2xl overflow-hidden">
+                        <div class="bg-amber-600 text-white p-5">
+                            <div class="text-2xl mb-2">🧠</div>
+                            <h4 class="text-xl font-bold">Claude</h4>
+                        </div>
+                        <div class="p-5 space-y-4">
+                            <div class="pb-3 border-b">
+                                <p class="font-bold text-sm">Gratis</p>
+                                <p class="text-xs text-slate-500">Sonnet 4.6, Projects, Artifacts, ~9 msgs por ventana de 5h.</p>
+                            </div>
+                            <div class="pb-3 border-b">
+                                <div class="flex items-baseline gap-1">
+                                    <span class="text-2xl font-black text-amber-600">$20</span>
+                                    <span class="text-sm text-slate-400">/mes</span>
+                                </div>
+                                <p class="font-bold text-sm">Claude Pro</p>
+                                <p class="text-xs text-slate-500">5x capacidad, Opus 4.6, Claude Code, Cowork, Google Workspace, Extended Thinking.</p>
+                            </div>
+                            <div>
+                                <div class="flex items-baseline gap-1">
+                                    <span class="text-2xl font-black text-amber-600">$100–$200</span>
+                                    <span class="text-sm text-slate-400">/mes</span>
+                                </div>
+                                <p class="font-bold text-sm">Claude Max</p>
+                                <p class="text-xs text-slate-500">5x ($100) o 20x ($200) la capacidad de Pro. Prioridad máxima, Agent Teams.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="glossary-term bg-green-50 p-4 rounded-lg">
-                        <h4 class="font-bold text-lg text-green-800">LLM (Modelo de Lenguaje Grande)</h4>
-                        <p class="text-gray-700">Es el "cerebro" digital. Un programa gigante entrenado con enormes cantidades de texto para entender y generar lenguaje humano. Es el motor detrás de todo.</p>
+
+                    <!-- Gemini Pricing -->
+                    <div class="card-hover border-2 border-blue-200 rounded-2xl overflow-hidden">
+                        <div class="bg-blue-600 text-white p-5">
+                            <div class="text-2xl mb-2">✨</div>
+                            <h4 class="text-xl font-bold">Gemini</h4>
+                        </div>
+                        <div class="p-5 space-y-4">
+                            <div class="pb-3 border-b">
+                                <p class="font-bold text-sm">Gratis</p>
+                                <p class="text-xs text-slate-500">Gemini 3 Flash, acceso limitado a 3 Pro, NotebookLM básico, 15GB storage.</p>
+                            </div>
+                            <div class="pb-3 border-b">
+                                <div class="flex items-baseline gap-1">
+                                    <span class="text-2xl font-black text-blue-600">$19.99</span>
+                                    <span class="text-sm text-slate-400">/mes</span>
+                                </div>
+                                <p class="font-bold text-sm">Google AI Pro</p>
+                                <p class="text-xs text-slate-500">Gemini 3.1 Pro, 1M contexto, Veo 3 Fast, NotebookLM Pro, Gems, 2TB, Workspace.</p>
+                            </div>
+                            <div>
+                                <div class="flex items-baseline gap-1">
+                                    <span class="text-2xl font-black text-blue-600">$249.99</span>
+                                    <span class="text-sm text-slate-400">/mes</span>
+                                </div>
+                                <p class="font-bold text-sm">Google AI Ultra</p>
+                                <p class="text-xs text-slate-500">Deep Think, Veo 3.1 completo, 30TB, YouTube Premium, máximos límites en todo.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="glossary-term bg-orange-50 p-4 rounded-lg">
-                        <h4 class="font-bold text-lg text-orange-800">Multimodal</h4>
-                        <p class="text-gray-700">Significa que la IA no solo entiende texto, sino también otros formatos como <strong>imágenes, audio o video</strong>. Por ejemplo, puedes mostrarle una foto de tu nevera y pedirle una receta con lo que hay dentro.</p>
+                </div>
+
+                <!-- API Pricing -->
+                <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200">
+                    <h3 class="text-xl font-bold mb-4">🔌 Para Desarrolladores (Precios de API)</h3>
+                    <div class="bg-amber-50 p-4 rounded-lg border-l-4 border-amber-400 mb-6">
+                        <p class="font-semibold text-amber-800 text-sm">¿Qué es esto?</p>
+                        <p class="text-xs text-slate-600">Esta sección es para programadores que quieren usar estos "cerebros" de IA dentro de sus propias aplicaciones. El precio se basa en tokens procesados. <strong>Si solo usas las apps web, puedes ignorar esta parte.</strong></p>
                     </div>
-                    <div class="glossary-term bg-red-50 p-4 rounded-lg">
-                        <h4 class="font-bold text-lg text-red-800">Parámetros</h4>
-                        <p class="text-gray-700">Piensa en ellos como las "conexiones neuronales" del cerebro de la IA. Son millones de perillas que el modelo ajusta durante su entrenamiento para aprender los patrones del lenguaje. Cuantos más parámetros (generalmente), más potente es el modelo.</p>
-                    </div>
-                     <div class="glossary-term bg-indigo-50 p-4 rounded-lg">
-                        <h4 class="font-bold text-lg text-indigo-800">Prompt</h4>
-                        <p class="text-gray-700">Es simplemente la <strong>instrucción, pregunta o texto que tú le escribes a la IA</strong>. Un buen prompt es la clave para obtener un buen resultado.</p>
-                    </div>
-                    <div class="glossary-term bg-yellow-50 p-4 rounded-lg">
-                        <h4 class="font-bold text-lg text-yellow-800">Token</h4>
-                        <p class="text-gray-700">Son los "ladrillos" con los que la IA construye el lenguaje. Un token puede ser una palabra entera, un trozo de palabra o un signo de puntuación. Por ejemplo, la frase "Hola mundo" tiene 2 tokens. Son importantes porque así es como los modelos miden la longitud del texto.</p>
-                    </div>
-                    <div class="glossary-term bg-pink-50 p-4 rounded-lg">
-                        <h4 class="font-bold text-lg text-pink-800">Ventana de Contexto</h4>
-                        <p class="text-gray-700">Es la "memoria a corto plazo" de la IA en una conversación. Se mide en tokens. Una ventana de contexto grande significa que puede "recordar" más información de lo que han hablado o de documentos largos que le has dado, lo que le permite dar respuestas más coherentes y precisas.</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-xs">
+                            <thead>
+                                <tr class="bg-slate-700 text-white">
+                                    <th class="p-2 text-left">Modelo</th>
+                                    <th class="p-2 text-center">Input / 1M tokens</th>
+                                    <th class="p-2 text-center">Output / 1M tokens</th>
+                                    <th class="p-2 text-center">Uso ideal</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 bg-white">
+                                <tr><td class="p-2 font-semibold">GPT-5.2</td><td class="p-2 text-center">$1.25</td><td class="p-2 text-center">$10.00</td><td class="p-2 text-center">Flagship OpenAI</td></tr>
+                                <tr><td class="p-2 font-semibold">GPT-4o-mini</td><td class="p-2 text-center">$0.15</td><td class="p-2 text-center">$0.60</td><td class="p-2 text-center">Económico y rápido</td></tr>
+                                <tr class="bg-amber-50"><td class="p-2 font-semibold">Claude Opus 4.6</td><td class="p-2 text-center">$5.00</td><td class="p-2 text-center">$25.00</td><td class="p-2 text-center">Máxima inteligencia</td></tr>
+                                <tr class="bg-amber-50"><td class="p-2 font-semibold">Claude Sonnet 4.6</td><td class="p-2 text-center">$3.00</td><td class="p-2 text-center">$15.00</td><td class="p-2 text-center">Balance ideal</td></tr>
+                                <tr class="bg-amber-50"><td class="p-2 font-semibold">Claude Haiku 4.5</td><td class="p-2 text-center">$0.80</td><td class="p-2 text-center">$4.00</td><td class="p-2 text-center">Alto volumen</td></tr>
+                                <tr class="bg-blue-50"><td class="p-2 font-semibold">Gemini 3.1 Pro</td><td class="p-2 text-center">$2.00</td><td class="p-2 text-center">$12.00</td><td class="p-2 text-center">Flagship Google</td></tr>
+                                <tr class="bg-blue-50"><td class="p-2 font-semibold">Gemini 3 Flash</td><td class="p-2 text-center">~$0.10</td><td class="p-2 text-center">~$0.40</td><td class="p-2 text-center">Ultraeconómico</td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Tab: Arquitectura Técnica -->
-        <div id="content-arquitectura" class="tab-content hidden">
-            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
-                <h2 class="text-3xl font-bold mb-6 text-gray-800">⚙️ ¿Cómo Funciona por Dentro? (La Magia Explicada)</h2>
-                
-                <div class="bg-gradient-to-r from-gray-50 to-blue-50 p-6 rounded-xl mb-8">
-                    <p class="text-lg text-gray-700">
-                        No necesitas saber cómo funciona el motor de un coche para conducir, pero es fascinante ver la tecnología que hay detrás. Esta sección es un vistazo simple a la enorme infraestructura que hace que estas IAs funcionen.
-                    </p>
+        </section>
+
+        <!-- ==================== TAB: GLOSARIO ==================== -->
+        <section id="content-glosario" class="tab-content hidden space-y-8">
+            <div class="bg-white rounded-2xl shadow-lg p-8 border border-slate-100">
+                <h2 class="text-3xl font-black mb-2 text-slate-900">📖 Glosario para Principiantes</h2>
+                <p class="text-slate-500 mb-8">Algunas palabras pueden sonar complicadas. Aquí te las explicamos de forma muy sencilla.</p>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="glossary-card bg-red-50 p-4 rounded-lg" style="border-color:#ef4444;">
+                        <h4 class="font-bold text-red-800">🤥 Alucinación</h4>
+                        <p class="text-sm text-slate-600 mt-1">Cuando la IA se "inventa" información que parece real pero es falsa. Ocurre porque trata de rellenar huecos de forma creativa. <strong>Siempre verifica datos importantes.</strong></p>
+                    </div>
+                    <div class="glossary-card bg-purple-50 p-4 rounded-lg" style="border-color:#a855f7;">
+                        <h4 class="font-bold text-purple-800">🔌 API</h4>
+                        <p class="text-sm text-slate-600 mt-1">Un "enchufe" que permite a los programadores conectar el cerebro de la IA a sus propias aplicaciones. Así es como muchas apps usan GPT o Claude sin que vayas a su web.</p>
+                    </div>
+                    <div class="glossary-card bg-green-50 p-4 rounded-lg" style="border-color:#22c55e;">
+                        <h4 class="font-bold text-green-800">🧠 LLM</h4>
+                        <p class="text-sm text-slate-600 mt-1">Large Language Model. El "cerebro" digital. Un programa gigante entrenado con enormes cantidades de texto para entender y generar lenguaje humano.</p>
+                    </div>
+                    <div class="glossary-card bg-orange-50 p-4 rounded-lg" style="border-color:#f97316;">
+                        <h4 class="font-bold text-orange-800">🎭 Multimodal</h4>
+                        <p class="text-sm text-slate-600 mt-1">La IA no solo entiende texto, sino también imágenes, audio y video. Ejemplo: mostrarle una foto de tu refrigerador y pedirle una receta.</p>
+                    </div>
+                    <div class="glossary-card bg-indigo-50 p-4 rounded-lg" style="border-color:#6366f1;">
+                        <h4 class="font-bold text-indigo-800">💬 Prompt</h4>
+                        <p class="text-sm text-slate-600 mt-1">La instrucción, pregunta o texto que TÚ le escribes a la IA. Un buen prompt es la clave para obtener un buen resultado.</p>
+                    </div>
+                    <div class="glossary-card bg-yellow-50 p-4 rounded-lg" style="border-color:#eab308;">
+                        <h4 class="font-bold text-yellow-800">🧱 Token</h4>
+                        <p class="text-sm text-slate-600 mt-1">Los "ladrillos" del lenguaje para la IA. Puede ser una palabra, parte de una palabra o un signo. "Hola mundo" ≈ 2 tokens. Así se mide la longitud del texto y el costo.</p>
+                    </div>
+                    <div class="glossary-card bg-pink-50 p-4 rounded-lg" style="border-color:#ec4899;">
+                        <h4 class="font-bold text-pink-800">📏 Ventana de Contexto</h4>
+                        <p class="text-sm text-slate-600 mt-1">La "memoria a corto plazo" de la IA. Se mide en tokens. Una ventana grande = puede "recordar" más de la conversación y documentos que le diste.</p>
+                    </div>
+                    <div class="glossary-card bg-sky-50 p-4 rounded-lg" style="border-color:#0ea5e9;">
+                        <h4 class="font-bold text-sky-800">⚙️ Parámetros</h4>
+                        <p class="text-sm text-slate-600 mt-1">Las "conexiones neuronales" del cerebro de la IA. Son millones de valores que ajusta durante el entrenamiento. Más parámetros ≈ más potente (generalmente).</p>
+                    </div>
+
+                    <!-- Nuevos términos 2026 -->
+                    <div class="glossary-card bg-cyan-50 p-4 rounded-lg" style="border-color:#06b6d4;">
+                        <h4 class="font-bold text-cyan-800">🤖 Agente (Agent) <span class="badge badge-new">Nuevo</span></h4>
+                        <p class="text-sm text-slate-600 mt-1">Una IA que puede tomar decisiones y ejecutar acciones de forma autónoma, como buscar en internet, escribir archivos o navegar una web, sin intervención humana paso a paso.</p>
+                    </div>
+                    <div class="glossary-card bg-lime-50 p-4 rounded-lg" style="border-color:#84cc16;">
+                        <h4 class="font-bold text-lime-800">🔗 RAG <span class="badge badge-new">Nuevo</span></h4>
+                        <p class="text-sm text-slate-600 mt-1">Retrieval-Augmented Generation. Una técnica que permite a la IA buscar información específica en tus documentos antes de responder, reduciendo las alucinaciones. Es lo que usa NotebookLM.</p>
+                    </div>
+                    <div class="glossary-card bg-violet-50 p-4 rounded-lg" style="border-color:#8b5cf6;">
+                        <h4 class="font-bold text-violet-800">🧠 Extended Thinking <span class="badge badge-new">Nuevo</span></h4>
+                        <p class="text-sm text-slate-600 mt-1">Modo donde la IA "piensa" internamente paso a paso antes de darte la respuesta final. Mejora dramáticamente la calidad en problemas de lógica, matemáticas y código.</p>
+                    </div>
+                    <div class="glossary-card bg-rose-50 p-4 rounded-lg" style="border-color:#f43f5e;">
+                        <h4 class="font-bold text-rose-800">🔗 MCP <span class="badge badge-new">Nuevo</span></h4>
+                        <p class="text-sm text-slate-600 mt-1">Model Context Protocol. Un estándar creado por Anthropic para que la IA se conecte con herramientas externas (Google Drive, Slack, GitHub, etc.) de forma segura.</p>
+                    </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB: ARQUITECTURA ==================== -->
+        <section id="content-arquitectura" class="tab-content hidden space-y-8">
+            <div class="bg-white rounded-2xl shadow-lg p-8 border border-slate-100">
+                <h2 class="text-3xl font-black mb-2 text-slate-900">⚙️ ¿Cómo Funciona por Dentro?</h2>
+                <p class="text-slate-500 mb-8">No necesitas saber cómo funciona el motor de un coche para conducir, pero es fascinante ver la tecnología detrás.</p>
 
                 <div class="grid md:grid-cols-2 gap-8 mb-8">
-                    <div>
-                        <h3 class="text-2xl font-bold mb-4 text-purple-800">💻 El Software</h3>
-                        <p class="text-gray-600">Se usan lenguajes de programación (como Python) y herramientas especiales (frameworks como PyTorch o TensorFlow) para construir y entrenar estos "cerebros" digitales.</p>
+                    <div class="bg-purple-50 rounded-xl p-6 border border-purple-100">
+                        <h3 class="text-xl font-bold mb-3 text-purple-800">💻 El Software</h3>
+                        <p class="text-sm text-slate-600">Se usan lenguajes de programación (principalmente <strong>Python</strong>) y frameworks especializados (<strong>PyTorch, JAX, TensorFlow</strong>) para construir y entrenar estos "cerebros" digitales. La arquitectura base se llama <strong>Transformer</strong>, inventada por Google en 2017.</p>
                     </div>
-                    <div>
-                        <h3 class="text-2xl font-bold mb-4 text-orange-800">🖥️ El Hardware</h3>
-                        <p class="text-gray-600">No funcionan en un ordenador normal. Requieren miles de chips gráficos ultra potentes (llamados GPUs, como los de los videojuegos, pero mucho más grandes y caros) que trabajan juntos. Empresas como Google, Microsoft y Amazon construyen edificios enteros llenos de estos ordenadores, llamados centros de datos.</p>
+                    <div class="bg-orange-50 rounded-xl p-6 border border-orange-100">
+                        <h3 class="text-xl font-bold mb-3 text-orange-800">🖥️ El Hardware</h3>
+                        <p class="text-sm text-slate-600">Requieren miles de chips ultra potentes (GPUs como <strong>NVIDIA H100/B200</strong> o los <strong>TPUs de Google</strong>) trabajando juntos en centros de datos del tamaño de edificios. Un solo cluster de entrenamiento puede consumir la electricidad de una ciudad pequeña.</p>
                     </div>
                 </div>
 
-                <div class="bg-gradient-to-r from-red-50 to-orange-50 rounded-xl p-8 mt-8">
-                    <h3 class="text-2xl font-bold mb-4 text-red-800">💸 El Costo de la "Magia"</h3>
-                    <p class="text-gray-700 mb-4">Mantener esta tecnología es extremadamente caro por dos razones principales:</p>
-                    <ul class="list-disc list-inside text-gray-700 space-y-2">
-                        <li><strong>Costo de Entrenamiento:</strong> "Educar" a un modelo como GPT-4 desde cero puede costar más de <strong>100 millones de dólares</strong>. Es un proceso que dura meses y consume una cantidad inmensa de energía.</li>
-                        <li><strong>Costo de Uso (Inferencia):</strong> Cada vez que haces una pregunta, se activan estos superordenadores para generar la respuesta. Se estima que mantener ChatGPT funcionando para todos sus usuarios cuesta alrededor de <strong>$700,000 al día</strong>.</li>
-                    </ul>
-                    <div class="mt-6 bg-yellow-100 p-4 rounded-lg border-l-4 border-yellow-500">
-                        <p class="text-sm font-semibold mb-2">⚡ Dato Impactante:</p>
-                        <p class="text-sm text-gray-700">El entrenamiento de un gran modelo de IA consume una cantidad de electricidad similar a la de cientos de hogares durante todo un año. Por eso, hacerlos más eficientes es una prioridad para estas empresas.</p>
+                <!-- Diagrama de infraestructura -->
+                <div class="bg-slate-50 rounded-xl p-6 border border-slate-200 mb-8">
+                    <h4 class="font-bold mb-4 text-center text-slate-700">🏗️ Infraestructura detrás de cada respuesta</h4>
+                    <div class="flex flex-wrap items-center justify-center gap-3 text-xs">
+                        <div class="diagram-box border-amber-400 bg-amber-50 text-amber-800 w-32">👤 Tu pregunta<br>en la web/app</div>
+                        <div class="diagram-arrow">→</div>
+                        <div class="diagram-box border-blue-400 bg-blue-50 text-blue-800 w-32">☁️ Servidores<br>en la nube</div>
+                        <div class="diagram-arrow">→</div>
+                        <div class="diagram-box border-purple-400 bg-purple-50 text-purple-800 w-32">🖥️ Miles de GPUs<br>procesando</div>
+                        <div class="diagram-arrow">→</div>
+                        <div class="diagram-box border-green-400 bg-green-50 text-green-800 w-32">🧠 Red neuronal<br>(billones de params)</div>
+                        <div class="diagram-arrow">→</div>
+                        <div class="diagram-box border-emerald-400 bg-emerald-50 text-emerald-800 w-32">💬 Respuesta<br>en segundos</div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-red-50 to-orange-50 rounded-xl p-8 border border-red-100">
+                    <h3 class="text-xl font-bold mb-4 text-red-800">💸 El Costo de la "Magia"</h3>
+                    <p class="text-sm text-slate-600 mb-4">Mantener esta tecnología es extremadamente caro:</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-white p-4 rounded-lg">
+                            <p class="font-bold text-sm text-red-700 mb-2">🎓 Costo de Entrenamiento</p>
+                            <p class="text-xs text-slate-600">"Educar" un modelo como GPT-5 desde cero cuesta más de <strong>$100 millones de dólares</strong>. Es un proceso de meses que consume cantidades inmensas de energía eléctrica.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg">
+                            <p class="font-bold text-sm text-red-700 mb-2">⚡ Costo de Uso (Inferencia)</p>
+                            <p class="text-xs text-slate-600">Cada pregunta activa superordenadores para generar la respuesta. Se estima que mantener ChatGPT funcionando cuesta alrededor de <strong>$700,000 al día</strong>.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 bg-yellow-100 p-3 rounded-lg border-l-4 border-yellow-500">
+                        <p class="text-xs font-semibold">⚡ Dato Impactante: El entrenamiento de un gran modelo consume electricidad similar a la de cientos de hogares durante un año entero.</p>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Tab: Actividad Práctica (Contenido sin cambios, ya era claro) -->
-        <div id="content-practica" class="tab-content hidden">
-            <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-2xl p-8 mb-8">
-                <h2 class="text-3xl font-bold mb-4">⚡ Actividad Práctica: "El Email Perfecto para BCI"</h2>
-                <p class="text-lg opacity-90">Pon a prueba ChatGPT, Claude y Gemini en un caso real de prospección</p>
+        <!-- ==================== TAB: ACTIVIDAD PRÁCTICA ==================== -->
+        <section id="content-practica" class="tab-content hidden space-y-8">
+            <div class="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-2xl p-8">
+                <h2 class="text-3xl font-black mb-3 display-font">🎯 Actividad Práctica</h2>
+                <p class="text-lg opacity-90">"El Email Perfecto" — Pon a prueba ChatGPT, Claude y Gemini en un caso real</p>
             </div>
-            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
-                <h3 class="text-2xl font-bold mb-4 text-gray-800">📋 Escenario</h3>
-                <div class="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-500">
-                    <p class="text-lg text-gray-800 mb-4">
-                        Has identificado a <strong>María González</strong>, nueva Gerente de Transformación Digital en BCI Banco, 
-                        que podría estar interesada en servicios de consultoría en IA para optimizar procesos de atención al cliente.
+
+            <div class="bg-white rounded-2xl shadow-lg p-8 border border-slate-100">
+                <h3 class="text-xl font-bold mb-4">📋 Escenario</h3>
+                <div class="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-400 mb-6">
+                    <p class="text-slate-700 mb-3">
+                        Has identificado a <strong>María González</strong>, nueva Gerente de Transformación Digital en una empresa importante, que podría estar interesada en servicios de consultoría en IA para optimizar procesos de atención al cliente.
                     </p>
-                    <p class="text-gray-700">
-                        Tu tarea: usar <strong>ChatGPT</strong>, <strong>Claude</strong> y <strong>Gemini</strong> para redactar 
-                        un correo de presentación breve, personalizado y de alto impacto.
+                    <p class="text-sm text-slate-600">
+                        Tu tarea: usar <strong>ChatGPT, Claude y Gemini</strong> para redactar un correo de presentación breve, personalizado y de alto impacto.
                     </p>
                 </div>
-            </div>
-            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
-                <h3 class="text-2xl font-bold mb-4 text-gray-800">📝 Instrucciones Paso a Paso</h3>
+
+                <h3 class="text-xl font-bold mb-4">📝 Instrucciones Paso a Paso</h3>
                 <div class="space-y-6">
-                    <div class="flex items-start space-x-4"><div class="bg-purple-100 rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0"><span class="text-xl font-bold text-purple-700">1</span></div><div class="flex-1"><h4 class="font-bold text-lg mb-2">Define tu prompt base</h4><div class="bg-gray-50 p-4 rounded-lg"><p class="text-sm font-mono text-gray-700">"Redacta un email de presentación profesional para María González, nueva Gerente de Transformación Digital en BCI Banco. El objetivo es ofrecer servicios de consultoría en IA para optimizar procesos de atención al cliente. El email debe ser breve (máximo 150 palabras), personalizado, y generar interés para agendar una reunión. Incluye un subject line atractivo."</p></div></div></div>
-                    <div class="flex items-start space-x-4"><div class="bg-green-100 rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0"><span class="text-xl font-bold text-green-700">2</span></div><div class="flex-1"><h4 class="font-bold text-lg mb-2">Prueba con cada modelo</h4><p class="text-gray-700 mb-3">Usa el mismo prompt en:</p><div class="grid md:grid-cols-3 gap-4"><div class="bg-green-50 p-4 rounded-lg border-2 border-green-200"><p class="font-semibold text-green-800">🤖 ChatGPT</p><a href="https://chat.openai.com" target="_blank" class="text-sm text-blue-600 hover:underline">chat.openai.com</a></div><div class="bg-orange-50 p-4 rounded-lg border-2 border-orange-200"><p class="font-semibold text-orange-800">🧠 Claude</p><a href="https://claude.ai" target="_blank" class="text-sm text-blue-600 hover:underline">claude.ai</a></div><div class="bg-purple-50 p-4 rounded-lg border-2 border-purple-200"><p class="font-semibold text-purple-800">✨ Gemini</p><a href="https://gemini.google.com" target="_blank" class="text-sm text-blue-600 hover:underline">gemini.google.com</a></div></div></div></div>
-                    <div class="flex items-start space-x-4"><div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0"><span class="text-xl font-bold text-blue-700">3</span></div><div class="flex-1"><h4 class="font-bold text-lg mb-2">Analiza y compara</h4><p class="text-gray-700 mb-3">Evalúa cada respuesta según estos criterios:</p><ul class="space-y-2 text-sm text-gray-700"><li class="flex items-start"><span class="text-purple-500 mr-2">▸</span><span><strong>Personalización:</strong> ¿Menciona detalles específicos de BCI o transformación digital?</span></li><li class="flex items-start"><span class="text-purple-500 mr-2">▸</span><span><strong>Brevedad:</strong> ¿Respeta el límite de 150 palabras?</span></li><li class="flex items-start"><span class="text-purple-500 mr-2">▸</span><span><strong>Tono profesional:</strong> ¿Es apropiado para un ejecutivo bancario?</span></li><li class="flex items-start"><span class="text-purple-500 mr-2">▸</span><span><strong>Call-to-action:</strong> ¿Incluye un cierre claro para agendar reunión?</span></li><li class="flex items-start"><span class="text-purple-500 mr-2">▸</span><span><strong>Subject line:</strong> ¿Es atractivo y relevante?</span></li></ul></div></div>
-                    <div class="flex items-start space-x-4"><div class="bg-yellow-100 rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0"><span class="text-xl font-bold text-yellow-700">4</span></div><div class="flex-1"><h4 class="font-bold text-lg mb-2">Itera y mejora</h4><p class="text-gray-700 mb-3">Con el modelo que tuvo mejor resultado, refina tu prompt:</p><div class="bg-gray-50 p-4 rounded-lg"><p class="text-sm text-gray-700 mb-2">Ejemplos de mejoras:</p><ul class="text-sm text-gray-600 space-y-1"><li>• "Hazlo más conciso, máximo 100 palabras"</li><li>• "Incluye un dato específico sobre BCI que investigué"</li><li>• "Cambia el tono a más consultivo y menos comercial"</li><li>• "Agrega una pregunta de apertura impactante"</li></ul></div></div></div>
+                    <!-- Paso 1 -->
+                    <div class="flex gap-4">
+                        <div class="w-12 h-12 bg-amber-400 text-slate-900 rounded-full flex items-center justify-center font-black text-lg flex-shrink-0">1</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-lg mb-2">Define tu prompt base</h4>
+                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                <p class="text-sm mono text-slate-700 leading-relaxed">"Redacta un email de presentación profesional para María González, nueva Gerente de Transformación Digital en [empresa]. El objetivo es ofrecer servicios de consultoría en IA para optimizar procesos de atención al cliente. El email debe ser breve (máximo 150 palabras), personalizado, y generar interés para agendar una reunión. Incluye un subject line atractivo."</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paso 2 -->
+                    <div class="flex gap-4">
+                        <div class="w-12 h-12 bg-amber-400 text-slate-900 rounded-full flex items-center justify-center font-black text-lg flex-shrink-0">2</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-lg mb-2">Prueba en los tres modelos</h4>
+                            <div class="grid md:grid-cols-3 gap-3">
+                                <a href="https://chat.openai.com" target="_blank" class="block bg-emerald-50 p-4 rounded-lg border-2 border-emerald-200 hover:border-emerald-400 transition-colors text-center">
+                                    <p class="font-bold text-emerald-800">🤖 ChatGPT</p>
+                                    <p class="text-xs text-blue-600 mt-1">chat.openai.com →</p>
+                                </a>
+                                <a href="https://claude.ai" target="_blank" class="block bg-amber-50 p-4 rounded-lg border-2 border-amber-200 hover:border-amber-400 transition-colors text-center">
+                                    <p class="font-bold text-amber-800">🧠 Claude</p>
+                                    <p class="text-xs text-blue-600 mt-1">claude.ai →</p>
+                                </a>
+                                <a href="https://gemini.google.com" target="_blank" class="block bg-blue-50 p-4 rounded-lg border-2 border-blue-200 hover:border-blue-400 transition-colors text-center">
+                                    <p class="font-bold text-blue-800">✨ Gemini</p>
+                                    <p class="text-xs text-blue-600 mt-1">gemini.google.com →</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paso 3 -->
+                    <div class="flex gap-4">
+                        <div class="w-12 h-12 bg-amber-400 text-slate-900 rounded-full flex items-center justify-center font-black text-lg flex-shrink-0">3</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-lg mb-2">Analiza y compara con esta rúbrica</h4>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm border-collapse">
+                                    <thead>
+                                        <tr class="bg-slate-100">
+                                            <th class="p-2 text-left">Criterio</th>
+                                            <th class="p-2 text-center">🤖 ChatGPT</th>
+                                            <th class="p-2 text-center">🧠 Claude</th>
+                                            <th class="p-2 text-center">✨ Gemini</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y">
+                                        <tr><td class="p-2 text-xs">Personalización (menciona detalles específicos)</td><td class="p-2 text-center">⭐/5</td><td class="p-2 text-center">⭐/5</td><td class="p-2 text-center">⭐/5</td></tr>
+                                        <tr><td class="p-2 text-xs">Brevedad (respeta 150 palabras)</td><td class="p-2 text-center">⭐/5</td><td class="p-2 text-center">⭐/5</td><td class="p-2 text-center">⭐/5</td></tr>
+                                        <tr><td class="p-2 text-xs">Tono profesional adecuado</td><td class="p-2 text-center">⭐/5</td><td class="p-2 text-center">⭐/5</td><td class="p-2 text-center">⭐/5</td></tr>
+                                        <tr><td class="p-2 text-xs">Call-to-action claro</td><td class="p-2 text-center">⭐/5</td><td class="p-2 text-center">⭐/5</td><td class="p-2 text-center">⭐/5</td></tr>
+                                        <tr><td class="p-2 text-xs">Subject line atractivo</td><td class="p-2 text-center">⭐/5</td><td class="p-2 text-center">⭐/5</td><td class="p-2 text-center">⭐/5</td></tr>
+                                        <tr class="bg-amber-50 font-bold"><td class="p-2 text-xs">TOTAL</td><td class="p-2 text-center">/25</td><td class="p-2 text-center">/25</td><td class="p-2 text-center">/25</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paso 4 -->
+                    <div class="flex gap-4">
+                        <div class="w-12 h-12 bg-amber-400 text-slate-900 rounded-full flex items-center justify-center font-black text-lg flex-shrink-0">4</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-lg mb-2">Itera y mejora</h4>
+                            <p class="text-sm text-slate-600 mb-3">Con el modelo ganador, refina tu prompt:</p>
+                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-2 text-sm text-slate-600">
+                                <p>• "Hazlo más conciso, máximo 100 palabras"</p>
+                                <p>• "Incluye un dato específico sobre la empresa que investigué"</p>
+                                <p>• "Cambia el tono a más consultivo y menos comercial"</p>
+                                <p>• "Agrega una pregunta de apertura impactante"</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paso 5 NUEVO -->
+                    <div class="flex gap-4">
+                        <div class="w-12 h-12 bg-cyan-400 text-slate-900 rounded-full flex items-center justify-center font-black text-lg flex-shrink-0">5</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-lg mb-2">🆕 Desafío Extra: Usa las funciones avanzadas</h4>
+                            <div class="grid md:grid-cols-3 gap-3 text-xs">
+                                <div class="bg-emerald-50 p-3 rounded-lg border border-emerald-100">
+                                    <p class="font-bold text-emerald-700 mb-1">ChatGPT:</p>
+                                    <p class="text-slate-600">Crea un <strong>Custom GPT</strong> experto en redacción de emails de prospección B2B. Súbele un PDF con tu propuesta de servicios.</p>
+                                </div>
+                                <div class="bg-amber-50 p-3 rounded-lg border border-amber-100">
+                                    <p class="font-bold text-amber-700 mb-1">Claude:</p>
+                                    <p class="text-slate-600">Crea un <strong>Project</strong> con las instrucciones del ejercicio. Pide a Claude generar el email como un <strong>Artifact</strong> compartible.</p>
+                                </div>
+                                <div class="bg-blue-50 p-3 rounded-lg border border-blue-100">
+                                    <p class="font-bold text-blue-700 mb-1">Gemini:</p>
+                                    <p class="text-slate-600">Usa <strong>Deep Research</strong> para investigar la empresa primero, luego crea un <strong>Gem</strong> especializado en prospección.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="gradient-bg text-white py-8 mt-12">
+    <!-- ========== FOOTER ========== -->
+    <footer class="bg-slate-900 text-white py-10 mt-12">
         <div class="container mx-auto px-6 text-center">
-            <p class="text-lg mb-2">🚀 ¡Felicidades por completar el Día 2!</p>
-            <p class="opacity-90">Ahora entiendes mucho mejor las herramientas de IA más poderosas del mundo.</p>
-            <p class="text-sm mt-4 opacity-75">Presentación creada con IA • 2025</p>
+            <p class="text-xl font-bold mb-2" style="color:var(--aiwis-accent);">🚀 ¡Felicidades por completar el Día 2!</p>
+            <p class="opacity-70 mb-4">Ahora entiendes mucho mejor las herramientas de IA más poderosas del mundo y sus funciones actualizadas a 2026.</p>
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <span class="text-amber-400 font-bold">AIWIS Academy</span>
+                <span class="opacity-30">|</span>
+                <span class="text-sm opacity-50">Armin Salazar San Martín, CEO</span>
+            </div>
+            <p class="text-xs opacity-30">Contenido creado con IA y verificado por AIWIS · Marzo 2026</p>
         </div>
     </footer>
 
+    <!-- ========== JAVASCRIPT ========== -->
     <script>
         function showTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.add('hidden');
-                content.classList.remove('animate-fade-in');
+            // Hide all
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('animate-in');
             });
-            document.querySelectorAll('.tab-btn').forEach(tab => {
-                tab.classList.remove('tab-active');
+            // Deactivate all nav pills
+            document.querySelectorAll('.nav-pill').forEach(btn => {
+                btn.classList.remove('active');
             });
-            const selectedContent = document.getElementById('content-' + tabName);
-            if (selectedContent) {
-                selectedContent.classList.remove('hidden');
-                selectedContent.classList.add('animate-fade-in');
+            // Show selected
+            const content = document.getElementById('content-' + tabName);
+            if (content) {
+                content.classList.remove('hidden');
+                // Trigger animation
+                void content.offsetWidth;
+                content.classList.add('animate-in');
             }
-            const selectedTab = document.getElementById('tab-' + tabName);
-            if (selectedTab) {
-                selectedTab.classList.add('tab-active');
+            // Activate nav
+            const nav = document.querySelector('[data-tab="' + tabName + '"]');
+            if (nav) {
+                nav.classList.add('active');
+                // Scroll nav into view
+                nav.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        document.addEventListener('DOMContentLoaded', () => showTab('introduccion'));
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => showTab('intro'));
     </script>
 </body>
-</html>```
+</html>
