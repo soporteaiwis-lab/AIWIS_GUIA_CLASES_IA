@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CUBI-K | Adopción de IA Corporativa – Fase 1 AIWIS</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0a0e1a;
+  --bg-secondary: #111827;
+  --bg-card: #1a2235;
+  --bg-card-hover: #1f2a42;
+  --accent-blue: #3b82f6;
+  --accent-cyan: #06b6d4;
+  --accent-emerald: #10b981;
+  --accent-purple: #8b5cf6;
+  --accent-amber: #f59e0b;
+  --accent-rose: #f43f5e;
+  --accent-orange: #f97316;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border: #1e293b;
+  --glow-blue: rgba(59,130,246,.15);
+  --glow-cyan: rgba(6,182,212,.12);
+  --glow-purple: rgba(139,92,246,.12);
+  --gradient-hero: linear-gradient(135deg, #0a0e1a 0%, #1a1040 50%, #0a2540 100%);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+::selection { background: var(--accent-blue); color: #fff; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--accent-blue); border-radius: 3px; }
+
+/* ═══════════ NAVIGATION ═══════════ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(10,14,26,.85); backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  transition: all .3s;
+}
+.nav-inner {
+  max-width: 1400px; margin: 0 auto; padding: .75rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand {
+  display: flex; align-items: center; gap: .75rem;
+  font-weight: 800; font-size: 1.1rem; letter-spacing: -.02em;
+}
+.nav-brand .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent-cyan); box-shadow: 0 0 12px var(--accent-cyan); animation: pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100%{ opacity:1; } 50%{ opacity:.4; } }
+.nav-links { display: flex; gap: .25rem; flex-wrap: wrap; }
+.nav-links a {
+  color: var(--text-secondary); text-decoration: none; padding: .4rem .8rem;
+  border-radius: 8px; font-size: .82rem; font-weight: 500; transition: all .2s;
+}
+.nav-links a:hover { color: var(--text-primary); background: rgba(255,255,255,.06); }
+
+/* ═══════════ HERO ═══════════ */
+.hero {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: var(--gradient-hero); position: relative; overflow: hidden;
+  padding: 6rem 2rem 4rem;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59,130,246,.08) 0%, transparent 60%),
+              radial-gradient(ellipse 60% 50% at 80% 80%, rgba(139,92,246,.06) 0%, transparent 50%);
+}
+.hero-grid {
+  position: absolute; inset: 0; opacity: .04;
+  background-image: linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
+                     linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-content { position: relative; text-align: center; max-width: 900px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: rgba(59,130,246,.1); border: 1px solid rgba(59,130,246,.25);
+  padding: .4rem 1.2rem; border-radius: 999px; font-size: .8rem;
+  font-weight: 600; color: var(--accent-blue); margin-bottom: 2rem;
+  letter-spacing: .04em; text-transform: uppercase;
+  animation: fadeInUp .8s ease;
+}
+.hero-badge .live { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-emerald); animation: pulse-dot 1.5s infinite; }
+.hero-title {
+  font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #fff 0%, #94a3b8 50%, #3b82f6 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  animation: fadeInUp .8s ease .1s both;
+}
+.hero-sub {
+  font-size: 1.25rem; color: var(--text-secondary); font-weight: 300;
+  max-width: 650px; margin: 0 auto 2.5rem;
+  animation: fadeInUp .8s ease .2s both;
+}
+.hero-meta {
+  display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;
+  animation: fadeInUp .8s ease .3s both;
+}
+.hero-meta-item {
+  display: flex; flex-direction: column; align-items: center; gap: .25rem;
+}
+.hero-meta-item .val { font-size: 1.6rem; font-weight: 800; color: var(--accent-cyan); font-family: 'JetBrains Mono', monospace; }
+.hero-meta-item .lbl { font-size: .72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .08em; font-weight: 600; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════ SECTIONS ═══════════ */
+.section { padding: 5rem 2rem; position: relative; }
+.section:nth-child(even) { background: var(--bg-secondary); }
+.container { max-width: 1400px; margin: 0 auto; }
+.section-header {
+  text-align: center; margin-bottom: 3.5rem;
+}
+.section-num {
+  font-family: 'JetBrains Mono', monospace; font-size: .75rem; font-weight: 600;
+  color: var(--accent-blue); letter-spacing: .1em; text-transform: uppercase;
+  margin-bottom: .5rem;
+}
+.section-title {
+  font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800; margin-bottom: .75rem; line-height: 1.15;
+}
+.section-desc {
+  color: var(--text-secondary); max-width: 700px; margin: 0 auto;
+  font-size: 1.05rem; font-weight: 300;
+}
+
+/* ═══════════ DASHBOARD STATS ═══════════ */
+.stats-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem; margin-bottom: 3rem;
+}
+.stat-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 1.5rem; position: relative; overflow: hidden;
+  transition: all .3s;
+}
+.stat-card:hover { border-color: rgba(59,130,246,.3); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,.3); }
+.stat-card .icon {
+  width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; margin-bottom: 1rem;
+}
+.stat-card .icon.blue { background: rgba(59,130,246,.12); color: var(--accent-blue); }
+.stat-card .icon.cyan { background: rgba(6,182,212,.12); color: var(--accent-cyan); }
+.stat-card .icon.emerald { background: rgba(16,185,129,.12); color: var(--accent-emerald); }
+.stat-card .icon.purple { background: rgba(139,92,246,.12); color: var(--accent-purple); }
+.stat-card .icon.amber { background: rgba(245,158,11,.12); color: var(--accent-amber); }
+.stat-card .icon.rose { background: rgba(244,63,94,.12); color: var(--accent-rose); }
+.stat-card .number {
+  font-family: 'JetBrains Mono', monospace; font-size: 2rem; font-weight: 800; line-height: 1;
+  margin-bottom: .25rem;
+}
+.stat-card .label { color: var(--text-secondary); font-size: .85rem; font-weight: 400; }
+.stat-card .bar { position: absolute; bottom: 0; left: 0; height: 3px; border-radius: 0 3px 0 0; }
+
+/* ═══════════ PARTICIPANT TABLE ═══════════ */
+.participant-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1rem;
+}
+.p-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.25rem; transition: all .3s;
+  display: flex; gap: 1rem; align-items: flex-start;
+}
+.p-card:hover { border-color: rgba(59,130,246,.3); background: var(--bg-card-hover); }
+.p-avatar {
+  width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: .9rem; flex-shrink: 0; color: #fff;
+}
+.p-info h4 { font-size: .95rem; font-weight: 700; margin-bottom: .2rem; }
+.p-info .role { font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; margin-bottom: .4rem; }
+.p-info .desc { font-size: .82rem; color: var(--text-secondary); line-height: 1.5; }
+
+/* ═══════════ TIMELINE ═══════════ */
+.timeline { position: relative; padding-left: 2.5rem; }
+.timeline::before {
+  content: ''; position: absolute; left: 11px; top: 0; bottom: 0; width: 2px;
+  background: linear-gradient(to bottom, var(--accent-blue), var(--accent-purple), var(--accent-cyan));
+  border-radius: 2px;
+}
+.tl-item { position: relative; margin-bottom: 2rem; }
+.tl-item::before {
+  content: ''; position: absolute; left: -2.5rem; top: .5rem;
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 2px solid var(--accent-blue); background: var(--bg-primary);
+}
+.tl-item:nth-child(3n+2)::before { border-color: var(--accent-purple); }
+.tl-item:nth-child(3n)::before { border-color: var(--accent-cyan); }
+.tl-time {
+  font-family: 'JetBrains Mono', monospace; font-size: .75rem;
+  color: var(--accent-blue); font-weight: 600; margin-bottom: .35rem;
+}
+.tl-title { font-size: 1.1rem; font-weight: 700; margin-bottom: .4rem; }
+.tl-desc { color: var(--text-secondary); font-size: .9rem; line-height: 1.6; }
+.tl-tags { display: flex; gap: .4rem; flex-wrap: wrap; margin-top: .5rem; }
+.tl-tag {
+  font-size: .65rem; font-weight: 600; padding: .2rem .6rem; border-radius: 6px;
+  text-transform: uppercase; letter-spacing: .04em;
+}
+.tl-tag.tech { background: rgba(59,130,246,.12); color: var(--accent-blue); }
+.tl-tag.idea { background: rgba(16,185,129,.12); color: var(--accent-emerald); }
+.tl-tag.demo { background: rgba(245,158,11,.12); color: var(--accent-amber); }
+.tl-tag.task { background: rgba(244,63,94,.12); color: var(--accent-rose); }
+
+/* ═══════════ PROPOSAL CARDS ═══════════ */
+.proposal-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 1.5rem;
+}
+.proposal-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden; transition: all .3s;
+}
+.proposal-card:hover { border-color: rgba(59,130,246,.3); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,.3); }
+.proposal-header {
+  padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 1rem;
+}
+.proposal-icon {
+  width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; flex-shrink: 0;
+}
+.proposal-header h3 { font-size: 1.05rem; font-weight: 700; line-height: 1.3; }
+.proposal-header .author { font-size: .78rem; color: var(--text-muted); font-weight: 500; }
+.proposal-body { padding: 1.25rem 1.5rem; }
+.proposal-body p { color: var(--text-secondary); font-size: .88rem; margin-bottom: .75rem; line-height: 1.6; }
+.proposal-body ul { list-style: none; padding: 0; }
+.proposal-body li {
+  position: relative; padding-left: 1.2rem; color: var(--text-secondary);
+  font-size: .85rem; margin-bottom: .4rem; line-height: 1.5;
+}
+.proposal-body li::before {
+  content: '▸'; position: absolute; left: 0; color: var(--accent-cyan); font-weight: bold;
+}
+.proposal-footer {
+  padding: .75rem 1.5rem; border-top: 1px solid var(--border);
+  display: flex; gap: .4rem; flex-wrap: wrap;
+}
+.proposal-footer .tag {
+  font-size: .65rem; font-weight: 600; padding: .2rem .6rem; border-radius: 6px;
+  text-transform: uppercase; letter-spacing: .04em;
+  background: rgba(139,92,246,.1); color: var(--accent-purple);
+}
+
+/* ═══════════ TECH DEEP DIVE ═══════════ */
+.tech-section {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; margin-bottom: 1.5rem; overflow: hidden;
+}
+.tech-header {
+  padding: 1.25rem 1.5rem; cursor: pointer; display: flex; align-items: center; gap: 1rem;
+  transition: background .2s;
+}
+.tech-header:hover { background: var(--bg-card-hover); }
+.tech-header .num {
+  font-family: 'JetBrains Mono', monospace; font-size: .7rem; font-weight: 600;
+  color: var(--accent-cyan); background: rgba(6,182,212,.1); padding: .3rem .6rem;
+  border-radius: 6px; min-width: 36px; text-align: center;
+}
+.tech-header h3 { flex: 1; font-size: 1.05rem; font-weight: 700; }
+.tech-header .arrow { color: var(--text-muted); transition: transform .3s; font-size: .9rem; }
+.tech-section.open .tech-header .arrow { transform: rotate(180deg); }
+.tech-body { padding: 0 1.5rem 1.5rem; display: none; }
+.tech-section.open .tech-body { display: block; }
+.tech-body p { color: var(--text-secondary); font-size: .9rem; margin-bottom: .75rem; line-height: 1.7; }
+.tech-body h4 { font-size: .95rem; font-weight: 700; margin: 1.25rem 0 .5rem; color: var(--accent-blue); }
+.tech-body ul { list-style: none; padding: 0; margin-bottom: 1rem; }
+.tech-body li { position: relative; padding-left: 1.4rem; color: var(--text-secondary); font-size: .88rem; margin-bottom: .5rem; line-height: 1.55; }
+.tech-body li::before { content: '›'; position: absolute; left: .2rem; color: var(--accent-cyan); font-weight: 900; font-size: 1.1rem; }
+
+/* ═══════════ COMPARISON TABLE ═══════════ */
+.comp-table {
+  width: 100%; border-collapse: collapse; font-size: .85rem;
+  background: var(--bg-card); border-radius: 12px; overflow: hidden;
+  border: 1px solid var(--border);
+}
+.comp-table thead th {
+  background: rgba(59,130,246,.08); padding: 1rem; text-align: left;
+  font-weight: 700; font-size: .78rem; text-transform: uppercase;
+  letter-spacing: .05em; color: var(--accent-blue); border-bottom: 1px solid var(--border);
+}
+.comp-table tbody td {
+  padding: .85rem 1rem; border-bottom: 1px solid var(--border);
+  color: var(--text-secondary); vertical-align: top;
+}
+.comp-table tbody tr:hover td { background: rgba(255,255,255,.02); }
+.comp-table tbody td:first-child { font-weight: 600; color: var(--text-primary); }
+.comp-table .badge {
+  display: inline-block; padding: .15rem .5rem; border-radius: 4px;
+  font-size: .7rem; font-weight: 600; text-transform: uppercase;
+}
+.badge.green { background: rgba(16,185,129,.12); color: var(--accent-emerald); }
+.badge.amber { background: rgba(245,158,11,.12); color: var(--accent-amber); }
+.badge.red { background: rgba(244,63,94,.12); color: var(--accent-rose); }
+.badge.blue { background: rgba(59,130,246,.12); color: var(--accent-blue); }
+
+/* ═══════════ ROADMAP ═══════════ */
+.roadmap {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.25rem;
+}
+.road-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+  padding: 1.5rem; position: relative; overflow: hidden; transition: all .3s;
+}
+.road-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.road-card.active::before { background: var(--accent-emerald); }
+.road-card.next::before { background: var(--accent-blue); }
+.road-card.future::before { background: var(--accent-purple); }
+.road-card.vision::before { background: var(--accent-amber); }
+.road-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,.3); }
+.road-label {
+  font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+  padding: .2rem .6rem; border-radius: 4px; display: inline-block; margin-bottom: .75rem;
+}
+.road-card.active .road-label { background: rgba(16,185,129,.12); color: var(--accent-emerald); }
+.road-card.next .road-label { background: rgba(59,130,246,.12); color: var(--accent-blue); }
+.road-card.future .road-label { background: rgba(139,92,246,.12); color: var(--accent-purple); }
+.road-card.vision .road-label { background: rgba(245,158,11,.12); color: var(--accent-amber); }
+.road-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: .35rem; }
+.road-card .tools { font-family: 'JetBrains Mono', monospace; font-size: .75rem; color: var(--accent-cyan); margin-bottom: .5rem; }
+.road-card p { color: var(--text-secondary); font-size: .82rem; line-height: 1.5; }
+
+/* ═══════════ TASKS ═══════════ */
+.task-list { display: grid; gap: 1rem; }
+.task-item {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.25rem 1.5rem; display: flex; gap: 1rem; align-items: flex-start;
+  transition: all .3s;
+}
+.task-item:hover { border-color: rgba(59,130,246,.3); background: var(--bg-card-hover); }
+.task-num {
+  font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 1.2rem;
+  min-width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+  border-radius: 10px; flex-shrink: 0;
+}
+.task-content h4 { font-size: .95rem; font-weight: 700; margin-bottom: .3rem; }
+.task-content p { color: var(--text-secondary); font-size: .85rem; line-height: 1.55; }
+
+/* ═══════════ VIDEO ═══════════ */
+.video-wrap {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 20px; overflow: hidden; max-width: 900px; margin: 0 auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,.4);
+}
+.video-label {
+  padding: 1rem 1.5rem; display: flex; align-items: center; gap: .75rem;
+  border-bottom: 1px solid var(--border);
+}
+.video-label .rec { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-rose); animation: pulse-dot 1.5s infinite; }
+.video-label span { font-weight: 700; font-size: .9rem; }
+.video-label .dur { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: .78rem; color: var(--text-muted); }
+.video-container { position: relative; padding-bottom: 56.25%; height: 0; }
+.video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+/* ═══════════ STACK ═══════════ */
+.stack-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;
+}
+.stack-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+  padding: 1.25rem; transition: all .3s;
+}
+.stack-card:hover { border-color: rgba(6,182,212,.3); }
+.stack-card h4 { font-size: .9rem; font-weight: 700; margin-bottom: .6rem; display: flex; align-items: center; gap: .5rem; }
+.stack-card h4 .ico { font-size: 1.1rem; }
+.stack-list { list-style: none; }
+.stack-list li {
+  font-size: .82rem; color: var(--text-secondary); padding: .3rem 0;
+  border-bottom: 1px solid rgba(255,255,255,.03); display: flex; align-items: center; gap: .5rem;
+}
+.stack-list li::before { content: '●'; font-size: .4rem; color: var(--accent-cyan); }
+
+/* ═══════════ CONCLUSIONS ═══════════ */
+.conclusion-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 1.25rem;
+}
+.concl-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+  padding: 1.5rem; transition: all .3s; border-left: 3px solid transparent;
+}
+.concl-card:nth-child(1) { border-left-color: var(--accent-emerald); }
+.concl-card:nth-child(2) { border-left-color: var(--accent-amber); }
+.concl-card:nth-child(3) { border-left-color: var(--accent-rose); }
+.concl-card:nth-child(4) { border-left-color: var(--accent-blue); }
+.concl-card:nth-child(5) { border-left-color: var(--accent-purple); }
+.concl-card:nth-child(6) { border-left-color: var(--accent-cyan); }
+.concl-card:hover { background: var(--bg-card-hover); }
+.concl-card h4 { font-size: .95rem; font-weight: 700; margin-bottom: .5rem; }
+.concl-card p { color: var(--text-secondary); font-size: .85rem; line-height: 1.6; }
+
+/* ═══════════ FOOTER ═══════════ */
+.footer {
+  padding: 3rem 2rem; text-align: center;
+  border-top: 1px solid var(--border); background: var(--bg-primary);
+}
+.footer p { color: var(--text-muted); font-size: .82rem; margin-bottom: .25rem; }
+.footer .brand { font-weight: 800; color: var(--accent-cyan); }
+
+/* ═══════════ UTILITIES ═══════════ */
+.highlight {
+  background: linear-gradient(135deg, rgba(59,130,246,.08), rgba(139,92,246,.08));
+  border: 1px solid rgba(59,130,246,.15); border-radius: 12px;
+  padding: 1.25rem 1.5rem; margin: 1.25rem 0;
+}
+.highlight p { color: var(--text-secondary); font-size: .9rem; margin: 0; }
+.highlight strong { color: var(--text-primary); }
+.code-inline {
+  font-family: 'JetBrains Mono', monospace; font-size: .8rem;
+  background: rgba(6,182,212,.1); color: var(--accent-cyan);
+  padding: .15rem .45rem; border-radius: 4px;
+}
+.divider {
+  height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin: 2.5rem 0;
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hero { padding: 5rem 1.25rem 3rem; }
+  .section { padding: 3rem 1.25rem; }
+  .hero-meta { gap: 1rem; }
+  .participant-grid, .proposal-grid, .conclusion-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .comp-table { font-size: .75rem; }
+  .comp-table thead th, .comp-table tbody td { padding: .6rem .5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ NAVIGATION ═══════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand"><div class="dot"></div> CUBI-K × AIWIS</div>
+    <div class="nav-links">
+      <a href="#dashboard">Dashboard</a>
+      <a href="#participantes">Participantes</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#propuestas">Propuestas</a>
+      <a href="#deep-dive">Deep Dive</a>
+      <a href="#herramientas">Herramientas</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#tareas">Tareas</a>
+      <a href="#video">Video</a>
+      <a href="#conclusiones">Conclusiones</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><div class="live"></div> Sesión Grabada · Módulo 2</div>
+    <h1 class="hero-title">Adopción de IA Corporativa</h1>
+    <p class="hero-sub">Informe exhaustivo de la sesión de capacitación Fase 1 — Programa AIWIS para el equipo CUBI-K en entorno Banco BCI</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span class="val">19 MAR</span><span class="lbl">Fecha 2026</span></div>
+      <div class="hero-meta-item"><span class="val">2:27:55</span><span class="lbl">Duración</span></div>
+      <div class="hero-meta-item"><span class="val">15</span><span class="lbl">Asistentes</span></div>
+      <div class="hero-meta-item"><span class="val">5</span><span class="lbl">Propuestas</span></div>
+      <div class="hero-meta-item"><span class="val">6</span><span class="lbl">Tareas</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ DASHBOARD ═══════════ -->
+<section class="section" id="dashboard">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Sección 01</div>
+      <h2 class="section-title">Dashboard de la Sesión</h2>
+      <p class="section-desc">Métricas clave, participación y datos generales del encuentro</p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="icon blue">⏱</div>
+        <div class="number">2h 28m</div>
+        <div class="label">Duración total de la sesión</div>
+        <div class="bar" style="width:85%; background: var(--accent-blue);"></div>
+      </div>
+      <div class="stat-card">
+        <div class="icon cyan">👥</div>
+        <div class="number">15</div>
+        <div class="label">Participantes registrados</div>
+        <div class="bar" style="width:100%; background: var(--accent-cyan);"></div>
+      </div>
+      <div class="stat-card">
+        <div class="icon emerald">🎤</div>
+        <div class="number">11</div>
+        <div class="label">Participantes con intervención verbal</div>
+        <div class="bar" style="width:73%; background: var(--accent-emerald);"></div>
+      </div>
+      <div class="stat-card">
+        <div class="icon purple">💡</div>
+        <div class="number">5</div>
+        <div class="label">Propuestas de innovación</div>
+        <div class="bar" style="width:50%; background: var(--accent-purple);"></div>
+      </div>
+      <div class="stat-card">
+        <div class="icon amber">🔧</div>
+        <div class="number">12+</div>
+        <div class="label">Tecnologías/herramientas mencionadas</div>
+        <div class="bar" style="width:90%; background: var(--accent-amber);"></div>
+      </div>
+      <div class="stat-card">
+        <div class="icon rose">📋</div>
+        <div class="number">6</div>
+        <div class="label">Tareas asignadas para próxima clase</div>
+        <div class="bar" style="width:60%; background: var(--accent-rose);"></div>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <p><strong>Contexto:</strong> Sesión del Módulo 2 del programa de capacitación en IA para CUBI-K (empresa de servicios TI que opera dentro del ecosistema del Banco BCI). Facilitada por Armin Salazar (CEO de AIWIS / ArmonIA Labs) con coordinación de Luis Cornejo. El programa busca capacitar al equipo en herramientas de IA generativa, prototipado de aplicaciones, y arquitectura de agentes inteligentes para optimizar operaciones bancarias.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PARTICIPANTES ═══════════ -->
+<section class="section" id="participantes">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Sección 02</div>
+      <h2 class="section-title">Participantes & Roles</h2>
+      <p class="section-desc">Detalle de cada asistente, su rol identificado y su participación en la sesión</p>
+    </div>
+    <div class="participant-grid">
+
+      <div class="p-card">
+        <div class="p-avatar" style="background: linear-gradient(135deg, #3b82f6, #06b6d4);">AS</div>
+        <div class="p-info">
+          <h4>Armin Salazar <span style="color:var(--text-muted);font-weight:400;">(aiwis)</span></h4>
+          <div class="role" style="color:var(--accent-cyan);">Facilitador Principal · CEO AIWIS</div>
+          <div class="desc">Condujo toda la sesión. Expuso arquitectura multiagente, demostró prototipo COBOL, explicó APIs, embeddings, bases vectoriales, herramientas (N8N, Zapier, LangChain/LangGraph). Asignó tareas y ofreció disponibilidad 24/7.</div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="p-avatar" style="background: linear-gradient(135deg, #8b5cf6, #a855f7);">LC</div>
+        <div class="p-info">
+          <h4>Luis Cornejo</h4>
+          <div class="role" style="color:var(--accent-purple);">Coordinador Operativo CUBI-K</div>
+          <div class="desc">Co-facilitó la reunión. Gestionó turnos de palabra, aportó contexto sobre planilla de turnos BCI, relación con Helix/BHOP. Motivó al equipo prometiendo recompensas por ideas implementadas.</div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="p-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">FA</div>
+        <div class="p-info">
+          <h4>Felipe Álvarez</h4>
+          <div class="role" style="color:var(--accent-emerald);">Técnico Mesa Preproducción BCI</div>
+          <div class="desc">Presentó 2 propuestas: memoria operativa con base de conocimiento y chat interactivo entre mesas. Describió flujo de diagnóstico de microservicios, WebLogic, TuxedOS, IBM MQ.</div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="p-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">VT</div>
+        <div class="p-info">
+          <h4>Vicente Torrejón</h4>
+          <div class="role" style="color:var(--accent-amber);">Técnico de Mesa / Soporte</div>
+          <div class="desc">Propuso integración con CMDB para consultar datos de máquinas desde chat. Colaboró con Armin en idea del escáner de documentos (OCR).</div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="p-avatar" style="background: linear-gradient(135deg, #f43f5e, #e11d48);">VJ</div>
+        <div class="p-info">
+          <h4>Víctor Jofre Huerta</h4>
+          <div class="role" style="color:var(--accent-rose);">Técnico / Participante Activo</div>
+          <div class="desc">Propuso botón de inclusividad y app de gastos hormiga. Trabajó con Armin en sesión individual previa. Sugirió "copiar y preguntarle a la IA" como método de aprendizaje.</div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="p-avatar" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">AA</div>
+        <div class="p-info">
+          <h4>Alfredo Aguayo</h4>
+          <div class="role" style="color:var(--accent-cyan);">Especialista COBOL / Mainframe</div>
+          <div class="desc">Validó técnicamente la demo del agente generador de código COBOL. Confirmó estructura correcta del programa generado. Señaló que el RAG requerirá nomenclatura de BD.</div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="p-avatar" style="background: linear-gradient(135deg, #64748b, #475569);">AL</div>
+        <div class="p-info">
+          <h4>Alfredo Lobos Vázquez</h4>
+          <div class="role" style="color:var(--text-secondary);">Técnico de Mesa</div>
+          <div class="desc">Preguntó sobre viabilidad de costos de APIs para uso intensivo. Consultó sobre disponibilidad de material de clases anteriores del Módulo 2.</div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="p-avatar" style="background: linear-gradient(135deg, #a78bfa, #7c3aed);">RO</div>
+        <div class="p-info">
+          <h4>Rodrigo <span style="color:var(--text-muted);font-weight:400;">(Arbersen)</span></h4>
+          <div class="role" style="color:var(--accent-purple);">Técnico / Participante</div>
+          <div class="desc">Preguntó cómo evitar que la IA reutilice código erróneamente (alucinaciones). Armin explicó uso de comandos "no negociable" en prompts.</div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="p-avatar" style="background: linear-gradient(135deg, #4ade80, #22c55e);">BH</div>
+        <div class="p-info">
+          <h4>Benjamin Henríquez N.</h4>
+          <div class="role" style="color:var(--accent-emerald);">Participante</div>
+          <div class="desc">Confirmó audio al inicio. Sugirió que el cambio de horario pudo causar confusión en asistencia de otros miembros.</div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="p-avatar" style="background: linear-gradient(135deg, #38bdf8, #0ea5e9);">JM</div>
+        <div class="p-info">
+          <h4>José Martínez Palome</h4>
+          <div class="role" style="color:var(--accent-blue);">Participante</div>
+          <div class="desc">Definió correctamente una API como "prácticamente un puente entre una plataforma y otra".</div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="p-avatar" style="background: linear-gradient(135deg, #94a3b8, #64748b);">TH</div>
+        <div class="p-info">
+          <h4>Thomas Hokington</h4>
+          <div class="role" style="color:var(--text-muted);">Participante</div>
+          <div class="desc">Intervención breve mencionando API como "una aplicación".</div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="p-avatar" style="background: linear-gradient(135deg, #fb923c, #ea580c);">RS</div>
+        <div class="p-info">
+          <h4>Rigoberto Salazar</h4>
+          <div class="role" style="color:var(--accent-orange);">Participante</div>
+          <div class="desc">Confirmó haber visto el video del curso sobre embeddings (ejemplo del "perro y el gato" de Platzi). Intervenciones breves.</div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="p-avatar" style="background: linear-gradient(135deg, #334155, #1e293b);">MM</div>
+        <div class="p-info">
+          <h4>Michael Morales</h4>
+          <div class="role" style="color:var(--text-muted);">Registrado sin intervención verbal</div>
+          <div class="desc">Presente en la lista de asistentes. Sin participación verbal detectada en la transcripción.</div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="p-avatar" style="background: linear-gradient(135deg, #334155, #1e293b);">AF</div>
+        <div class="p-info">
+          <h4>Alejandro Fuentealba V.</h4>
+          <div class="role" style="color:var(--text-muted);">Registrado sin intervención verbal</div>
+          <div class="desc">Presente en la lista de asistentes. Sin participación verbal detectada en la transcripción.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TIMELINE ═══════════ -->
+<section class="section" id="timeline">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Sección 03</div>
+      <h2 class="section-title">Timeline de la Sesión</h2>
+      <p class="section-desc">Flujo cronológico completo de la sesión de 2 horas y 28 minutos</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">00:00 — 00:10</div>
+        <div class="tl-title">Apertura y discusión sobre planilla de turnos</div>
+        <div class="tl-desc">Verificación de audio y conexión. Discusión detallada sobre la planilla de turnos de Luis Cornejo: es un Google Sheets enorme (columnas hasta ZZZ) alojado en el Drive corporativo de BCI (@externo.bci.cl). Armin propuso transformarla en una base de datos funcional usando Google Apps Script, con la misma tecnología del Portal ADA IA de CUBI-K. Se explicó el backend con JSON y activadores automáticos.</div>
+        <div class="tl-tags"><span class="tl-tag tech">Google Sheets</span><span class="tl-tag tech">Apps Script</span><span class="tl-tag idea">Base de datos</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">00:10 — 00:25</div>
+        <div class="tl-title">Propuestas de Felipe Álvarez</div>
+        <div class="tl-desc">Felipe presentó dos propuestas: (1) Memoria operativa con base de conocimiento para la mesa preproducción — cargar procedimientos + chat interactivo para análisis de logs de WebLogic, TuxedOS, microservicios e IBM MQ. (2) Chat interactivo entre mesas para reporte y agrupación automática de incidentes similares. Luis Cornejo apoyó ambas ideas destacando la frecuencia de reportes duplicados.</div>
+        <div class="tl-tags"><span class="tl-tag idea">Base conocimiento</span><span class="tl-tag idea">Chat interactivo</span><span class="tl-tag tech">WebLogic</span><span class="tl-tag tech">Microservicios</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">00:25 — 00:35</div>
+        <div class="tl-title">Propuesta CMDB + discusión de costos y licencias</div>
+        <div class="tl-desc">Vicente Torrejón propuso consultar la CMDB desde un chat (máquinas, responsables, contactos). Alfredo Lobos preguntó sobre costos de APIs. Armin explicó que modelos de video (VO3) son muy caros (3 videos/día con cuenta Pro), pero imágenes ya son accesibles. Helix tiene ventajas de licencia si BCI tiene la versión Enterprise.</div>
+        <div class="tl-tags"><span class="tl-tag idea">CMDB</span><span class="tl-tag tech">Helix/BMC</span><span class="tl-tag tech">Costos API</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">00:35 — 01:00</div>
+        <div class="tl-title">Arquitectura multiagente + Demo generador COBOL</div>
+        <div class="tl-desc">Armin explicó su arquitectura multiagente propuesta: un orquestador propio (Python/LangGraph) que conecta Helix, Dynatrace/Davis, Control-M, Jira y Nagios. Demostró en vivo el prototipo ya entregado a BCI: generador de código COBOL batch con agentes planificador → codificador → validador → documentador. El sistema replanifica automáticamente si la compilación falla.</div>
+        <div class="tl-tags"><span class="tl-tag demo">Demo en vivo</span><span class="tl-tag tech">LangGraph</span><span class="tl-tag tech">COBOL</span><span class="tl-tag tech">Python</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">01:00 — 01:15</div>
+        <div class="tl-title">RAG, Datacom y segunda fase del prototipo COBOL</div>
+        <div class="tl-desc">Explicación de cómo escalar el prototipo integrando un RAG con nomenclatura específica de BCI (tablas Datacom en vez de DB2, VSAM, copies). Propuesta de una interfaz para que el banco cargue estructuras de bases de datos al RAG mediante formulario. Armin mencionó que el RAG del COBOL tiene "pega para 2 años".</div>
+        <div class="tl-tags"><span class="tl-tag tech">RAG</span><span class="tl-tag tech">Datacom</span><span class="tl-tag tech">Mainframe IBM</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">01:15 — 01:30</div>
+        <div class="tl-title">APIs, Canvas y creación de aplicaciones con metodología</div>
+        <div class="tl-desc">Explicación de APIs como "mensajero" y API Keys como "llave de acceso". Demostración de creación de app con Gemini Canvas usando metodología PRD: Gemini propone arquitectura → usuario aprueba → se genera el código. Ejemplo práctico: app para cargar y modificar fotos usando la API de Gemini. Mención de que Suno no vende su API.</div>
+        <div class="tl-tags"><span class="tl-tag tech">API</span><span class="tl-tag tech">Gemini Canvas</span><span class="tl-tag tech">PRD</span><span class="tl-tag demo">Demo</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">01:30 — 01:45</div>
+        <div class="tl-title">Embeddings, bases vectoriales y diferencias Gemas/NotebookLM/Agentes</div>
+        <div class="tl-desc">Explicación de embeddings (transformación texto → vectores numéricos), ejemplo del "perro ladró" vs "perro durmió" con probabilidades. Bases vectoriales: Supabase (recomendada), Pinecone, MongoDB. Diferencias claras: Gemas = asistentes simples, NotebookLM = RAG básico, Agentes (LangChain) = automatización completa con grafos.</div>
+        <div class="tl-tags"><span class="tl-tag tech">Embeddings</span><span class="tl-tag tech">Supabase</span><span class="tl-tag tech">NotebookLM</span><span class="tl-tag tech">Vectores</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">01:45 — 02:00</div>
+        <div class="tl-title">Comparativa de herramientas de automatización</div>
+        <div class="tl-desc">Comparativa Code (Python/LangGraph) vs No-Code (Zapier/Make) vs Low-Code (N8N). N8N cumple norma ISO 27001 y BCI está comenzando a adoptarlo. Anuncio de webinar de N8N con un colega de Armin. Armin recomienda N8N como herramienta puente: más control que Zapier, menos complejo que LangGraph puro.</div>
+        <div class="tl-tags"><span class="tl-tag tech">N8N</span><span class="tl-tag tech">Zapier</span><span class="tl-tag tech">ISO 27001</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">02:00 — 02:10</div>
+        <div class="tl-title">React, React Native y ruta hacia apps móviles</div>
+        <div class="tl-desc">Explicación de por qué Gemini Canvas genera código en React (no HTML puro). Historia de React Native: creado en Facebook cuando HTML5 falló para móviles. Ruta: React (web) → React Native (móviles) → Android Studio (apps nativas). El portal CUBI-K ya se ve como app en teléfono gracias a diseño responsive con React.</div>
+        <div class="tl-tags"><span class="tl-tag tech">React</span><span class="tl-tag tech">React Native</span><span class="tl-tag tech">Android Studio</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">02:10 — 02:28</div>
+        <div class="tl-title">Asignación de tareas, BPCoden y cierre motivacional</div>
+        <div class="tl-desc">Asignación de tareas: crear app/POC con Gemini Canvas, usar herramienta BPCoden para generar plan de implementación con 3 metodologías (PRD, historias de usuario, etc.). Luis Cornejo enfatizó recompensas para creadores de ideas implementadas. Armin ofreció disponibilidad 24/7 y motivó al equipo a usar el chat del grupo activamente.</div>
+        <div class="tl-tags"><span class="tl-tag task">Tarea</span><span class="tl-tag tech">BPCoden</span><span class="tl-tag tech">POC</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PROPUESTAS ═══════════ -->
+<section class="section" id="propuestas">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Sección 04</div>
+      <h2 class="section-title">Propuestas de Innovación</h2>
+      <p class="section-desc">5 propuestas presentadas durante la sesión con potencial de implementación</p>
+    </div>
+    <div class="proposal-grid">
+
+      <div class="proposal-card">
+        <div class="proposal-header">
+          <div class="proposal-icon" style="background: rgba(16,185,129,.12); color: var(--accent-emerald);">🧠</div>
+          <div><h3>Memoria Operativa con IA</h3><div class="author">Felipe Álvarez · Mesa Preproducción</div></div>
+        </div>
+        <div class="proposal-body">
+          <p>Base de conocimiento inteligente para la mesa de preproducción que permita:</p>
+          <ul>
+            <li>Cargar procedimientos operativos como fuentes de conocimiento</li>
+            <li>Chat interactivo para subir logs y obtener diagnóstico automático</li>
+            <li>Historial de casos resueltos con soluciones aplicadas</li>
+            <li>Identificación rápida de errores recurrentes en WebLogic, TuxedOS, IBM MQ</li>
+            <li>Base de datos que almacene todos los casos para consulta de toda la mesa</li>
+          </ul>
+          <p><strong>Problema que resuelve:</strong> "Hay veces que hacemos las cosas y después no nos acordamos de lo que hicimos porque llega el problema como meses después."</p>
+        </div>
+        <div class="proposal-footer">
+          <span class="tag">RAG</span><span class="tag">NotebookLM</span><span class="tag">Base conocimiento</span><span class="tag">Logs</span>
+        </div>
+      </div>
+
+      <div class="proposal-card">
+        <div class="proposal-header">
+          <div class="proposal-icon" style="background: rgba(59,130,246,.12); color: var(--accent-blue);">💬</div>
+          <div><h3>Chat Interactivo entre Mesas</h3><div class="author">Felipe Álvarez + Luis Cornejo</div></div>
+        </div>
+        <div class="proposal-body">
+          <p>Sistema de chat inteligente integrado en Google Chat donde:</p>
+          <ul>
+            <li>Usuarios de distintas mesas reportan problemas en un mismo canal</li>
+            <li>El sistema agrupa automáticamente incidentes del mismo microservicio</li>
+            <li>Si hay incidencia masiva (caída CRM, saturación IBM MQ), responde automáticamente</li>
+            <li>Reduce duplicidad: "a veces llegan dos o tres reportando el mismo tema"</li>
+            <li>Interacción bidireccional: usuario pregunta → IA diagnostica ruta de microservicios</li>
+          </ul>
+          <p><strong>Ejemplo citado:</strong> Error 500 en login-cliente → IA sugiere revisar perfilamiento → verifica enrolamiento → chequea Multipass.</p>
+        </div>
+        <div class="proposal-footer">
+          <span class="tag">Google Chat</span><span class="tag">Microservicios</span><span class="tag">Automatización</span>
+        </div>
+      </div>
+
+      <div class="proposal-card">
+        <div class="proposal-header">
+          <div class="proposal-icon" style="background: rgba(245,158,11,.12); color: var(--accent-amber);">🖥️</div>
+          <div><h3>Consulta CMDB desde Chat</h3><div class="author">Vicente Torrejón</div></div>
+        </div>
+        <div class="proposal-body">
+          <p>Integrar la CMDB del banco en un chat para consultas rápidas:</p>
+          <ul>
+            <li>Escribir nombre de máquina → obtener responsable, contactos, área</li>
+            <li>Links de procedimientos asociados a cada servidor</li>
+            <li>Eliminación de pasos manuales: ya no iniciar sesión en SDM (obsoleto)</li>
+            <li>Consultar datos directamente desde Google Chat sin cambiar de herramienta</li>
+          </ul>
+          <p><strong>Valoración de Armin:</strong> Viable como Gema con base de conocimiento. Para un agente completo requeriría RAG con base vectorial.</p>
+        </div>
+        <div class="proposal-footer">
+          <span class="tag">CMDB</span><span class="tag">SDM</span><span class="tag">Gema Gemini</span>
+        </div>
+      </div>
+
+      <div class="proposal-card">
+        <div class="proposal-header">
+          <div class="proposal-icon" style="background: rgba(244,63,94,.12); color: var(--accent-rose);">📱</div>
+          <div><h3>Botón Inclusivo + Gastos Hormiga</h3><div class="author">Víctor Jofre Huerta</div></div>
+        </div>
+        <div class="proposal-body">
+          <p>Ideas para la app/web del BCI orientadas al cliente final:</p>
+          <ul>
+            <li>Botón de inclusividad en la interfaz de la app BCI</li>
+            <li>App que identifique y muestre "gastos hormiga" al cliente</li>
+            <li>Simulación de la interfaz BCI usando capturas de pantalla como referencia en Gemini</li>
+          </ul>
+          <p><strong>Limitación actual:</strong> Requiere acceso al código fuente de la página BCI, no viable en Fase 1. Se pueden crear mockups/simuladores como demostración.</p>
+        </div>
+        <div class="proposal-footer">
+          <span class="tag">UX/UI</span><span class="tag">Mockup</span><span class="tag">Fase 2+</span>
+        </div>
+      </div>
+
+      <div class="proposal-card">
+        <div class="proposal-header">
+          <div class="proposal-icon" style="background: rgba(6,182,212,.12); color: var(--accent-cyan);">📸</div>
+          <div><h3>Escáner de Documentos (OCR)</h3><div class="author">Víctor Jofre + Armin Salazar</div></div>
+        </div>
+        <div class="proposal-body">
+          <p>Aplicación que digitaliza capturas de pantalla usando técnicas OCR:</p>
+          <ul>
+            <li>Subir screenshot de log, diagrama de flujo o documento → extraer texto</li>
+            <li>Caso de uso: prints de WhatsApp con logs que no se pueden copiar</li>
+            <li>Gemini (Nano Banana) genera imágenes pero NO digitaliza bien → usar modelo Pro sin imagen</li>
+            <li>Claude es superior para transcribir imágenes a texto (técnica OCR)</li>
+            <li>Convertir diagramas de flujo fotográficos a texto estructurado</li>
+          </ul>
+          <p><strong>Demostrado en vivo:</strong> Armin mostró la diferencia entre modelos para OCR y la importancia de seleccionar el modelo correcto.</p>
+        </div>
+        <div class="proposal-footer">
+          <span class="tag">OCR</span><span class="tag">Claude</span><span class="tag">Gemini Pro</span><span class="tag">Viable ahora</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ DEEP DIVE TÉCNICO ═══════════ -->
+<section class="section" id="deep-dive">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Sección 05</div>
+      <h2 class="section-title">Deep Dive Técnico</h2>
+      <p class="section-desc">Análisis en profundidad de cada tema técnico abordado en la sesión</p>
+    </div>
+
+    <div class="tech-section open">
+      <div class="tech-header" onclick="this.parentElement.classList.toggle('open')">
+        <span class="num">01</span>
+        <h3>Agente Multiagente COBOL — Prototipo BCI</h3>
+        <span class="arrow">▾</span>
+      </div>
+      <div class="tech-body">
+        <p>Armin demostró un prototipo ya entregado a BCI para generación automática de código COBOL batch. El proyecto nació de un requerimiento directo de la gerencia que solicitaba un "prototipo experimental que permita generar código COBOL batch desde cero utilizando lenguaje natural."</p>
+        <h4>Arquitectura de 4 agentes:</h4>
+        <ul>
+          <li><strong>Planificador:</strong> Recibe instrucción en lenguaje natural, selecciona la metodología de planificación (PRD, historias de usuario, o integral). Si la primera falla, replanifica con otra.</li>
+          <li><strong>Codificador:</strong> Genera código COBOL usando Gemini como modelo base, con instrucciones personalizadas (cabeceras empresariales BCI, formato VSAM/Datacom, nomenclatura interna).</li>
+          <li><strong>Validador:</strong> Compila el código y verifica el return code (0004 = exitoso). Si falla, devuelve al planificador para iteración.</li>
+          <li><strong>Documentador:</strong> Genera documentación técnica del programa. Fue agregado como extra ("la cuchufleta" del gerente).</li>
+        </ul>
+        <h4>Ejemplo demostrado:</h4>
+        <p>"Actúa como un experto COBOL mainframe. Genera un programa batch que realiza un pareo (match file) entre dos archivos: un archivo de personas/clientes y un archivo de tarjetas de crédito. Busca por RUT del cliente las tarjetas activas y luego consulta la base de datos de cuentas corrientes para traer el producto asociado."</p>
+        <h4>Desafíos técnicos identificados:</h4>
+        <ul>
+          <li>BCI usa Datacom en vez de DB2 (estándar universal de COBOL), requiriendo entrenamiento específico del modelo.</li>
+          <li>La conexión al mainframe IBM vía Py3270 (librería Python que simula terminal TN3270) no se completó en la Fase 1.</li>
+          <li>La IA nunca genera exactamente el mismo programa dos veces — se necesita machine learning para consistencia.</li>
+          <li>Los copies de Datacom cambiaron recientemente, hay que actualizar la nomenclatura del RAG.</li>
+        </ul>
+        <h4>Próximos pasos propuestos:</h4>
+        <p>Construir una aplicación web donde el banco pueda cargar estructuras de base de datos al RAG mediante formulario (interfaz tipo CRUD). El RAG almacenará toda la nomenclatura interna (tablas, copies, campos clave, archivos legacy) en una base vectorial en la nube. Armin estima "pega para 2 años" en este RAG.</p>
+      </div>
+    </div>
+
+    <div class="tech-section">
+      <div class="tech-header" onclick="this.parentElement.classList.toggle('open')">
+        <span class="num">02</span>
+        <h3>APIs, API Keys y seguridad</h3>
+        <span class="arrow">▾</span>
+      </div>
+      <div class="tech-body">
+        <p>Armin dedicó tiempo a explicar conceptos fundamentales para que el equipo entienda la infraestructura detrás de las herramientas de IA:</p>
+        <h4>API (Application Programming Interface):</h4>
+        <p>"El mensajero que te conecta y trae la información." Cuando una aplicación necesita usar el cerebro de Gemini, la API es el canal de comunicación. El equipo participó: Luis Cornejo la definió como "herramienta de integración", José Martínez como "un puente entre plataformas".</p>
+        <h4>API Key:</h4>
+        <p>"La llave para llegar al cerebro." Comparable a una suscripción de Spotify (básica/media/premium). Las APIs gratuitas de Gemini Canvas son limitadas pero suficientes para prototipado. Las APIs de pago ofrecen acceso a modelos más potentes y mayor volumen.</p>
+        <h4>Seguridad crítica:</h4>
+        <ul>
+          <li>Nunca compartir API Keys públicamente.</li>
+          <li>GitHub bloquea cuentas si detecta archivos .env con keys expuestas.</li>
+          <li>En desarrollo local se usa archivo .env (environment) que no se sube a repositorios.</li>
+          <li>En producción las keys van en variables de entorno del servidor.</li>
+        </ul>
+        <h4>Caso Suno:</h4>
+        <p>Suno (generador de música IA) no vende su API, obligando a usar su plataforma. Armin comentó que tiene ideas para crear aplicaciones mejores que Suno pero necesita acceso al API que no está disponible.</p>
+      </div>
+    </div>
+
+    <div class="tech-section">
+      <div class="tech-header" onclick="this.parentElement.classList.toggle('open')">
+        <span class="num">03</span>
+        <h3>Embeddings y bases de datos vectoriales</h3>
+        <span class="arrow">▾</span>
+      </div>
+      <div class="tech-body">
+        <p>Los embeddings son la transformación que hace la IA del texto humano a representaciones numéricas (vectores) que permiten búsquedas semánticas y comparaciones de significado.</p>
+        <h4>Ejemplo didáctico del "perro":</h4>
+        <p>Si el contexto anterior dice "el perro corrió al parque y...", la IA genera vectores para posibles continuaciones: "ladró" (85% probabilidad), "durmió" (10%), "voló" (0.1%). Selecciona la opción con mayor porcentaje según el contexto acumulado. Por eso cuando "le meten mucha ensalada de mensajes", se equivoca — los vectores se confunden.</p>
+        <h4>Tipos de bases de datos mencionadas:</h4>
+        <ul>
+          <li><strong>Relacionales:</strong> SQL Server, MySQL (las clásicas)</li>
+          <li><strong>No relacionales:</strong> MongoDB (documentos JSON)</li>
+          <li><strong>Transaccionales:</strong> Datacom de IBM (usada en BCI)</li>
+          <li><strong>Vectoriales:</strong> Supabase (recomendada), Pinecone (escalable), MongoDB con vectores (emergente)</li>
+        </ul>
+        <h4>Recomendación de Armin:</h4>
+        <p>"Empiecen desde ya a estudiar bases de datos vectoriales. Pueden hacer su NotebookLM de bases de datos vectoriales." Supabase es la empresa que más ha crecido en los últimos 2 años en este espacio.</p>
+      </div>
+    </div>
+
+    <div class="tech-section">
+      <div class="tech-header" onclick="this.parentElement.classList.toggle('open')">
+        <span class="num">04</span>
+        <h3>Gemas vs NotebookLM vs Agentes</h3>
+        <span class="arrow">▾</span>
+      </div>
+      <div class="tech-body">
+        <h4>Gemas (Gemini):</h4>
+        <p>Asistentes personalizados con instrucciones y base de conocimiento adjunta (archivos). Son como un chat mejorado con contexto. No hacen embedding real — simplemente adjuntan archivos que el modelo lee en cada consulta. Ejemplo: Armin tiene una gema que genera notebooks para Databricks basándose en un archivo de ejemplo adjunto.</p>
+        <h4>NotebookLM (Google):</h4>
+        <p>Herramienta tipo RAG básico. Permite adjuntar fuentes desde Drive y genera resúmenes, infografías y audio. Tiene más funcionalidades que una Gema (busca en Drive, genera multimedia), pero sigue siendo "una gema más grande" — no hace embedding real como un agente. Armin lo usa para generar listas de asistencia desde transcripciones.</p>
+        <h4>Agentes (LangChain/LangGraph):</h4>
+        <p>Automatización completa con grafos neuronales, base vectorial real (Supabase/Pinecone), aprendizaje (machine learning), y orquestación autónoma. Pueden aprender de sí mismos, iterar, y eventualmente operar sin intervención humana (deep learning). La curva de aprendizaje es de 1.5-2 años.</p>
+        <h4>Clave diferencial:</h4>
+        <p>"Notebook tiene un universo de posibilidades más grande porque además de adjuntar archivos tiene fuentes de otros lados y automatiza generación de video. Pero sigue siendo un chat de Gemini — no piensa como un agente, no hace embedding real."</p>
+      </div>
+    </div>
+
+    <div class="tech-section">
+      <div class="tech-header" onclick="this.parentElement.classList.toggle('open')">
+        <span class="num">05</span>
+        <h3>Prompt Engineering: comandos "no negociable"</h3>
+        <span class="arrow">▾</span>
+      </div>
+      <div class="tech-body">
+        <p>Ante la pregunta de Rodrigo (Arbersen) sobre cómo evitar que la IA genere código incorrecto o reutilizado, Armin explicó técnicas avanzadas de prompt engineering:</p>
+        <h4>Comando "No negociable":</h4>
+        <p>Un modificador en el prompt que establece restricciones absolutas. Ejemplo en música: "Agrégame un piano. La guitarra y el bajo NO son negociables" — la IA añade el piano sin eliminar los otros instrumentos. En código COBOL: "Respeta los márgenes COBOL. NO elimines ni modifiques la estructura de cabecera. NO es negociable."</p>
+        <h4>Otras técnicas mencionadas:</h4>
+        <ul>
+          <li>Dar "personalidades" a los agentes con roles específicos (planificador, codificador, validador)</li>
+          <li>Usar marcadores de cambio ("aquí modifiqué") para rastrear modificaciones</li>
+          <li>Templates con instrucciones como "analiza el código original" y "respeta la estructura existente"</li>
+          <li>Control de temperatura para reducir variabilidad en las respuestas</li>
+        </ul>
+        <h4>Limitación honesta de Armin:</h4>
+        <p>"Tampoco te lo garantiza. Nunca te va a generar un programa igual siempre. Para lograr consistencia hay que trabajar con machine learning para que aprenda de sí misma."</p>
+      </div>
+    </div>
+
+    <div class="tech-section">
+      <div class="tech-header" onclick="this.parentElement.classList.toggle('open')">
+        <span class="num">06</span>
+        <h3>React, React Native y el camino a apps móviles</h3>
+        <span class="arrow">▾</span>
+      </div>
+      <div class="tech-body">
+        <p>Armin explicó por qué Gemini Canvas genera código en React en lugar de HTML puro:</p>
+        <h4>Historia de React Native:</h4>
+        <p>Un programador de Facebook creó React Native después de que Mark Zuckerberg reconociera públicamente que apostar por HTML5 fue un error ("la cagué"). HTML5 no manejaba bien los diferentes dispositivos móviles. React Native combina lo mejor de HTML5 y JavaScript con acceso a periféricos del dispositivo (cámara, sensores).</p>
+        <h4>Ruta de progresión:</h4>
+        <ul>
+          <li><strong>React:</strong> Web para ordenadores (lo que genera Gemini Canvas actualmente)</li>
+          <li><strong>React Native:</strong> Apps multiplataforma (Android + iOS) — Facebook, Instagram lo usan</li>
+          <li><strong>Android Studio + Flutter:</strong> Apps nativas con Google — importa código React, lo transforma automáticamente</li>
+        </ul>
+        <h4>Por qué importa:</h4>
+        <p>"Cada aplicación que hacemos con Canvas está a un solo paso de pasar a React Native y después a Android Studio. El portal CUBI-K ya se ve como app en el teléfono." Esto significa que los prototipos que el equipo cree ahora con Gemini Canvas podrán evolucionar a apps móviles reales.</p>
+        <h4>Requisitos de Android Studio:</h4>
+        <p>Mínimo 32 GB RAM y procesador Core i12 de octava generación. "Es pesadísimo" pero maneja la conversión casi automáticamente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ HERRAMIENTAS ═══════════ -->
+<section class="section" id="herramientas">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Sección 06</div>
+      <h2 class="section-title">Herramientas & Stack Tecnológico</h2>
+      <p class="section-desc">Comparativa de herramientas de automatización y stack recomendado por AIWIS</p>
+    </div>
+
+    <h3 style="font-size:1.15rem; margin-bottom:1.25rem; font-weight:700;">Comparativa: Code vs No-Code vs Low-Code</h3>
+    <div style="overflow-x:auto; margin-bottom:2.5rem;">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Característica</th>
+          <th>Code (Python / LangGraph)</th>
+          <th>No-Code (Zapier / Make)</th>
+          <th>Low-Code (N8N)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Flexibilidad</td>
+          <td><span class="badge green">Máxima</span> — Control total del código</td>
+          <td><span class="badge red">Limitada</span> — Depende de conectores</td>
+          <td><span class="badge green">Alta</span> — Doble clic = código personalizado</td>
+        </tr>
+        <tr>
+          <td>Control sobre datos</td>
+          <td><span class="badge green">Total</span> — Código abierto, tú lo manejas</td>
+          <td><span class="badge red">Bajo</span> — No sabes qué pasa por detrás</td>
+          <td><span class="badge amber">Medio-Alto</span> — Self-hosted posible</td>
+        </tr>
+        <tr>
+          <td>Curva de aprendizaje</td>
+          <td><span class="badge red">1.5–2 años</span></td>
+          <td><span class="badge green">Días</span></td>
+          <td><span class="badge amber">Semanas a meses</span></td>
+        </tr>
+        <tr>
+          <td>ISO 27001</td>
+          <td><span class="badge green">Sí</span> — Código propio, auditable</td>
+          <td><span class="badge red">No garantizado</span></td>
+          <td><span class="badge amber">En proceso</span> — "Parece que sí la cumple"</td>
+        </tr>
+        <tr>
+          <td>Uso en BCI</td>
+          <td><span class="badge green">Obligatorio</span> para producción bancaria</td>
+          <td><span class="badge red">No viable</span> para datos sensibles</td>
+          <td><span class="badge blue">Adoptándose</span> — BCI empezando a usar</td>
+        </tr>
+        <tr>
+          <td>Costo</td>
+          <td><span class="badge green">Gratis</span> — Open source (Python)</td>
+          <td><span class="badge red">De pago</span> — 7 días gratis típico</td>
+          <td><span class="badge green">Gratis / pago</span></td>
+        </tr>
+        <tr>
+          <td>Recomendación AIWIS</td>
+          <td>Objetivo final — Ligas mayores</td>
+          <td>Solo automatizaciones personales simples</td>
+          <td><span class="badge blue">Punto de partida</span> para agentes CUBI-K</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 style="font-size:1.15rem; margin-bottom:1.25rem; font-weight:700;">Stack Tecnológico Recomendado por AIWIS</h3>
+    <div class="stack-grid">
+      <div class="stack-card">
+        <h4><span class="ico">🎨</span> Frontend</h4>
+        <ul class="stack-list">
+          <li>React (web — Gemini Canvas lo genera)</li>
+          <li>React Native (móviles multiplataforma)</li>
+          <li>Flutter (apps nativas con Android Studio)</li>
+          <li>HTML5 + CSS + JavaScript (prototipos)</li>
+        </ul>
+      </div>
+      <div class="stack-card">
+        <h4><span class="ico">⚙️</span> Backend IA</h4>
+        <ul class="stack-list">
+          <li>Python (lenguaje principal)</li>
+          <li>LangChain (framework de IA)</li>
+          <li>LangGraph (grafos de agentes)</li>
+          <li>Google Apps Script (portales/planillas)</li>
+        </ul>
+      </div>
+      <div class="stack-card">
+        <h4><span class="ico">🧠</span> Modelos de IA</h4>
+        <ul class="stack-list">
+          <li>Gemini (obligatorio BCI — Pro, Flash, Nano)</li>
+          <li>Claude (superior para OCR/transcripción)</li>
+          <li>OpenAI/GPT (alternativa)</li>
+          <li>VO3 (video — muy costoso)</li>
+        </ul>
+      </div>
+      <div class="stack-card">
+        <h4><span class="ico">💾</span> Bases de Datos</h4>
+        <ul class="stack-list">
+          <li>Supabase (vectorial — recomendada)</li>
+          <li>Pinecone (vectorial — escalable)</li>
+          <li>MongoDB (NoSQL + vectores)</li>
+          <li>Datacom (IBM mainframe — BCI)</li>
+        </ul>
+      </div>
+      <div class="stack-card">
+        <h4><span class="ico">🔄</span> Automatización</h4>
+        <ul class="stack-list">
+          <li>N8N (low-code — ISO 27001)</li>
+          <li>Zapier/Make (no-code — limitado)</li>
+          <li>Google Apps Script (gratis)</li>
+          <li>Gemas Gemini (asistentes simples)</li>
+        </ul>
+      </div>
+      <div class="stack-card">
+        <h4><span class="ico">🚀</span> Despliegue</h4>
+        <ul class="stack-list">
+          <li>Vercel (apps web actuales)</li>
+          <li>Android Studio (apps móviles futuro)</li>
+          <li>GitHub (repositorio — sin .env)</li>
+          <li>Gemini Canvas (prototipado rápido)</li>
+        </ul>
+      </div>
+      <div class="stack-card">
+        <h4><span class="ico">🏦</span> Ecosistema BCI</h4>
+        <ul class="stack-list">
+          <li>Helix/BHOP (BMC — ticketing)</li>
+          <li>Dynatrace/Davis AI (monitoreo)</li>
+          <li>Control-M (orquestador batch)</li>
+          <li>Jira (gestión de tickets)</li>
+          <li>CMDB/SDM (configuración)</li>
+          <li>Mainframe IBM (COBOL/TN3270)</li>
+        </ul>
+      </div>
+      <div class="stack-card">
+        <h4><span class="ico">📚</span> Metodologías</h4>
+        <ul class="stack-list">
+          <li>PRD (Product Requirements Document)</li>
+          <li>Historias de usuario</li>
+          <li>Framework de 5 pasos (BODEN)</li>
+          <li>POC / MVP (prueba de concepto)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ROADMAP ═══════════ -->
+<section class="section" id="roadmap">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Sección 07</div>
+      <h2 class="section-title">Hoja de Ruta del Programa</h2>
+      <p class="section-desc">Ruta de aprendizaje progresiva presentada por Armin para el equipo CUBI-K</p>
+    </div>
+    <div class="roadmap">
+      <div class="road-card active">
+        <span class="road-label">Fase actual</span>
+        <h4>Gemini Chat + Canvas</h4>
+        <div class="tools">gemini · canvas · gemas</div>
+        <p>Conceptos de IA, prompt engineering, creación de apps básicas con Canvas. Próxima semana: Gemas de Gemini (asistentes personalizados con base de conocimiento).</p>
+      </div>
+      <div class="road-card next">
+        <span class="road-label">Próxima fase · 4-5 meses</span>
+        <h4>Google AI Studio</h4>
+        <div class="tools">ai-studio · apis · modelos</div>
+        <p>APIs avanzadas, selección de modelos, programación de asistentes, integración con servicios externos. Apps implementadas y desplegadas con Vercel.</p>
+      </div>
+      <div class="road-card next">
+        <span class="road-label">Dentro de Fase 2</span>
+        <h4>N8N (Low-Code)</h4>
+        <div class="tools">n8n · workflows · agentes</div>
+        <p>Automatización de workflows, creación de agentes con interfaz visual. Webinar con colega de Armin confirmado. Balance entre control y velocidad.</p>
+      </div>
+      <div class="road-card future">
+        <span class="road-label">Avanzado · Posterior</span>
+        <h4>LangChain + LangGraph</h4>
+        <div class="tools">python · langchain · langraph</div>
+        <p>Agentes autónomos con grafos neuronales, RAG completo con base vectorial, machine learning. Orquestador propio para BCI. "Las ligas mayores."</p>
+      </div>
+      <div class="road-card vision">
+        <span class="road-label">Visión largo plazo · ~1 año</span>
+        <h4>Apps Móviles Nativas</h4>
+        <div class="tools">android-studio · react-native · flutter</div>
+        <p>Despliegue de aplicaciones móviles nativas desde código React. Migración de prototipos Canvas → React Native → Android Studio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TAREAS ═══════════ -->
+<section class="section" id="tareas">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Sección 08</div>
+      <h2 class="section-title">Tareas para el Martes</h2>
+      <p class="section-desc">Asignaciones concretas para la próxima sesión de clase</p>
+    </div>
+    <div class="task-list">
+      <div class="task-item">
+        <div class="task-num" style="background: rgba(59,130,246,.12); color: var(--accent-blue);">1</div>
+        <div class="task-content">
+          <h4>Llegar con una idea de aplicación</h4>
+          <p>Prioridad: ideas internas CUBI-K > para BCI > para el banco como cliente > personales. "Inventen algo para su casa si no se les ocurre nada más". Si no tienen idea, contactar a Armin para que les asigne una. Nadie debe llegar al martes sin idea.</p>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-num" style="background: rgba(16,185,129,.12); color: var(--accent-emerald);">2</div>
+        <div class="task-content">
+          <h4>Usar la herramienta BPCoden</h4>
+          <p>Escribir la idea en la herramienta BPCoden (link compartido). La herramienta tiene agentes internos que generan automáticamente el plan de implementación con las 3 metodologías (PRD, historias de usuario, etc.). Guardar el link en favoritos del navegador.</p>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-num" style="background: rgba(139,92,246,.12); color: var(--accent-purple);">3</div>
+        <div class="task-content">
+          <h4>Descargar y comparar los 3 Markdown</h4>
+          <p>Generar los 3 archivos Markdown (uno por metodología) desde BPCoden. Abrir 3 chats de Gemini separados, pegar uno en cada uno, y comparar las diferencias en los resultados. Esto enseña cómo las diferentes metodologías producen resultados distintos.</p>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-num" style="background: rgba(245,158,11,.12); color: var(--accent-amber);">4</div>
+        <div class="task-content">
+          <h4>Crear una app / POC con Gemini Canvas</h4>
+          <p>Usar Gemini con Canvas para programar una Prueba de Concepto funcional. No se requiere saber programar — la IA programa por ellos. Copiar el Markdown de BPCoden → pegarlo en Canvas → seguir las indicaciones. "Es más fácil de lo que parece, de verdad."</p>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-num" style="background: rgba(244,63,94,.12); color: var(--accent-rose);">5</div>
+        <div class="task-content">
+          <h4>Usar activamente el chat del grupo</h4>
+          <p>Armin tiene las propuestas integradas en un RAG (NotebookLM) y puede analizar similitudes, consolidar ideas, y encontrar sinergias. Mientras más escriban, más pueden optimizar. "Lo tengo de pago hasta como tres meses todavía."</p>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-num" style="background: rgba(6,182,212,.12); color: var(--accent-cyan);">6</div>
+        <div class="task-content">
+          <h4>Subir propuestas al tablero de iniciativas</h4>
+          <p>Categorizar la idea (internas CUBI-K / internas BCI / BCI cliente), agregar nombre, y subir al tablero compartido. Si suben el documento del Drive, los campos se llenan casi automáticamente gracias a la IA integrada en el formulario.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ VIDEO ═══════════ -->
+<section class="section" id="video">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Sección 09</div>
+      <h2 class="section-title">Video Resumen de la Clase</h2>
+      <p class="section-desc">Grabación oficial de la sesión del 19 de marzo de 2026</p>
+    </div>
+    <div class="video-wrap">
+      <div class="video-label">
+        <div class="rec"></div>
+        <span>Video Resumen — Clase Módulo 2</span>
+        <span class="dur">19/03/2026</span>
+      </div>
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/gq_ncBN55pE" title="CUBI-K Adopción IA Corporativa - Clase Módulo 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CONCLUSIONES ═══════════ -->
+<section class="section" id="conclusiones">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Sección 10</div>
+      <h2 class="section-title">Conclusiones & Observaciones</h2>
+      <p class="section-desc">Análisis final de la sesión con observaciones estratégicas</p>
+    </div>
+    <div class="conclusion-grid">
+      <div class="concl-card">
+        <h4>✅ Alto nivel de engagement</h4>
+        <p>Sesión de casi 2.5 horas con participación activa de 11 de 15 asistentes. Las propuestas de Felipe y Vicente demuestran comprensión real de los problemas operativos que la IA puede resolver. El equipo está pasando de la curiosidad a la propuesta concreta.</p>
+      </div>
+      <div class="concl-card">
+        <h4>⚠️ Brecha visión vs. capacidad actual</h4>
+        <p>Muchas propuestas (chat RAG, agentes, integración Helix) requieren conocimientos de Fase 2–3. Armin manejó bien las expectativas mostrando la complejidad real sin desalentar: "No es que sea difícil, pero es largo en la curva de aprendizaje."</p>
+      </div>
+      <div class="concl-card">
+        <h4>🔐 Dependencia de licencias BCI</h4>
+        <p>La viabilidad de integraciones con Helix (IOPS), Dynatrace (Davis) y Control-M depende de si BCI tiene la versión Enterprise. Esta pregunta sigue sin respuesta desde reuniones anteriores con Lorena del banco.</p>
+      </div>
+      <div class="concl-card">
+        <h4>🏗️ Visión estratégica AIWIS</h4>
+        <p>Armin propone construir una plataforma agéntica propia (Python/LangGraph) que orqueste todas las herramientas. Si BCI cambia una herramienta, solo se modifica una línea de código. Modelo de negocio: vender como servicio (cobro anual) o entregar código fuente.</p>
+      </div>
+      <div class="concl-card">
+        <h4>🎯 Foco práctico inmediato</h4>
+        <p>La tarea del martes (crear app con Gemini Canvas) es el primer paso concreto de la teoría a la práctica. Se espera que cada miembro llegue con un POC funcional. La herramienta BPCoden facilita la planificación con agentes internos que generan el plan automáticamente.</p>
+      </div>
+      <div class="concl-card">
+        <h4>💰 Propiedad intelectual y motivación</h4>
+        <p>Luis Cornejo enfatizó que los creadores de ideas implementadas recibirán recompensa: "El que inventó la idea va a tener su recompensa." Las propuestas quedan grabadas en la transcripción como registro de autoría. Armin ofrece disponibilidad 24/7.</p>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top: 2.5rem;">
+      <p><strong>Referencia clave — "Iniciativa de los Luises":</strong> Se mencionó múltiples veces una reunión previa con Luis Garrido (BCI) donde surgió la idea de gestión inteligente de incidentes, autoasignación en BHOP, y un mecanismo avanzado de gestión de flujo de trabajo. Luis Cornejo documentó estas ideas con IA y las envió al banco, recibiendo como respuesta: <em>"Deben darle foco a este punto. No puedo no estar enterado. Invítame a las reuniones."</em> Esto confirma el interés activo del banco en las propuestas del equipo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="footer">
+  <p>Documento generado por <span class="brand">AIWIS PRO</span> — Análisis exhaustivo de transcripción automática</p>
+  <p>Sesión del 19 de marzo de 2026 · Generado el 24 de marzo de 2026</p>
+  <p style="margin-top:.75rem; color: var(--text-muted); font-size:.72rem;">CUBI-K × AIWIS · ArmonIA Labs · Programa de Adopción de IA Corporativa · Fase 1</p>
+</footer>
+
+<script>
+// Open first tech section by default, rest are closed
+document.querySelectorAll('.tech-section').forEach((s, i) => {
+  if (i > 0) s.classList.remove('open');
+});
+
+// Smooth scroll for nav links
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// Animate stats on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.stat-card, .p-card, .proposal-card, .road-card, .task-item, .concl-card, .tl-item').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'all 0.5s ease';
+  observer.observe(el);
+});
+
+// Stagger animation delays
+document.querySelectorAll('.stats-grid .stat-card').forEach((el, i) => { el.style.transitionDelay = `${i * 0.08}s`; });
+document.querySelectorAll('.participant-grid .p-card').forEach((el, i) => { el.style.transitionDelay = `${i * 0.05}s`; });
+document.querySelectorAll('.roadmap .road-card').forEach((el, i) => { el.style.transitionDelay = `${i * 0.1}s`; });
+document.querySelectorAll('.conclusion-grid .concl-card').forEach((el, i) => { el.style.transitionDelay = `${i * 0.08}s`; });
+</script>
+</body>
+</html>
