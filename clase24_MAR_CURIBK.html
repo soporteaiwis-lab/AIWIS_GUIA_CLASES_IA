@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 Clase 5: Automatización con IA - Para Principiantes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+            margin-bottom: 30px;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            background: #667eea;
+            color: white;
+        }
+
+        .nav-btn.active {
+            background: #667eea;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* Content Sections */
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .card h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin: 20px 0 10px 0;
+        }
+
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .comparison-card:hover {
+            transform: scale(1.05);
+        }
+
+        .comparison-card.automated {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        .icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        /* Examples */
+        .example-box {
+            background: #f0f4ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .example-box code {
+            background: #fff;
+            padding: 2px 8px;
+            border-radius: 5px;
+            color: #e91e63;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        /* Interactive Timeline */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin: 20px 0;
+            align-items: center;
+        }
+
+        .timeline-dot {
+            width: 40px;
+            height: 40px;
+            background: #667eea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            flex-grow: 1;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Quiz Section */
+        .quiz-option {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .quiz-option:hover {
+            border-color: #667eea;
+            transform: translateX(10px);
+        }
+
+        .quiz-option.correct {
+            border-color: #4caf50;
+            background: #e8f5e9;
+        }
+
+        .quiz-option.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        /* Buttons */
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+
+        .btn-secondary {
+            background: #4caf50;
+        }
+
+        .btn-secondary:hover {
+            background: #45a049;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            background: #e0e0e0;
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Emoji helpers */
+        .big-emoji {
+            font-size: 4em;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .nav-btn {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+        }
+
+        /* Animation for cards */
+        .animate-card {
+            animation: popIn 0.5s ease;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🤖 CLASE 5: Automatización con IA</h1>
+            <p class="subtitle">¡Aprende a hacer que las computadoras trabajen por ti!</p>
+        </header>
+
+        <!-- Navigation -->
+        <div class="nav-tabs">
+            <button class="nav-btn active" onclick="showSection(0)">🏠 Inicio</button>
+            <button class="nav-btn" onclick="showSection(1)">❓ ¿Qué es?</button>
+            <button class="nav-btn" onclick="showSection(2)">🔄 Ejemplos</button>
+            <button class="nav-btn" onclick="showSection(3)">🤖 Con IA</button>
+            <button class="nav-btn" onclick="showSection(4)">💻 Scripts</button>
+            <button class="nav-btn" onclick="showSection(5)">📊 Dashboard</button>
+            <button class="nav-btn" onclick="showSection(6)">🎮 Quiz</button>
+        </div>
+
+        <!-- Section 0: Inicio -->
+        <div class="section active" id="section-0">
+            <div class="card animate-card">
+                <h2>¡Bienvenido a la Automatización! 🎉</h2>
+                <div class="big-emoji">🤖✨💻</div>
+                <p style="font-size: 1.3em; text-align: center; line-height: 1.8;">
+                    Hoy aprenderás cómo hacer que las computadoras hagan tareas repetitivas por ti.<br>
+                    ¡Es como tener un robot ayudante! 🦾
+                </p>
+                
+                <div class="dashboard" style="margin-top: 30px;">
+                    <div class="metric-card">
+                        <div class="icon">⏰</div>
+                        <div class="metric-value">60%</div>
+                        <div class="metric-label">Tiempo Ahorrado</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="icon">😊</div>
+                        <div class="metric-value">100%</div>
+                        <div class="metric-label">Más Feliz</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="icon">🚀</div>
+                        <div class="metric-value">10x</div>
+                        <div class="metric-label">Más Rápido</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn btn-secondary" onclick="showSection(1)">
+                        ¡Comenzar! 🚀
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1: ¿Qué es Automatización? -->
+        <div class="section" id="section-1">
+            <div class="card">
+                <h2>¿Qué es la Automatización? 🤔</h2>
+                
+                <p style="font-size: 1.2em; text-align: center; margin: 20px 0;">
+                    <strong>Automatizar</strong> es hacer que las computadoras hagan tareas<br>
+                    que normalmente harías tú una y otra vez. 🔄
+                </p>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <div class="icon">😓</div>
+                        <h3>SIN Automatización</h3>
+                        <p>Tú haces todo manualmente</p>
+                        <p>Repites lo mismo muchas veces</p>
+                        <p>Te cansas y aburres</p>
+                        <p>Puede haber errores</p>
+                    </div>
+                    <div class="comparison-card automated">
+                        <div class="icon">🎉</div>
+                        <h3>CON Automatización</h3>
+                        <p>La computadora lo hace</p>
+                        <p>Se hace automáticamente</p>
+                        <p>Tú haces cosas más divertidas</p>
+                        <p>Siempre es perfecto</p>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h3>🎯 Ejemplo Simple:</h3>
+                    <p><strong>Sin Automatizar:</strong> Tienes que abrir 100 correos y copiar los nombres uno por uno. ¡Qué aburrido! 😴</p>
+                    <p><strong>Automatizado:</strong> ¡Un programa hace todo en 5 segundos! 🚀</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Ejemplos Cotidianos -->
+        <div class="section" id="section-2">
+            <div class="card">
+                <h2>Ejemplos del Día a Día 🌟</h2>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot">1</div>
+                        <div class="timeline-content">
+                            <h3>📧 Organizar Correos</h3>
+                            <p><strong>Antes:</strong> Leer cada correo y moverlo a su carpeta</p>
+                            <p><strong>Automatizado:</strong> Los correos se organizan solos según reglas</p>
+                            <p style="color: green;">⏱️ Ahorro: 30 minutos al día</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot">2</div>
+                        <div class="timeline-content">
+                            <h3>📊 Crear Reportes</h3>
+                            <p><strong>Antes:</strong> Copiar datos, hacer cálculos, crear gráficos</p>
+                            <p><strong>Automatizado:</strong> El reporte se crea solo cada día</p>
+                            <p style="color: green;">⏱️ Ahorro: 2 horas a la semana</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot">3</div>
+                        <div class="timeline-content">
+                            <h3>🖼️ Cambiar Tamaño de Fotos</h3>
+                            <p><strong>Antes:</strong> Abrir cada foto y cambiarla una por una</p>
+                            <p><strong>Automatizado:</strong> Todas las fotos se ajustan a la vez</p>
+                            <p style="color: green;">⏱️ Ahorro: 1 hora por cada 100 fotos</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot">4</div>
+                        <div class="timeline-content">
+                            <h3>💾 Hacer Respaldos</h3>
+                            <p><strong>Antes:</strong> Acordarte de copiar archivos importantes</p>
+                            <p><strong>Automatizado:</strong> Se hace copia automática cada día</p>
+                            <p style="color: green;">⏱️ Beneficio: ¡Nunca pierdes nada!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Automatización con IA -->
+        <div class="section" id="section-3">
+            <div class="card">
+                <h2>🤖 Automatizar CON Inteligencia Artificial</h2>
+                
+                <p style="font-size: 1.2em; text-align: center; margin: 20px 0;">
+                    La IA hace que la automatización sea más <strong>inteligente</strong> 🧠✨
+                </p>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <div class="icon">🔧</div>
+                        <h3>Automatización Normal</h3>
+                        <p>Sigue reglas fijas</p>
+                        <p>Hace siempre lo mismo</p>
+                        <p>No puede aprender</p>
+                        <p><em>Ejemplo: Copiar archivos</em></p>
+                    </div>
+                    <div class="comparison-card automated">
+                        <div class="icon">🧠</div>
+                        <h3>Automatización con IA</h3>
+                        <p>Entiende el contenido</p>
+                        <p>Toma decisiones</p>
+                        <p>Aprende y mejora</p>
+                        <p><em>Ejemplo: Responder correos</em></p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px;">✨ ¿Qué puede hacer la IA?</h3>
+                
+                <div class="example-box">
+                    <h3>📝 1. Escribir Textos</h3>
+                    <p>La IA puede escribir correos, resúmenes, reportes y más</p>
+                    <p><strong>Ejemplo:</strong> "IA, escribe un correo agradeciendo a Juan por su ayuda"</p>
+                </div>
+
+                <div class="example-box">
+                    <h3>🔍 2. Analizar Información</h3>
+                    <p>La IA puede leer muchos documentos y encontrar lo importante</p>
+                    <p><strong>Ejemplo:</strong> "IA, resume estos 10 artículos para mí"</p>
+                </div>
+
+                <div class="example-box">
+                    <h3>🎨 3. Crear Contenido</h3>
+                    <p>La IA puede hacer imágenes, presentaciones, videos</p>
+                    <p><strong>Ejemplo:</strong> "IA, crea una imagen de un robot feliz"</p>
+                </div>
+
+                <div class="example-box">
+                    <h3>💬 4. Conversar y Responder</h3>
+                    <p>La IA puede responder preguntas de clientes automáticamente</p>
+                    <p><strong>Ejemplo:</strong> Chatbot que ayuda 24/7</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Scripts Simples -->
+        <div class="section" id="section-4">
+            <div class="card">
+                <h2>💻 ¿Qué es un Script?</h2>
+                
+                <p style="font-size: 1.2em; text-align: center; margin: 20px 0;">
+                    Un <strong>script</strong> es como una receta que le das a la computadora 📜<br>
+                    ¡Le dices qué hacer paso a paso! 👣
+                </p>
+
+                <div class="big-emoji">🥘 ➡️ 💻</div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <div class="icon">👨‍🍳</div>
+                        <h3>Receta de Cocina</h3>
+                        <p>1. Mezcla harina y huevos</p>
+                        <p>2. Bate por 5 minutos</p>
+                        <p>3. Hornea 30 minutos</p>
+                        <p>4. ¡Listo el pastel!</p>
+                    </div>
+                    <div class="comparison-card automated">
+                        <div class="icon">💻</div>
+                        <h3>Script de Computadora</h3>
+                        <p>1. Abre el archivo</p>
+                        <p>2. Lee los datos</p>
+                        <p>3. Organiza la información</p>
+                        <p>4. ¡Guarda el resultado!</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px;">📝 Ejemplo de Script Simple</h3>
+                
+                <div class="example-box">
+                    <h3>Renombrar 100 fotos automáticamente:</h3>
+                    <p><strong>Lo que quieres:</strong> Cambiar "IMG_001.jpg" a "Vacaciones_001.jpg"</p>
+                    <p><strong>Script dice:</strong></p>
+                    <code>
+                        Para cada foto:<br>
+                        &nbsp;&nbsp;- Toma el nombre<br>
+                        &nbsp;&nbsp;- Cambia "IMG" por "Vacaciones"<br>
+                        &nbsp;&nbsp;- Guarda con nuevo nombre
+                    </code>
+                </div>
+
+                <h3 style="margin-top: 20px;">🛠️ Herramientas para Crear Scripts</h3>
+                
+                <div class="dashboard">
+                    <div class="metric-card">
+                        <div class="icon">🐍</div>
+                        <h4>Python</h4>
+                        <p>Fácil de aprender</p>
+                        <p>Muy popular</p>
+                    </div>
+                    <div class="metric-card">
+                        <div class="icon">🤖</div>
+                        <h4>n8n</h4>
+                        <p>Con bloques visuales</p>
+                        <p>No necesitas código</p>
+                    </div>
+                    <div class="metric-card">
+                        <div class="icon">⚡</div>
+                        <h4>Zapier</h4>
+                        <p>Conecta aplicaciones</p>
+                        <p>Muy fácil de usar</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Dashboard -->
+        <div class="section" id="section-5">
+            <div class="card">
+                <h2>📊 Tu Dashboard de Automatización</h2>
+                <p style="text-align: center; margin-bottom: 30px;">
+                    ¡Mira cuánto tiempo puedes ahorrar! ⏰
+                </p>
+
+                <div class="dashboard">
+                    <div class="metric-card">
+                        <div class="icon">📧</div>
+                        <div class="metric-value">20</div>
+                        <div class="metric-label">Correos Organizados/Día</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="icon">📊</div>
+                        <div class="metric-value">5</div>
+                        <div class="metric-label">Reportes Automáticos</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="icon">🖼️</div>
+                        <div class="metric-value">100</div>
+                        <div class="metric-label">Fotos Procesadas/Minuto</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="icon">⏱️</div>
+                        <div class="metric-value">10hrs</div>
+                        <div class="metric-label">Ahorradas/Semana</div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 40px; text-align: center;">🎯 ¿Qué tareas puedes automatizar HOY?</h3>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 80%;">80% de tareas repetitivas</div>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot">✅</div>
+                        <div class="timeline-content">
+                            <h3>Nivel Fácil: Organizar Archivos</h3>
+                            <p>Mueve fotos, documentos y descargas automáticamente a sus carpetas</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot">✅</div>
+                        <div class="timeline-content">
+                            <h3>Nivel Medio: Responder Mensajes</h3>
+                            <p>Usa IA para responder mensajes frecuentes automáticamente</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot">✅</div>
+                        <div class="timeline-content">
+                            <h3>Nivel Avanzado: Generar Reportes</h3>
+                            <p>Crea reportes completos con datos, gráficos y conclusiones</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-box" style="margin-top: 30px;">
+                    <h3>💡 Consejo del Día:</h3>
+                    <p style="font-size: 1.2em;">
+                        Comienza automatizando tareas pequeñas que haces todos los días.<br>
+                        ¡Poco a poco verás grandes resultados! 🌟
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Quiz Interactivo -->
+        <div class="section" id="section-6">
+            <div class="card">
+                <h2>🎮 ¡Hora del Quiz!</h2>
+                <p style="text-align: center; margin-bottom: 30px;">
+                    Demuestra lo que aprendiste 🧠✨
+                </p>
+
+                <div id="quiz-container">
+                    <!-- Pregunta 1 -->
+                    <div class="quiz-question" id="q1">
+                        <h3>❓ Pregunta 1:</h3>
+                        <p style="font-size: 1.2em; margin: 15px 0;">
+                            ¿Qué es automatizar?
+                        </p>
+                        <div class="quiz-option" onclick="checkAnswer(1, 'a', false)">
+                            A) Hacer todo manualmente
+                        </div>
+                        <div class="quiz-option" onclick="checkAnswer(1, 'b', true)">
+                            B) Hacer que la computadora haga tareas repetitivas por ti
+                        </div>
+                        <div class="quiz-option" onclick="checkAnswer(1, 'c', false)">
+                            C) Jugar videojuegos
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 2 -->
+                    <div class="quiz-question" id="q2" style="display: none;">
+                        <h3>❓ Pregunta 2:</h3>
+                        <p style="font-size: 1.2em; margin: 15px 0;">
+                            ¿Cuál es una ventaja de automatizar?
+                        </p>
+                        <div class="quiz-option" onclick="checkAnswer(2, 'a', false)">
+                            A) Es más lento
+                        </div>
+                        <div class="quiz-option" onclick="checkAnswer(2, 'b', true)">
+                            B) Ahorras mucho tiempo
+                        </div>
+                        <div class="quiz-option" onclick="checkAnswer(2, 'c', false)">
+                            C) Tienes más trabajo
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 3 -->
+                    <div class="quiz-question" id="q3" style="display: none;">
+                        <h3>❓ Pregunta 3:</h3>
+                        <p style="font-size: 1.2em; margin: 15px 0;">
+                            ¿Qué hace especial a la automatización con IA?
+                        </p>
+                        <div class="quiz-option" onclick="checkAnswer(3, 'a', false)">
+                            A) Solo sigue reglas simples
+                        </div>
+                        <div class="quiz-option" onclick="checkAnswer(3, 'b', true)">
+                            B) Puede entender, aprender y tomar decisiones inteligentes
+                        </div>
+                        <div class="quiz-option" onclick="checkAnswer(3, 'c', false)">
+                            C) No hace nada diferente
+                        </div>
+                    </div>
+
+                    <!-- Resultado Final -->
+                    <div id="quiz-result" style="display: none; text-align: center;">
+                        <div class="big-emoji">🎉🏆🎊</div>
+                        <h2 style="color: #4caf50;">¡Felicitaciones!</h2>
+                        <p style="font-size: 1.3em; margin: 20px 0;">
+                            ¡Respondiste <span id="score">0</span> de 3 preguntas correctamente!
+                        </p>
+                        <div class="metric-card" style="max-width: 400px; margin: 30px auto;">
+                            <div class="big-emoji">🌟</div>
+                            <h3>Has aprendido sobre:</h3>
+                            <p>✅ Qué es automatización</p>
+                            <p>✅ Ejemplos prácticos</p>
+                            <p>✅ Automatización con IA</p>
+                            <p>✅ Scripts simples</p>
+                        </div>
+                        <button class="btn btn-secondary" onclick="location.reload()">
+                            🔄 Reiniciar Quiz
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentSection = 0;
+        let correctAnswers = 0;
+        let currentQuestion = 1;
+
+        function showSection(index) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(`section-${index}`).classList.add('active');
+            
+            // Update nav buttons
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach((btn, i) => {
+                btn.classList.toggle('active', i === index);
+            });
+            
+            currentSection = index;
+        }
+
+        function checkAnswer(questionNum, option, isCorrect) {
+            const question = document.getElementById(`q${questionNum}`);
+            const options = question.querySelectorAll('.quiz-option');
+            
+            // Disable all options
+            options.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+                if (opt.textContent.includes(option.toUpperCase())) {
+                    opt.classList.add(isCorrect ? 'correct' : 'incorrect');
+                }
+            });
+
+            if (isCorrect) {
+                correctAnswers++;
+            }
+
+            // Show next question after delay
+            setTimeout(() => {
+                question.style.display = 'none';
+                
+                if (questionNum < 3) {
+                    document.getElementById(`q${questionNum + 1}`).style.display = 'block';
+                } else {
+                    // Show result
+                    document.getElementById('score').textContent = correctAnswers;
+                    document.getElementById('quiz-result').style.display = 'block';
+                }
+            }, 1500);
+        }
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                if (currentSection < 6) showSection(currentSection + 1);
+            } else if (e.key === 'ArrowLeft') {
+                if (currentSection > 0) showSection(currentSection - 1);
+            }
+        });
+    </script>
+</body>
+</html>
